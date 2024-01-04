@@ -23,7 +23,14 @@ const Page = () => {
     retry: true,
     retryDelay: 500,
   });
-  return <div>Page</div>;
+  return (
+    <div className="flex justify-center w-full mt-24">
+      <div className="flex flex-col items-center gap-2">
+        Loading....
+        <p>You will be redirected automatically.</p>
+      </div>
+    </div>
+  );
 };
 
 export default Page;
