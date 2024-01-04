@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "./_trpc/provider";
 import { NavBar } from "@/components/NavBar";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <body className={inter.className}>
+        <body className={GeistSans.className}>
           <NavBar />
           {children}
         </body>

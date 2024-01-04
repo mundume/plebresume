@@ -13,10 +13,7 @@ const UserCard = ({ user }: { user: KindeUser }) => {
     <Card>
       <CardHeader>
         <CardTitle className="text-lg font-medium">
-          Welcome Back{" "}
-          <span className="text-purple-400 ">
-            {user.given_name} {user.family_name}{" "}
-          </span>
+          Welcome Back, Nzai
         </CardTitle>
       </CardHeader>
       <CardContent>
