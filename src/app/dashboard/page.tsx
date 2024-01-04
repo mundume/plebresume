@@ -1,3 +1,6 @@
+import Dashboard from "@/components/Dashboard";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import UserCard from "@/components/UserCard";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 const Page = async () => {
@@ -5,11 +8,9 @@ const Page = async () => {
   const user = await getUser();
   if (!user || !user.id) redirect("/auth-callack?origin=dashboard");
   return (
-    <div>
-      <p>
-        {user?.email} {user?.given_name} {user?.family_name}
-      </p>
-    </div>
+    <MaxWidthWrapper className="px-2 pt-3 my-auto">
+      <Dashboard user={user} />
+    </MaxWidthWrapper>
   );
 };
 
