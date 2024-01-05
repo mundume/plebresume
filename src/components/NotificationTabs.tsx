@@ -28,15 +28,44 @@ const tabsData = [
   {
     value: "password",
     heading: "Password",
-    content: [{ title: "Title 2", description: "Description 2" }],
+    content: [
+      {
+        title: "new job at kinde",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+      },
+      {
+        title: "new job at kinde",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+      },
+      {
+        title: "new job at kinde",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+      },
+    ],
   },
   {
     value: "rod wave",
     heading: "letter",
     content: [
-      { title: "Title 2", description: "Description 2" },
-      { title: "Title 2", description: "Description 2" },
-      { title: "Title 2", description: "Description 2" },
+      {
+        title: "new job at kinde",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+      },
+
+      {
+        title: "new job at kinde",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+      },
+      {
+        title: "new job at kinde",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+      },
     ],
   },
 ];

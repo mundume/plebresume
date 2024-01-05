@@ -20,7 +20,7 @@ import {
   MixerVerticalIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
-import NotificationIcon from "./Bellicon";
+
 import { Power } from "lucide-react";
 
 const UserAccountNav = async ({}) => {
