@@ -21,16 +21,16 @@ import {
   PersonIcon,
 } from "@radix-ui/react-icons";
 import NotificationIcon from "./Bellicon";
+import { Power } from "lucide-react";
 
 const UserAccountNav = async ({}) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
   return (
     <>
-      <NotificationIcon />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="overflow-visible">
-          <Button className="flex items-center gap-2 rounded-full aspect-square w-14 focus:ring-1 focus:ring-blue-500">
+          <Button className="flex items-center gap-2 rounded-full aspect-square w-14 ">
             <Avatar className="relative flex items-center ">
               {user?.picture ? (
                 <div className="relative w-full h-full aspect-square">
@@ -84,7 +84,7 @@ const UserAccountNav = async ({}) => {
               aria-label="Logout button"
               className="flex items-center gap-2 "
             >
-              <MixerVerticalIcon className="w-4 h-4 font-normal text-slate-500" />
+              <Power className="w-4 h-4 text-slate-500" />
               Log out
             </LogoutLink>
           </DropdownMenuItem>
