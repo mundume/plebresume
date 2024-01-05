@@ -30,24 +30,14 @@ const UserAccountNav = async ({}) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="overflow-visible">
-          <Button className="flex items-center gap-2 rounded-full aspect-square w-14 ">
-            <Avatar className="relative flex items-center ">
+          <Button className="flex items-center gap-2 rounded-full w-14 ">
+            <Avatar className="flex items-center ">
               {user?.picture ? (
-                <div className="relative w-full h-full aspect-square">
-                  <Image
-                    fill
-                    src={user?.picture!}
-                    alt="profile picture"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
+                <Image src={user?.picture} alt="profile" />
               ) : (
-                <AvatarFallback>
-                  <span className="sr-only">{user?.given_name}</span>
-                  <PersonIcon className="w-4 h-4" />
-                </AvatarFallback>
+                <PersonIcon className="w-4 h-4" />
               )}
-              <CaretDownIcon className="w-8 h-4" />
+              <CaretDownIcon className="w-4 h-4" />
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -72,7 +62,7 @@ const UserAccountNav = async ({}) => {
 
           <DropdownMenuItem asChild>
             <Link href="/dashboard" className="flex items-center gap-2 text-sm">
-              <FaceIcon className="w-4 h-4 font-normal text-slate-500" />{" "}
+              <FaceIcon className="w-4 h-4 font-normal text-primary" />{" "}
               Dashboard
             </Link>
           </DropdownMenuItem>
@@ -84,7 +74,7 @@ const UserAccountNav = async ({}) => {
               aria-label="Logout button"
               className="flex items-center gap-2 "
             >
-              <Power className="w-4 h-4 text-slate-500" />
+              <Power className="w-4 h-4 text-primary" />
               Log out
             </LogoutLink>
           </DropdownMenuItem>

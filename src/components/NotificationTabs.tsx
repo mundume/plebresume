@@ -1,4 +1,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Button } from "./ui/button";
+import { ActivityIcon, MessageSquareWarning } from "lucide-react";
 
 const tabsData = [
   {
@@ -11,14 +13,27 @@ const tabsData = [
     heading: "Password",
     content: [{ title: "Title 2", description: "Description 2" }],
   },
+  {
+    value: "rod wave",
+    heading: "letter",
+    content: [
+      { title: "Title 2", description: "Description 2" },
+      { title: "Title 2", description: "Description 2" },
+      { title: "Title 2", description: "Description 2" },
+    ],
+  },
 ];
 
 const NotificationTabs = () => {
   return (
-    <Tabs defaultValue={tabsData[0].value} className="w-full px-0 mx-0 border">
-      <TabsList className="flex justify-between">
+    <Tabs defaultValue={tabsData[0].value} className="w-full px-0 mx-0">
+      <TabsList className="gap-2">
         {tabsData.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value}>
+          <TabsTrigger
+            key={tab.value}
+            value={tab.value}
+            className="px-4 border-b"
+          >
             {tab.heading}
           </TabsTrigger>
         ))}

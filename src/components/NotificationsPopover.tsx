@@ -12,7 +12,7 @@ const NotificationsPopover = () => {
       <PopoverTrigger asChild>
         <NotificationIcon />
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="w-full px-1">
         <NotificationTabs />
       </PopoverContent>
     </Popover>
