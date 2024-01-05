@@ -1,12 +1,11 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Button } from "./ui/button";
-import { ActivityIcon, MessageSquareWarning } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Card, CardDescription, CardHeader } from "./ui/card";
 
 const tabsData = [
   {
-    value: "account",
-    heading: "Account",
+    value: "All jobs",
+    heading: "Jobs",
     content: [
       {
         title: "new job at kinde",
@@ -25,24 +24,25 @@ const tabsData = [
       },
     ],
   },
+
   {
-    value: "password",
-    heading: "Password",
+    value: "recruiters",
+    heading: "Actively recruiting",
     content: [
       {
-        title: "new job at kinde",
+        title: "glow up",
         description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis mollitia dolorum voluptatum, ab sunt vel consequatur beatae totam aliquam voluptatibus!",
       },
       {
-        title: "new job at kinde",
+        title: "here with me",
         description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis mollitia dolorum voluptatum, ab sunt vel consequatur beatae totam aliquam voluptatibus!",
       },
       {
-        title: "new job at kinde",
+        title: "niko on",
         description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, eum!",
+          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis mollitia dolorum voluptatum, ab sunt vel consequatur beatae totam aliquam voluptatibus!",
       },
     ],
   },
@@ -72,14 +72,15 @@ const tabsData = [
 
 const NotificationTabs = () => {
   return (
-    <Tabs defaultValue={tabsData[0].value} className="w-full px-0 mx-0">
-      <TabsList className="gap-2">
+    <Tabs defaultValue={tabsData[0].value} className="w-[500px] px-0 mx-0">
+      <TabsList className="gap-2 duration-1000 animate-in">
         {tabsData.map((tab) => (
           <TabsTrigger key={tab.value} value={tab.value} className="">
             {tab.heading}
           </TabsTrigger>
         ))}
       </TabsList>
+
       {tabsData.map((tab) => (
         <TabsContent key={tab.value} value={tab.value} className="px-1 ">
           {tab.content.map((item) => (
@@ -87,7 +88,7 @@ const NotificationTabs = () => {
               <CardHeader className="p-0 py-1 text-sm font-normal ">
                 {item.title}
               </CardHeader>
-              <CardDescription className="flex items-center justify-start pb-2 text-xs truncate">
+              <CardDescription className="flex items-center justify-start pb-2 text-xs truncate text-wrap text-slate-500">
                 {item.description}
               </CardDescription>
             </Card>

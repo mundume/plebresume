@@ -21,7 +21,7 @@ import {
   PersonIcon,
 } from "@radix-ui/react-icons";
 
-import { Power } from "lucide-react";
+import { ChevronRightSquare, Power, Settings } from "lucide-react";
 
 const UserAccountNav = async ({}) => {
   const { getUser } = getKindeServerSession();
@@ -62,11 +62,18 @@ const UserAccountNav = async ({}) => {
 
           <DropdownMenuItem asChild>
             <Link href="/dashboard" className="flex items-center gap-2 text-sm">
-              <FaceIcon className="w-4 h-4 font-normal text-primary" />{" "}
+              <ChevronRightSquare className="w-4 h-4 font-normal text-slate-500" />{" "}
               Dashboard
             </Link>
           </DropdownMenuItem>
 
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard" className="flex items-center gap-2 text-sm">
+              <Settings className="w-4 h-4 font-normal text-slate-500" />{" "}
+              Settings
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
 
           <DropdownMenuItem className="cursor-pointer">
@@ -74,7 +81,7 @@ const UserAccountNav = async ({}) => {
               aria-label="Logout button"
               className="flex items-center gap-2 "
             >
-              <Power className="w-4 h-4 text-primary" />
+              <Power className="w-4 h-4 text-slate-500" />
               Log out
             </LogoutLink>
           </DropdownMenuItem>
