@@ -17,10 +17,10 @@ const Page = () => {
     },
     onError: (err) => {
       if (err.data?.code === "UNAUTHORIZED") {
-        router.push("/signin");
+        router.push("/sign-in");
       }
     },
-    retry: true,
+    retry: false,
     retryDelay: 500,
   });
   return (

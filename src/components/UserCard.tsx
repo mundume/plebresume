@@ -10,7 +10,7 @@ import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 
 const UserCard = ({ user }: { user: KindeUser }) => {
   return (
-    <Card>
+    <Card className="rounded">
       <CardHeader>
         <CardTitle className="text-lg font-medium">
           Welcome Back, Nzai
