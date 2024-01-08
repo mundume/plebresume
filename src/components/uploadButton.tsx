@@ -11,18 +11,11 @@ import {
   XCircle,
 } from "lucide-react";
 import Dropzone from "react-dropzone";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
+import { toast } from "sonner";
 
 const UploadDropzone = () => {
   const [isUploading, setIsUploading] = useState(true);
@@ -56,8 +49,13 @@ const UploadDropzone = () => {
           const res = await startUpload(acceptedFile);
           if (!res) {
             setIsUploading(false);
+            toast.error("Something went wrong");
           }
-          await new Promise((resolve) => setTimeout(resolve, 3000));
+          const [fileResponse] = res;
+          const key = fileResponse?.key;
+          if (!key) {
+            toast.error("Something went wrong");
+          }
           clearInterval(progressInterval);
           setUploadProgress(100);
         }}
@@ -80,80 +78,61 @@ const UploadDropzone = () => {
                 </p>
               </div>
             </div>
-            {acceptedFiles && acceptedFiles[0]
-              ? isUploading && (
-                  <div className="px-4 py-6 border rounded h-28">
-                    <div className="flex justify-between ">
-                      <div className="flex items-center flex-1 gap-2 ">
-                        <FileText className="w-4 h-4 text-slate-700" />
+            {acceptedFiles && acceptedFiles[0] ? (
+              isUploading && (
+                <div className="px-4 py-6 border rounded h-28">
+                  <div className="flex justify-between ">
+                    <div className="flex items-center flex-1 gap-2 ">
+                      <FileText className="w-4 h-4 text-slate-700" />
 
-                        <div className="w-full text-sm ">
-                          <p className="truncate ">{acceptedFiles[0].name}</p>
-                          {uploadProgress < 100 ? (
-                            <p className="flex items-center gap-1 text-xs text-slate-500">
-                              {acceptedFiles[0].size}{" "}
-                              <Loader className="w-4 h-4 text-slate-700 animate-spin" />{" "}
-                              Uploading...
-                            </p>
-                          ) : (
-                            <p className="flex items-center gap-1 text-xs text-slate-500">
-                              {acceptedFiles[0].size}{" "}
-                              <span className="flex gap-1 text-green-500">
-                                <CheckCircle2 className="w-4 h-4 " /> Completed
-                              </span>
-                            </p>
-                          )}
-                        </div>
+                      <div className="w-full text-sm ">
+                        <p className="truncate ">{acceptedFiles[0].name}</p>
+                        {uploadProgress < 100 ? (
+                          <p className="flex items-center gap-1 text-xs text-slate-500">
+                            {acceptedFiles[0].size}{" "}
+                            <Loader className="w-4 h-4 text-slate-700 animate-spin" />{" "}
+                            Uploading...
+                          </p>
+                        ) : (
+                          <p className="flex items-center gap-1 text-xs text-slate-500">
+                            {acceptedFiles[0].size}{" "}
+                            <span className="flex gap-1 text-green-500">
+                              <CheckCircle2 className="w-4 h-4 " /> Completed
+                            </span>
+                          </p>
+                        )}
                       </div>
+                    </div>
 
-                      <Trash className="w-4 h-4 cursor-pointer text-slate-700" />
-                    </div>
-                    <div className="flex items-center gap-2 pt-2">
-                      <Progress value={uploadProgress} />{" "}
-                      <span className="text-slate-500">{uploadProgress}%</span>
-                    </div>
+                    <Trash className="w-4 h-4 cursor-pointer text-slate-700" />
                   </div>
-                )
-              : null}
-
-            {/* <div className="px-4 py-6 border rounded ">
-              <div className="flex justify-between ">
-                <div className="flex items-center flex-1 gap-2 ">
-                  <FileText className="w-4 h-4 text-slate-700" />
-
-                  <div className="w-full text-sm ">
-                    <p className=" text-prowse">FileName.PDF</p>
-                    <p className="flex items-center gap-1 text-xs text-slate-500">
-                      434KB{" "}
-                      <span className="flex gap-1 text-green-500">
-                        <CheckCircle2 className="w-4 h-4 " /> Completed
-                      </span>
-                    </p>
+                  <div className="flex items-center gap-2 pt-2">
+                    <Progress value={uploadProgress} />{" "}
+                    <span className="text-slate-500">{uploadProgress}%</span>
                   </div>
                 </div>
+              )
+            ) : (
+              <div className="px-4 py-6 border border-red-500 rounded ">
+                <div className="flex justify-between ">
+                  <div className="flex items-center flex-1 gap-2 ">
+                    <FileText className="w-4 h-4 text-slate-700" />
 
-                <Trash className="w-4 h-4 cursor-pointer text-slate-700" />
-              </div>
-            </div> */}
-            {/* <div className="px-4 py-6 border border-red-500 rounded ">
-              <div className="flex justify-between ">
-                <div className="flex items-center flex-1 gap-2 ">
-                  <FileText className="w-4 h-4 text-slate-700" />
-
-                  <div className="w-full text-sm ">
-                    <p className=" text-prowse">FileName.PDF</p>
-                    <p className="flex items-center gap-1 text-xs text-slate-500">
-                      434KB{" "}
-                      <span className="flex gap-1 text-red-500">
-                        <XCircle className="w-4 h-4 " /> Error
-                      </span>
-                    </p>
+                    <div className="w-full text-sm ">
+                      <p className=" text-prowse">FileName.PDF</p>
+                      <p className="flex items-center gap-1 text-xs text-slate-500">
+                        434KB{" "}
+                        <span className="flex gap-1 text-red-500">
+                          <XCircle className="w-4 h-4 " /> Error when uploading
+                        </span>
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <Trash className="w-4 h-4 text-red-500 cursor-pointer" />
+                  <Trash className="w-4 h-4 text-red-500 cursor-pointer" />
+                </div>
               </div>
-            </div> */}
+            )}
           </div>
         )}
       </Dropzone>
