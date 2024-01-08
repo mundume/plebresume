@@ -112,7 +112,7 @@ const UploadDropzone = () => {
                   </div>
                 </div>
               )
-            ) : (
+            ) : !isUploading && acceptedFiles ? (
               <div className="px-4 py-6 border border-red-500 rounded ">
                 <div className="flex justify-between ">
                   <div className="flex items-center flex-1 gap-2 ">
@@ -132,7 +132,7 @@ const UploadDropzone = () => {
                   <Trash className="w-4 h-4 text-red-500 cursor-pointer" />
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
         )}
       </Dropzone>
