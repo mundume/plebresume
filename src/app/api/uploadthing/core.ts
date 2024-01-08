@@ -1,8 +1,9 @@
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/dist/types/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 
-const auth = (req: Request) => ({ id: "fakeId" }); // Fake auth function
+// Fake auth function
 
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
@@ -10,11 +11,11 @@ export const ourFileRouter = {
   pdfUploader: f({ pdf: { maxFileSize: "4MB" } })
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req }) => {
-      // This code runs on your server before upload
-      const user = await auth(req);
-
+      // This code runs on your server b(efore upload
+      const { getUser } = await getKindeServerSession();
+      const user = await getUser();
       // If you throw, the user will not be able to upload
-      if (!user) throw new Error("Unauthorized");
+      if (!user || !user.id) throw new Error("Unauthorized");
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.id };

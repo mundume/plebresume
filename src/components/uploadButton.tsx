@@ -21,15 +21,45 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
+import { useUploadThing } from "@/lib/uploadthing";
+import { OurFileRouter } from "@/app/api/uploadthing/core";
 
 const UploadDropzone = () => {
+  const [isUploading, setIsUploading] = useState(true);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const { startUpload } = useUploadThing("pdfUploader");
+  const startSimulatedProgress = () => {
+    setUploadProgress(0);
+
+    const interval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 95) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev + 5;
+      });
+    }, 500);
+    return interval;
+  };
   return (
     //<FileText />
     <div className=" text-zinc-800">
       <Dropzone
         multiple={false}
-        onDrop={(acceptedFile) => {
+        onDrop={async (acceptedFile) => {
+          setIsUploading(true);
+          const progressInterval = startSimulatedProgress();
           console.log(acceptedFile);
+          //handle file upload
+
+          const res = await startUpload(acceptedFile);
+          if (!res) {
+            setIsUploading(false);
+          }
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+          clearInterval(progressInterval);
+          setUploadProgress(100);
         }}
       >
         {({ getRootProps, getInputProps, acceptedFiles }) => (
@@ -50,29 +80,43 @@ const UploadDropzone = () => {
                 </p>
               </div>
             </div>
-            <div className="px-4 py-6 border rounded h-28">
-              <div className="flex justify-between ">
-                <div className="flex items-center flex-1 gap-2 ">
-                  <FileText className="w-4 h-4 text-slate-700" />
+            {acceptedFiles && acceptedFiles[0]
+              ? isUploading && (
+                  <div className="px-4 py-6 border rounded h-28">
+                    <div className="flex justify-between ">
+                      <div className="flex items-center flex-1 gap-2 ">
+                        <FileText className="w-4 h-4 text-slate-700" />
 
-                  <div className="w-full text-sm ">
-                    <p className=" text-prowse">FileName.PDF</p>
-                    <p className="flex items-center gap-1 text-xs text-slate-500">
-                      434KB{" "}
-                      <Loader className="w-4 h-4 text-slate-700 animate-spin" />{" "}
-                      Uploading...
-                    </p>
+                        <div className="w-full text-sm ">
+                          <p className="truncate ">{acceptedFiles[0].name}</p>
+                          {uploadProgress < 100 ? (
+                            <p className="flex items-center gap-1 text-xs text-slate-500">
+                              {acceptedFiles[0].size}{" "}
+                              <Loader className="w-4 h-4 text-slate-700 animate-spin" />{" "}
+                              Uploading...
+                            </p>
+                          ) : (
+                            <p className="flex items-center gap-1 text-xs text-slate-500">
+                              {acceptedFiles[0].size}{" "}
+                              <span className="flex gap-1 text-green-500">
+                                <CheckCircle2 className="w-4 h-4 " /> Completed
+                              </span>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <Trash className="w-4 h-4 cursor-pointer text-slate-700" />
+                    </div>
+                    <div className="flex items-center gap-2 pt-2">
+                      <Progress value={uploadProgress} />{" "}
+                      <span className="text-slate-500">{uploadProgress}%</span>
+                    </div>
                   </div>
-                </div>
+                )
+              : null}
 
-                <Trash className="w-4 h-4 cursor-pointer text-slate-700" />
-              </div>
-              <div className="flex items-center gap-2 pt-2">
-                <Progress value={33} />{" "}
-                <span className="text-slate-500">33%</span>
-              </div>
-            </div>
-            <div className="px-4 py-6 border rounded ">
+            {/* <div className="px-4 py-6 border rounded ">
               <div className="flex justify-between ">
                 <div className="flex items-center flex-1 gap-2 ">
                   <FileText className="w-4 h-4 text-slate-700" />
@@ -90,8 +134,8 @@ const UploadDropzone = () => {
 
                 <Trash className="w-4 h-4 cursor-pointer text-slate-700" />
               </div>
-            </div>
-            <div className="px-4 py-6 border border-red-500 rounded ">
+            </div> */}
+            {/* <div className="px-4 py-6 border border-red-500 rounded ">
               <div className="flex justify-between ">
                 <div className="flex items-center flex-1 gap-2 ">
                   <FileText className="w-4 h-4 text-slate-700" />
@@ -109,7 +153,7 @@ const UploadDropzone = () => {
 
                 <Trash className="w-4 h-4 text-red-500 cursor-pointer" />
               </div>
-            </div>
+            </div> */}
           </div>
         )}
       </Dropzone>
