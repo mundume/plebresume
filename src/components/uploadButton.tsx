@@ -26,18 +26,22 @@ const UploadDropzone = () => {
   return (
     //<FileText />
     <div className=" text-zinc-800">
-      <Dropzone>
+      <Dropzone
+        multiple={false}
+        onDrop={(acceptedFile) => {
+          console.log(acceptedFile);
+        }}
+      >
         {({ getRootProps, getInputProps, acceptedFiles }) => (
           <div className="flex flex-col gap-4 m-4 text-sm">
             <div
               {...getRootProps()}
-              className="h-40 transition-all border border-gray-300 border-dashed rounded cursor-pointer hover:bg-slate-100/90 transit"
+              className="flex items-center justify-center transition-all border border-gray-300 border-dashed rounded cursor-pointer h-44 bg-slate-100/90 transit"
             >
               <Input {...getInputProps()} type="file" />
-              <div className="flex flex-col items-center justify-center gap-2 py-6">
+              <div className="flex flex-col items-center justify-center gap-2 m-auto">
                 <UploadCloud className="w-4 h-4 text-slate-700" />
                 <h1 className="">
-                  {/* <Loader className="w-5 h-5 text-slate-500 animate-spin" /> */}
                   Drag & drop or{" "}
                   <span className="text-slate-500">choose file</span> to upload
                 </h1>
