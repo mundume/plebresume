@@ -22,8 +22,24 @@ const PdfRenderer = ({ url }: Props) => {
   }
   return (
     <div>
-      <Button onClick={() => setPageNumber((prev) => prev + 1)}>Prev</Button>
-      <Document file={url} onLoad={onDocumentLoadSuccess}>
+      <div className="py-4 bg-white/50 backdrop-blur-lg">
+        <Button
+          onClick={() => setPageNumber((prev) => prev - 1)}
+          disabled={pageNumber <= 1}
+        >
+          Prev
+        </Button>
+        <Button
+          onClick={() => setPageNumber((prev) => prev + 1)}
+          disabled={pageNumber === numPages || numPages === undefined}
+        >
+          Next
+        </Button>
+      </div>
+      <Document
+        file={url}
+        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+      >
         <Page pageNumber={pageNumber} />
       </Document>
     </div>
