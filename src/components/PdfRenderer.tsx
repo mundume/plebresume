@@ -6,6 +6,8 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Divide, Loader } from "lucide-react";
+import { useResizeDetector } from "react-resize-detector";
+import SimpleBar from "simplebar-react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -18,7 +20,7 @@ type Props = {
 const PdfRenderer = ({ url }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
-
+  const { ref, width } = useResizeDetector();
   return (
     <div>
       <div className="flex justify-around py-4 border bg-white/50 backdrop-blur-lg ">
@@ -35,24 +37,31 @@ const PdfRenderer = ({ url }: Props) => {
           Next
         </Button>
       </div>
-      <Document
-        file={url}
-        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-        loading={
-          <div className="flex items-center justify-center mt-48 ">
-            <Loader className="w-8 h-8 animate-spin" />
+      <div className="w-full min-h-screen">
+        <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
+          <div ref={ref}>
+            <Document
+              file={url}
+              onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+              loading={
+                <div className="flex items-center justify-center mt-48 ">
+                  <Loader className="w-8 h-8 animate-spin" />
+                </div>
+              }
+            >
+              <Page
+                pageNumber={pageNumber}
+                width={width ? width : 1}
+                loading={
+                  <div className="flex items-center justify-center mt-48 ">
+                    <Loader className="w-8 h-8 animate-spin" />
+                  </div>
+                }
+              />
+            </Document>
           </div>
-        }
-      >
-        <Page
-          pageNumber={pageNumber}
-          loading={
-            <div className="flex items-center justify-center mt-48 ">
-              <Loader className="w-8 h-8 animate-spin" />
-            </div>
-          }
-        />
-      </Document>
+        </SimpleBar>
+      </div>
     </div>
   );
 };
