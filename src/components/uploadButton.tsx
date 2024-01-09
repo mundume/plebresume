@@ -48,7 +48,7 @@ const UploadDropzone = () => {
           const res = await startUpload(acceptedFile);
           if (!res) {
             setIsUploading(false);
-            toast.error("Something went wrong");
+            return toast.error("Something went wrong");
           }
           const [fileResponse] = res;
           const key = fileResponse?.key;
