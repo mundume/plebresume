@@ -36,7 +36,6 @@ const UploadDropzone = () => {
     return interval;
   };
   return (
-    //<FileText />
     <div className=" text-zinc-800">
       <Dropzone
         multiple={false}

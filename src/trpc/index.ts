@@ -1,6 +1,6 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { z } from "zod";
-import { publicProcedure, router } from "./trpc";
+import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/config/prisma";
 
@@ -30,6 +30,28 @@ export const appRouter = router({
     }
     return { sucess: true };
   }),
+  getUserFiles: privateProcedure.query(async ({ ctx }) => {
+    const user = ctx.user;
+    if (!user) throw new TRPCError({ code: "UNAUTHORIZED" });
+    return await db.file.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+  }),
+  getFile: privateProcedure
+    .input(z.object({ key: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const file = await db.file.findFirst({
+        where: {
+          key: input.key,
+          userId,
+        },
+      });
+      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+      return file;
+    }),
 });
 
 // export type definition of API
