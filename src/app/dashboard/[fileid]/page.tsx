@@ -1,6 +1,12 @@
 import React from "react";
 
-const page = () => {
+type Params = {
+  params: {
+    fileid: string;
+  };
+};
+
+const page = ({ params }: Params) => {
   return <div>page</div>;
 };
 
