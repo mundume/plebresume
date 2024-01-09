@@ -5,6 +5,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 import { Document, Page, pdfjs } from "react-pdf";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Divide, Loader } from "lucide-react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -17,12 +18,10 @@ type Props = {
 const PdfRenderer = ({ url }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
+
   return (
     <div>
-      <div className="py-4 bg-white/50 backdrop-blur-lg">
+      <div className="flex justify-around py-4 border bg-white/50 backdrop-blur-lg ">
         <Button
           onClick={() => setPageNumber((prev) => prev - 1)}
           disabled={pageNumber <= 1}
@@ -39,8 +38,20 @@ const PdfRenderer = ({ url }: Props) => {
       <Document
         file={url}
         onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+        loading={
+          <div className="flex items-center justify-center mt-48 ">
+            <Loader className="w-8 h-8 animate-spin" />
+          </div>
+        }
       >
-        <Page pageNumber={pageNumber} />
+        <Page
+          pageNumber={pageNumber}
+          loading={
+            <div className="flex items-center justify-center mt-48 ">
+              <Loader className="w-8 h-8 animate-spin" />
+            </div>
+          }
+        />
       </Document>
     </div>
   );
