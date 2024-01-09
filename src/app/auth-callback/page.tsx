@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { trpc } from "../_trpc/client";
-import { Loader2 } from "lucide-react";
+import { Loader } from "lucide-react";
 
 const Page = () => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const Page = () => {
   return (
     <div className="flex justify-center w-full mt-24">
       <div className="flex flex-col items-center gap-2">
-        <Loader2 className="w-8 h-8 animate-spin" />
+        <Loader className="w-8 h-8 animate-spin" />
 
         <p>You will be redirected automatically....</p>
       </div>
