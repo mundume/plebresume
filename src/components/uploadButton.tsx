@@ -16,11 +16,23 @@ import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
 import { toast } from "sonner";
+import { trpc } from "@/app/_trpc/client";
+import { useRouter } from "next/navigation";
 
 const UploadDropzone = () => {
+  const router = useRouter();
   const [isUploading, setIsUploading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const { startUpload } = useUploadThing("pdfUploader");
+
+  const { mutate: startPolling } = trpc.getFile.useMutation({
+    onSuccess: (file) => {
+      setIsUploading(false);
+      router.push(`/dashboard/${file?.id}`);
+    },
+    retry: true,
+    retryDelay: 500,
+  });
   const startSimulatedProgress = () => {
     setUploadProgress(0);
 
@@ -57,6 +69,7 @@ const UploadDropzone = () => {
           }
           clearInterval(progressInterval);
           setUploadProgress(100);
+          startPolling({ key });
         }}
       >
         {({ getRootProps, getInputProps, acceptedFiles }) => (
@@ -65,7 +78,12 @@ const UploadDropzone = () => {
               {...getRootProps()}
               className="flex items-center justify-center transition-all border border-gray-300 border-dashed rounded cursor-pointer h-44 bg-slate-100/90 transit"
             >
-              <Input {...getInputProps()} type="file" />
+              <input
+                {...getInputProps()}
+                type="file"
+                className="hidden"
+                id="dropzone-file"
+              />
               <div className="flex flex-col items-center justify-center gap-2 m-auto">
                 <UploadCloud className="w-4 h-4 text-slate-700" />
                 <h1 className="">
