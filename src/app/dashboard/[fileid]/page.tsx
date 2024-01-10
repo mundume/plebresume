@@ -23,7 +23,7 @@ const Page = async ({ params }: Params) => {
   });
   return (
     <div className="mx-4">
-      <div className="w-1/2">
+      <div className="w-full lg:w-1/2">
         <PdfRenderer url={file?.url!} />
       </div>
     </div>

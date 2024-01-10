@@ -3,7 +3,6 @@ import "./globals.css";
 import Provider from "./_trpc/provider";
 import { NavBar } from "@/components/NavBar";
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
 import { Toaster } from "sonner";
 import "simplebar-react/dist/simplebar.min.css";
 

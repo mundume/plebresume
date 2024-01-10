@@ -5,9 +5,10 @@ import "react-pdf/dist/Page/TextLayer.css";
 import { Document, Page, pdfjs } from "react-pdf";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { Divide, Loader } from "lucide-react";
+import { ChevronLeft, ChevronRight, Divide, Loader } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
+import PdfFullscreen from "./PdfFullscreen";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -23,18 +24,23 @@ const PdfRenderer = ({ url }: Props) => {
   const { ref, width } = useResizeDetector();
   return (
     <div>
-      <div className="flex justify-around py-4 border bg-white/50 backdrop-blur-lg ">
+      <div className="flex items-center justify-end gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
+        <PdfFullscreen url={url} />
         <Button
           onClick={() => setPageNumber((prev) => prev - 1)}
           disabled={pageNumber <= 1}
+          size={"icon"}
+          aria-label="Previous page"
         >
-          Prev
+          <ChevronLeft className="w-4 h-4 text-slate-700" />
         </Button>
         <Button
           onClick={() => setPageNumber((prev) => prev + 1)}
           disabled={pageNumber === numPages || numPages === undefined}
+          size={"icon"}
+          aria-label="Next page"
         >
-          Next
+          <ChevronRight className="w-4 h-4 text-slate-700" />
         </Button>
       </div>
       <div className="w-full min-h-screen">
