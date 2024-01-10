@@ -1,4 +1,5 @@
 import CoverLetterRenderer from "@/components/CoverLetterRenderer";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ResumeRenderer from "@/components/ResumeRenderer";
 import { db } from "@/config/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -23,7 +24,7 @@ const Page = async ({ params }: Params) => {
     },
   });
   return (
-    <div className="flex flex-col w-full gap-2 mx-4 md:flex-row">
+    <div className="flex flex-col w-full gap-2 md:flex-row">
       <div className="w-full md:w-1/2">
         <ResumeRenderer url={file?.url!} />
       </div>

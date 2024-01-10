@@ -107,6 +107,9 @@ dependencies:
   react-pdf:
     specifier: ^7.6.0
     version: 7.6.0(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
+  react-pdf-tailwind:
+    specifier: ^2.2.1
+    version: 2.2.1(react@18.2.0)
   react-resize-detector:
     specifier: ^9.1.1
     version: 9.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -3892,6 +3895,17 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react-pdf-tailwind@2.2.1(react@18.2.0):
+    resolution: {integrity: sha512-T/XeFfSvp+HvreKQF9f1CVL5XX60cEvKKAFAqgoRBYYiM2DptTcXdGa2TMFvqkN2ZgeNiPI1UzB6HOSSZzhiEA==}
+    dependencies:
+      '@react-pdf/renderer': 3.1.14(react@18.2.0)
+      tailwindcss: 3.4.0
+    transitivePeerDependencies:
+      - encoding
+      - react
+      - ts-node
+    dev: false
 
   /react-pdf@7.6.0(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-b2/8V6xhe5pn4Y01ELKTQZ+RhdZl1KpSAMGbN+HCZ/kwhYTIc4Pn5ctz1wRQUu1gOJbIEG4CcjMD9vTCzNdwjw==}
