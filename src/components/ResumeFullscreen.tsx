@@ -11,7 +11,7 @@ import { useResizeDetector } from "react-resize-detector";
 type PdfFullscreenProps = {
   url: string;
 };
-const PdfFullscreen = ({ url }: PdfFullscreenProps) => {
+const ResumeFullscreen = ({ url }: PdfFullscreenProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [numPages, setNumPages] = useState<number>();
 
@@ -56,4 +56,4 @@ const PdfFullscreen = ({ url }: PdfFullscreenProps) => {
   );
 };
 
-export default PdfFullscreen;
+export default ResumeFullscreen;

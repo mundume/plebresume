@@ -1,4 +1,5 @@
-import PdfRenderer from "@/components/PdfRenderer";
+import CoverLetterRenderer from "@/components/CoverLetterRenderer";
+import ResumeRenderer from "@/components/ResumeRenderer";
 import { db } from "@/config/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
@@ -22,9 +23,12 @@ const Page = async ({ params }: Params) => {
     },
   });
   return (
-    <div className="mx-4">
-      <div className="w-full lg:w-1/2">
-        <PdfRenderer url={file?.url!} />
+    <div className="flex flex-col w-full gap-2 mx-4 md:flex-row">
+      <div className="w-full md:w-1/2">
+        <ResumeRenderer url={file?.url!} />
+      </div>
+      <div className="w-full md:w-1/2">
+        <CoverLetterRenderer />
       </div>
     </div>
   );

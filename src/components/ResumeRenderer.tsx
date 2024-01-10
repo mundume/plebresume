@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight, Divide, Loader } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
-import PdfFullscreen from "./PdfFullscreen";
+import ResumeFullscreen from "./ResumeFullscreen";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -25,7 +25,7 @@ const PdfRenderer = ({ url }: Props) => {
   return (
     <div>
       <div className="flex items-center justify-end gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
-        <PdfFullscreen url={url} />
+        <ResumeFullscreen url={url} />
         <Button
           onClick={() => setPageNumber((prev) => prev - 1)}
           disabled={pageNumber <= 1}
