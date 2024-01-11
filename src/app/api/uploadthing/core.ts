@@ -52,7 +52,9 @@ export const ourFileRouter = {
           };
         });
 
-        const pineconeIndex = pinecone.Index("nzai").namespace(metadata.userId);
+        const pineconeIndex = pinecone
+          .Index("plebresume")
+          .namespace(metadata.userId);
         const embeddings = new OpenAIEmbeddings({
           openAIApiKey: process.env.OPENAI_API_KEY,
         });
@@ -67,7 +69,9 @@ export const ourFileRouter = {
             uploadStatus: "SUCCESS",
           },
         });
-      } catch {}
+      } catch (err) {
+        console.log(err);
+      }
     }),
 } satisfies FileRouter;
 
