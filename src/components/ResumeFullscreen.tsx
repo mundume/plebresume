@@ -30,7 +30,7 @@ const ResumeFullscreen = ({ url }: PdfFullscreenProps) => {
           onClick={() => setIsOpen(true)}
           className="gap-1.5"
         >
-          <Expand className="w-4 h-4 text-slate-700" />
+          <Expand className="w-4 h-4 text-slate-600" />
         </Button>
       </DialogTrigger>
       <DialogContent className="w-full max-w-7xl ">

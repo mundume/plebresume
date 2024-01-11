@@ -85,7 +85,7 @@ const UploadDropzone = () => {
                 id="dropzone-file"
               />
               <div className="flex flex-col items-center justify-center gap-2 m-auto">
-                <UploadCloud className="w-4 h-4 text-slate-700" />
+                <UploadCloud className="w-4 h-4 text-slate-500" />
                 <h1 className="">
                   Drag & drop or{" "}
                   <span className="text-slate-500">choose file</span> to upload
@@ -100,7 +100,7 @@ const UploadDropzone = () => {
                 <div className="px-4 py-6 border rounded h-28">
                   <div className="flex justify-between ">
                     <div className="flex items-center flex-1 gap-2 ">
-                      <FileText className="w-4 h-4 text-slate-700" />
+                      <FileText className="w-4 h-4 text-slate-500" />
 
                       <div className="w-full text-sm ">
                         <p className="truncate ">{acceptedFiles[0].name}</p>
@@ -121,7 +121,7 @@ const UploadDropzone = () => {
                       </div>
                     </div>
 
-                    <Trash className="w-4 h-4 cursor-pointer text-slate-700" />
+                    <Trash className="w-4 h-4 cursor-pointer text-slate-500" />
                   </div>
                   <div className="flex items-center gap-2 pt-2">
                     <Progress value={uploadProgress} />{" "}
@@ -140,7 +140,8 @@ const UploadDropzone = () => {
                       <p className="flex items-center gap-1 text-xs text-slate-500">
                         434KB{" "}
                         <span className="flex gap-1 text-red-500">
-                          <XCircle className="w-4 h-4 " /> Error when uploading
+                          <XCircle className="w-4 h-4 text-slate-500 " /> Error
+                          when uploading
                         </span>
                       </p>
                     </div>

@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Loader } from "lucide-react";
+import { Delete, File, FileText, Loader } from "lucide-react";
 import Link from "next/link";
 
 type User = KindeUser;
@@ -22,7 +22,7 @@ const Dashboard = ({ user }: { user: User }) => {
 
   return (
     <>
-      <div className="flex justify-between flex-1">
+      <div className="flex justify-between flex-1 text-zinc-800">
         <UserCard user={user} />
         <UploadButton />
       </div>
@@ -31,13 +31,16 @@ const Dashboard = ({ user }: { user: User }) => {
           <Loader className="w-8 h-8 animate-spin" />
         ) : (
           getUserFiles?.map((file) => (
-            <Link
-              key={file.id}
-              className=" w-44"
-              href={`/dashboard/${file.id}`}
-            >
-              {file.name}
-            </Link>
+            <Card key={file.id} className="p-0 rounded w-44 ">
+              <CardContent className="p-4 ">
+                <Delete className="w-4 h-4 cursor-pointer text-slate-500 al" />
+                <div className="flex items-center flex-1 gap-2">
+                  <FileText className="w-4 h-4 text-slate-500 shrink-0" />
+                  <h1 className="text-sm truncate">{file.name}</h1>
+                </div>
+                <Link href={`/dashboard/${file.id}`}>View</Link>
+              </CardContent>
+            </Card>
           ))
         )}
       </div>

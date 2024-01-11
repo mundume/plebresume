@@ -32,7 +32,7 @@ const PdfRenderer = ({ url }: Props) => {
           size={"icon"}
           aria-label="Previous page"
         >
-          <ChevronLeft className="w-4 h-4 text-slate-700" />
+          <ChevronLeft className="w-4 h-4 text-slate-600" />
         </Button>
         <Button
           onClick={() => setPageNumber((prev) => prev + 1)}
@@ -40,7 +40,7 @@ const PdfRenderer = ({ url }: Props) => {
           size={"icon"}
           aria-label="Next page"
         >
-          <ChevronRight className="w-4 h-4 text-slate-700" />
+          <ChevronRight className="w-4 h-4 text-slate-600" />
         </Button>
       </div>
       <div className="w-full min-h-screen">

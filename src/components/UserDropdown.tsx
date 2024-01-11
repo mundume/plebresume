@@ -35,9 +35,9 @@ const UserAccountNav = async ({}) => {
               {user?.picture ? (
                 <Image src={user?.picture} alt="profile" />
               ) : (
-                <PersonIcon className="w-4 h-4" />
+                <PersonIcon className="w-4 h-4 text-slate-600" />
               )}
-              <CaretDownIcon className="w-4 h-4" />
+              <CaretDownIcon className="w-4 h-4 text-slate-400" />
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -62,7 +62,7 @@ const UserAccountNav = async ({}) => {
 
           <DropdownMenuItem asChild>
             <Link href="/dashboard" className="flex items-center gap-2 text-sm">
-              <ChevronRightSquare className="w-4 h-4 font-normal text-slate-500" />{" "}
+              <ChevronRightSquare className="w-4 h-4 font-normal text-slate-600" />{" "}
               Dashboard
             </Link>
           </DropdownMenuItem>
@@ -70,7 +70,7 @@ const UserAccountNav = async ({}) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link href="/dashboard" className="flex items-center gap-2 text-sm">
-              <Settings className="w-4 h-4 font-normal text-slate-500" />{" "}
+              <Settings className="w-4 h-4 font-normal text-slate-600" />{" "}
               Settings
             </Link>
           </DropdownMenuItem>
@@ -81,7 +81,7 @@ const UserAccountNav = async ({}) => {
               aria-label="Logout button"
               className="flex items-center gap-2 "
             >
-              <Power className="w-4 h-4 text-slate-500" />
+              <Power className="w-4 h-4 text-slate-600" />
               Log out
             </LogoutLink>
           </DropdownMenuItem>
