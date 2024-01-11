@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
+import GenerateResumeButton from "./GenerateResumeButton";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -24,24 +25,27 @@ const PdfRenderer = ({ url }: Props) => {
   const { ref, width } = useResizeDetector();
   return (
     <div>
-      <div className="flex items-center justify-end gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
-        <ResumeFullscreen url={url} />
-        <Button
-          onClick={() => setPageNumber((prev) => prev - 1)}
-          disabled={pageNumber <= 1}
-          size={"icon"}
-          aria-label="Previous page"
-        >
-          <ChevronLeft className="w-4 h-4 text-slate-600" />
-        </Button>
-        <Button
-          onClick={() => setPageNumber((prev) => prev + 1)}
-          disabled={pageNumber === numPages || numPages === undefined}
-          size={"icon"}
-          aria-label="Next page"
-        >
-          <ChevronRight className="w-4 h-4 text-slate-600" />
-        </Button>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center justify-start gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
+          <ResumeFullscreen url={url} />
+          <Button
+            onClick={() => setPageNumber((prev) => prev - 1)}
+            disabled={pageNumber <= 1}
+            size={"icon"}
+            aria-label="Previous page"
+          >
+            <ChevronLeft className="w-4 h-4 text-slate-600" />
+          </Button>
+          <Button
+            onClick={() => setPageNumber((prev) => prev + 1)}
+            disabled={pageNumber === numPages || numPages === undefined}
+            size={"icon"}
+            aria-label="Next page"
+          >
+            <ChevronRight className="w-4 h-4 text-slate-600" />
+          </Button>
+        </div>
+        <GenerateResumeButton url={url} />
       </div>
       <div className="w-full min-h-screen">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">

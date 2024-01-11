@@ -13,8 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Delete, File, FileText, Loader } from "lucide-react";
+import { Delete, File, FileText, Loader, Trash } from "lucide-react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 type User = KindeUser;
 const Dashboard = ({ user }: { user: User }) => {
@@ -33,7 +34,11 @@ const Dashboard = ({ user }: { user: User }) => {
           getUserFiles?.map((file) => (
             <Card key={file.id} className="p-0 rounded w-44 ">
               <CardContent className="p-4 ">
-                <Delete className="w-4 h-4 cursor-pointer text-slate-500 al" />
+                <div>
+                  <Button size={"icon"}>
+                    <Trash className="w-4 h-4 text-slate-600" />
+                  </Button>
+                </div>
                 <div className="flex items-center flex-1 gap-2">
                   <FileText className="w-4 h-4 text-slate-500 shrink-0" />
                   <h1 className="text-sm truncate">{file.name}</h1>

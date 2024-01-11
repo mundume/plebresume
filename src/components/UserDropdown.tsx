@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { Avatar, AvatarFallback } from "./ui/avatar";
+import { Avatar } from "./ui/avatar";
 import Image from "next/image";
 
 import Link from "next/link";
