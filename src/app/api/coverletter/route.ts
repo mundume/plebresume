@@ -41,7 +41,9 @@ export const POST = async (req: NextRequest) => {
     filter: { fileId },
   });
 
-  console.log(vectorStore);
+  const results = await vectorStore.similaritySearch(fileId, 4);
+  console.log(results);
+
   return new Response("sucess", {
     status: 200,
   });
