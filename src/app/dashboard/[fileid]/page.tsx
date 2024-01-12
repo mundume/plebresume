@@ -26,7 +26,7 @@ const Page = async ({ params }: Params) => {
   return (
     <div className="flex flex-col w-full gap-2 md:flex-row">
       <div className="w-full md:w-1/2">
-        <ResumeRenderer url={file?.url!} />
+        <ResumeRenderer url={file?.url!} id={file?.id!} />
       </div>
       <div className="w-full md:w-1/2">
         <CoverLetterRenderer />

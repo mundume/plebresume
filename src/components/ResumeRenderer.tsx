@@ -18,8 +18,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 type Props = {
   url: string;
+  id: string;
 };
-const PdfRenderer = ({ url }: Props) => {
+const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { ref, width } = useResizeDetector();
@@ -45,7 +46,7 @@ const PdfRenderer = ({ url }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        <GenerateCoverLetter url={url} />
+        <GenerateCoverLetter id={id} />
       </div>
       <div className="w-full min-h-screen">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">

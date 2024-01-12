@@ -13,20 +13,21 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import {
-  ChevronRight,
-  Delete,
-  File,
-  FileText,
-  Loader,
-  Trash,
-} from "lucide-react";
+import { ChevronRight, FileText, Loader, Trash } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 
 type User = KindeUser;
 const Dashboard = ({ user }: { user: User }) => {
-  const { data: getUserFiles, isLoading } = trpc.getUserFiles.useQuery();
+  const {
+    data: getUserFiles,
+    isLoading,
+    isError,
+    error,
+  } = trpc.getUserFiles.useQuery();
+  if (isError) {
+    return <p className="text-6xl text-red-600">{error.message}</p>;
+  }
 
   return (
     <>

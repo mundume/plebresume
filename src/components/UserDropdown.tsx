@@ -11,6 +11,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 import {
+  LoginLink,
   LogoutLink,
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -21,7 +22,7 @@ import {
   PersonIcon,
 } from "@radix-ui/react-icons";
 
-import { ChevronRightSquare, Power, Settings } from "lucide-react";
+import { ChevronRightSquare, Lightbulb, Power, Settings } from "lucide-react";
 
 const UserAccountNav = async ({}) => {
   const { getUser } = getKindeServerSession();
@@ -77,13 +78,20 @@ const UserAccountNav = async ({}) => {
           <DropdownMenuSeparator />
 
           <DropdownMenuItem className="cursor-pointer">
-            <LogoutLink
-              aria-label="Logout button"
-              className="flex items-center gap-2 "
-            >
-              <Power className="w-4 h-4 text-slate-600" />
-              Log out
-            </LogoutLink>
+            {user ? (
+              <LogoutLink
+                aria-label="Logout button"
+                className="flex items-center gap-2 "
+              >
+                <Power className="w-4 h-4 text-slate-600" />
+                Log out
+              </LogoutLink>
+            ) : (
+              <LoginLink className="flex items-center gap-2">
+                <Lightbulb className="w-4 h-4 text-slate-600" />
+                Log in
+              </LoginLink>
+            )}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
