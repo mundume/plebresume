@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
-import GenerateResumeButton from "./GenerateResumeButton";
+import GenerateCoverLetter from "./GenerateCoverLetter";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -45,7 +45,7 @@ const PdfRenderer = ({ url }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        <GenerateResumeButton url={url} />
+        <GenerateCoverLetter url={url} />
       </div>
       <div className="w-full min-h-screen">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
