@@ -3,6 +3,9 @@ import { ArrowRightIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import NotificationIcon from "./Bellicon";
+import { Minus } from "lucide-react";
+import { Button } from "./ui/button";
 
 const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -21,14 +24,18 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   };
   return (
     <div className=" sm:hidden">
-      <HamburgerMenuIcon
+      <div
+        className="relative z-50 flex-col items-center justify-center rounded-full"
         onClick={toggleOpen}
-        aria-label="Open navigation menu"
-        className="relative z-50 h-5 w-5 text-zinc-700 "
-      />
+      >
+        <Minus aria-label="" className="w-4 text-slate-600" />
+        <Minus className="w-4 text-slate-600" />
+      </div>
+
+      <NotificationIcon />
       {isOpen ? (
-        <div className="fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-0 w-full">
-          <ul className="absolute bg-white border-b border-zinc-200 shadow-xl grid w-full gap-3 px-10 pt-20 pb-8">
+        <div className="fixed inset-0 z-0 w-full animate-in slide-in-from-top-1 fade-in-20">
+          <ul className="absolute grid w-full gap-3 px-10 pt-20 pb-8 mt-10 bg-white border-b shadow-xl dark:bg-background ">
             {!isAuth ? (
               <>
                 <li>
@@ -37,10 +44,10 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                     href={"/sign-up"}
                     className="flex items-center w-full font-semibold text-green-600"
                   >
-                    Get started <ArrowRightIcon className="ml-2 h-5 w-5" />
+                    Get started <ArrowRightIcon className="w-5 h-5 ml-2" />
                   </Link>
                 </li>
-                <li className="my-3 h-px bg-gray-300" />
+                <li className="h-px my-3 bg-gray-300" />
                 <li>
                   <Link
                     onClick={() => closeOnCurrent("/sign-in")}
@@ -50,7 +57,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                     Sign in
                   </Link>
                 </li>
-                <li className="my-3 h-px bg-gray-300" />
+                <li className="h-px my-3 bg-gray-300" />
                 <li>
                   <Link
                     onClick={() => closeOnCurrent("/pricing")}
@@ -62,7 +69,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                 </li>
               </>
             ) : (
-              <>
+              <div className="border border-red-600">
                 <li>
                   <Link
                     onClick={() => closeOnCurrent("/dashboard")}
@@ -72,7 +79,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                     Dashboard
                   </Link>
                 </li>
-                <li className="my-3 h-px bg-gray-300" />
+                <li className="h-px my-3 bg-gray-300" />
                 <li>
                   <Link
                     onClick={() => closeOnCurrent("/sign-out")}
@@ -82,7 +89,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                     Sign Out
                   </Link>
                 </li>
-              </>
+              </div>
             )}
           </ul>
         </div>
