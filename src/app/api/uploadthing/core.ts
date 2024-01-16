@@ -8,8 +8,6 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 
 const f = createUploadthing();
 
-// Fake auth function
-
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug

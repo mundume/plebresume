@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import NotificationIcon from "./Bellicon";
-import { Minus } from "lucide-react";
+import { Menu, Minus, X } from "lucide-react";
 import { Button } from "./ui/button";
 
 const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
+
   const pathname = usePathname();
 
   useEffect(() => {
@@ -24,15 +25,18 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   };
   return (
     <div className=" sm:hidden">
-      <div
-        className="relative z-50 flex-col items-center justify-center rounded-full"
+      <Button
+        size={"icon"}
         onClick={toggleOpen}
+        className="relative z-50 rounded-full"
       >
-        <Minus aria-label="" className="w-4 text-slate-600" />
-        <Minus className="w-4 text-slate-600" />
-      </div>
+        {isOpen ? (
+          <X className="w-5 h-5 text-zinc-700" />
+        ) : (
+          <Menu className="w-5 h-5 text-zinc-700" />
+        )}
+      </Button>
 
-      <NotificationIcon />
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full animate-in slide-in-from-top-1 fade-in-20">
           <ul className="absolute grid w-full gap-3 px-10 pt-20 pb-8 mt-10 bg-white border-b shadow-xl dark:bg-background ">
