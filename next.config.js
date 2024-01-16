@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    swcPlugins: [["@swc-jotai/react-refresh", {}]],
+  },
   async redirects() {
     return [
       {
@@ -22,7 +25,6 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-
 
 // Injected content via Sentry wizard below
 
