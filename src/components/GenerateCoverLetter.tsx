@@ -19,6 +19,8 @@ const GenerateCoverLetter = ({ id }: Props) => {
             id: id,
           }),
         });
+        const data = await res.json();
+        console.log(data);
       }}
     >
       <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />

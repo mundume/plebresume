@@ -6,7 +6,7 @@ import { coverLetterSchema } from "@/lib/validators/coverlettervalidator";
 import { db } from "@/config/prisma";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-
+import { OpenAIStream, StreamingTextResponse } from "ai";
 export const POST = async (req: NextRequest) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -44,7 +44,30 @@ export const POST = async (req: NextRequest) => {
   const results = await vectorStore.similaritySearch(fileId);
   console.log(results);
 
-  return new Response("sucess", {
-    status: 200,
+  const response = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    temperature: 0.7,
+    stream: true,
+    messages: [
+      {
+        role: "system",
+        content:
+          "Use the following pieces of context (or previous conversaton if needed) to generate a cover letter for the user. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter but dont go out of the context",
+      },
+      {
+        role: "user",
+        content: `Use the following pieces of context (or previous conversaton if needed) to generate a cover letter for the user. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter but dont go out of the context.
+
+  \n----------------\n
+  CONTEXT:
+  ${results.map((r) => r.pageContent).join("\n\n")}
+  `,
+      },
+    ],
   });
+
+  const stream = OpenAIStream(response);
+
+  // Respond with the stream
+  return new StreamingTextResponse(stream);
 };
