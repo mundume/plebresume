@@ -25,10 +25,11 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   };
   return (
     <div className=" sm:hidden">
+      <NotificationIcon />
       <Button
         size={"icon"}
         onClick={toggleOpen}
-        className="relative z-50 rounded-full"
+        className="relative z-50 ml-1 rounded-full"
       >
         {isOpen ? (
           <X className="w-5 h-5 text-zinc-700" />
@@ -38,7 +39,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
       </Button>
 
       {isOpen ? (
-        <div className="fixed inset-0 z-0 w-full animate-in slide-in-from-top-1 fade-in-20">
+        <div className="fixed inset-0 z-0 w-full animate-in slide-in-from-top-20 fade-in-50">
           <ul className="absolute grid w-full gap-3 px-10 pt-20 pb-8 mt-10 bg-white border-b shadow-xl dark:bg-background ">
             {!isAuth ? (
               <>
@@ -73,7 +74,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                 </li>
               </>
             ) : (
-              <div className="border border-red-600">
+              <div className="">
                 <li>
                   <Link
                     onClick={() => closeOnCurrent("/dashboard")}
