@@ -12,9 +12,9 @@ import UserAccountNav from "./UserDropdown";
 import MobileNav from "./MobileNav";
 import NotificationsPopover from "./NotificationsPopover";
 
-export const NavBar = () => {
+export const NavBar = async () => {
   const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const user = await getUser();
   return (
     <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 h-14 bg-white/75 backdrop-blur-lg">
       <MaxWidthWrapper>
@@ -22,7 +22,7 @@ export const NavBar = () => {
           <Link href="/" className="z-40 flex font-semibold">
             <span>plebresume.</span>
           </Link>
-          <MobileNav isAuth={!!user} />
+          <MobileNav user={user} />
           <div className="items-center hidden space-x-4 sm:flex">
             {!user ? (
               <>

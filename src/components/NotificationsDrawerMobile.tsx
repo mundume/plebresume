@@ -9,8 +9,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
-import NotificationIcon from "./Bellicon";
 import { BellIcon } from "lucide-react";
+import NotificationTabs from "./NotificationTabs";
 const NotificationsDrawerMobile = () => {
   return (
     <Drawer>
@@ -21,16 +21,7 @@ const NotificationsDrawerMobile = () => {
         </Button>
       </DrawerTrigger>
       <DrawerContent className="min-h-[calc(80vh-10rem)]">
-        <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
-        </DrawerHeader>
-        <DrawerFooter>
-          <Button>Submit</Button>
-          <DrawerClose>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
+        <NotificationTabs />
       </DrawerContent>
     </Drawer>
   );

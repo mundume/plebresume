@@ -1,6 +1,8 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import { Card, CardDescription, CardHeader } from "./ui/card";
+import { Button } from "./ui/button";
+import { Settings } from "lucide-react";
 
 const tabsData = [
   {
@@ -72,14 +74,19 @@ const tabsData = [
 
 const NotificationTabs = () => {
   return (
-    <Tabs defaultValue={tabsData[0].value} className="w-[500px] px-0 mx-0">
-      <TabsList className="gap-2 duration-1000 animate-in">
-        {tabsData.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value} className="">
-            {tab.heading}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+    <Tabs defaultValue={tabsData[0].value} className="sm:w-[500px]  mx-0 px-4">
+      <div className="flex items-center justify-between ">
+        <TabsList className="gap-2 duration-1000 animate-in">
+          {tabsData.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value} className="">
+              {tab.heading}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <Button size={"icon"} className="">
+          <Settings className="w-4 h-4 text-slate-600" />
+        </Button>
+      </div>
 
       {tabsData.map((tab) => (
         <TabsContent key={tab.value} value={tab.value} className="px-1 ">
