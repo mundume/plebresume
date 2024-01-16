@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import NotificationIcon from "./Bellicon";
 import { Menu, Minus, X } from "lucide-react";
 import { Button } from "./ui/button";
+import NotificationsDrawerMobile from "./NotificationsDrawerMobile";
 
 const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -25,7 +26,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   };
   return (
     <div className=" sm:hidden">
-      <NotificationIcon />
+      <NotificationsDrawerMobile />
       <Button
         size={"icon"}
         onClick={toggleOpen}
