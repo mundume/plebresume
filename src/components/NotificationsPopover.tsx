@@ -17,9 +17,6 @@ const NotificationsPopover = () => {
       <PopoverContent className="w-full px-1">
         <div className="flex justify-around">
           <NotificationTabs />
-          <Button size={"icon"}>
-            <Settings className="w-4 h-4" />
-          </Button>
         </div>
       </PopoverContent>
     </Popover>

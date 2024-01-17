@@ -9,6 +9,7 @@ import {
   readAndWriteAtom,
   readOnlyAtom,
   writeOnlyAtom,
+  productAtom,
 } from "@/lib/jotai";
 import { Button } from "./ui/button";
 
@@ -29,7 +30,7 @@ const CoverLetterRenderer = () => {
   const [price, setPrice] = useAtom(readAndWriteAtom);
   return (
     <div className="w-full min-h-screen">
-      <Button onClick={() => setPrice(10)}>{price}</Button>
+      <Button onClick={() => setPrice(price + 10)}>{price}</Button>
 
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
         <div ref={ref}>
