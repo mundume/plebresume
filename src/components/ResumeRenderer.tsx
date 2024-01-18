@@ -10,9 +10,8 @@ import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
 import GenerateCoverLetter from "./GenerateCoverLetter";
-import { useAtom } from "jotai";
-import { priceAtom } from "@/lib/jotai";
 
+//pdfjs add globalworker options
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
   import.meta.url
@@ -26,11 +25,9 @@ const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { ref, width } = useResizeDetector();
-  const [price, setPrice] = useAtom(priceAtom);
+
   return (
     <div>
-      {price}
-      <Button onClick={() => setPrice(price + 10)}>updateprice</Button>
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-start gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
           <ResumeFullscreen url={url} />

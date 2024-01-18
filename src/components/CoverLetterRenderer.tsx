@@ -3,15 +3,6 @@ import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
-import { useAtom } from "jotai";
-import {
-  priceAtom,
-  readAndWriteAtom,
-  readOnlyAtom,
-  writeOnlyAtom,
-  productAtom,
-} from "@/lib/jotai";
-import { Button } from "./ui/button";
 
 const tw = createTw({
   theme: {
@@ -27,11 +18,8 @@ const tw = createTw({
 });
 const CoverLetterRenderer = () => {
   const { ref, height } = useResizeDetector();
-  const [price, setPrice] = useAtom(readAndWriteAtom);
   return (
     <div className="w-full min-h-screen">
-      <Button onClick={() => setPrice(price + 10)}>{price}</Button>
-
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
         <div ref={ref}>
           <Document>
