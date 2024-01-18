@@ -14,7 +14,7 @@ export const POST = async (req: NextRequest) => {
   const id = user?.id;
 
   const body = await req.json();
-  const { id: fileId } = coverLetterSchema.parse(body);
+  const { fileId } = coverLetterSchema.parse(body);
 
   if (!user || !user?.id)
     return new Response("Unauthorized", {

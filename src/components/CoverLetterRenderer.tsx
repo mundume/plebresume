@@ -1,8 +1,10 @@
 "use client";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { useContext } from "react";
 import { createTw } from "react-pdf-tailwind";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
+import { ResumeContext } from "./Provider";
 
 const tw = createTw({
   theme: {
@@ -18,6 +20,7 @@ const tw = createTw({
 });
 const CoverLetterRenderer = () => {
   const { ref, height } = useResizeDetector();
+  
   return (
     <div className="w-full min-h-screen">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">

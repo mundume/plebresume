@@ -10,20 +10,7 @@ type Props = {
 
 const GenerateCoverLetter = ({ id }: Props) => {
   return (
-    <Button
-      className="mx-4"
-      onClick={async () => {
-        const res = await fetch(`/api/coverletter`, {
-          method: "POST",
-          body: JSON.stringify({
-            id: id,
-          }),
-        });
-      }}
-    >
-      <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
-      Generate Resume
-    </Button>
+    <p></p>
   );
 };
 

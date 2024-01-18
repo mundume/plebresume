@@ -3,13 +3,14 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { Document, Page, pdfjs } from "react-pdf";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "./ui/button";
-import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
+import { Bot, ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
 import GenerateCoverLetter from "./GenerateCoverLetter";
+import { ResumeContext } from "./Provider";
 
 //pdfjs add globalworker options
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -24,6 +25,8 @@ type Props = {
 const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const { generateCoverLetter, fileId, isLoading } = useContext(ResumeContext);
+
   const { ref, width } = useResizeDetector();
 
   return (
@@ -48,7 +51,16 @@ const PdfRenderer = ({ url, id }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        <GenerateCoverLetter id={id} />
+        <Button
+          disabled={isLoading}
+          className="mx-4"
+          onClick={async () => {
+            generateCoverLetter();
+          }}
+        >
+          <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+          Generate Resume
+        </Button>
       </div>
       <div className="w-full min-h-screen">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">

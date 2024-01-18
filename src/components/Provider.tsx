@@ -20,10 +20,10 @@ type ContextProps = {
   children: ReactNode;
 };
 
-export const ChatContextProvider = ({ fileId, children }: ContextProps) => {
+export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mutate: pleb } = useMutation({
-    mutationFn: async ({ fileId }: { fileId: string }) => {
+    mutationFn: async () => {
       const response = await fetch("/api/coverletter", {
         method: "POST",
         body: JSON.stringify({
@@ -36,7 +36,7 @@ export const ChatContextProvider = ({ fileId, children }: ContextProps) => {
       return response.body;
     },
   });
-  const generateCoverLetter = () => pleb({ fileId });
+  const generateCoverLetter = () => pleb();
   return (
     <ResumeContext.Provider
       value={{
