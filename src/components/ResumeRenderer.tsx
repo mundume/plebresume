@@ -26,6 +26,7 @@ const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { generateCoverLetter, fileId, isLoading } = useContext(ResumeContext);
+  console.log(fileId);
 
   const { ref, width } = useResizeDetector();
 

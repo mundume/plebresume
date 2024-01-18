@@ -73,7 +73,10 @@ export const POST = async (req: NextRequest) => {
     async onCompletion(completion) {
       await db.coverLetter.create({
         data: {
-          name: `${user.given_name} ${user.family_name} coveretter `,
+          name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
+          text: completion,
+          fileId,
+          userId: id,
         },
       });
     },
