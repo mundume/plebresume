@@ -1,9 +1,15 @@
 "use client";
 
-import { Provider } from "jotai";
+import { createContext } from "react";
 
-const CoverletterProvider = ({ children }: { children: React.ReactNode }) => {
-  return <Provider>{children}</Provider>;
+type ResumeResponse = {
+  generateCoverLetter: () => void;
+  fileId: string;
+  isLoading: boolean;
 };
 
-export default CoverletterProvider;
+export const ResumeContext = createContext<ResumeResponse>({
+  generateCoverLetter: () => {},
+  fileId: "",
+  isLoading: false,
+});
