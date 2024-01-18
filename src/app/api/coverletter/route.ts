@@ -58,15 +58,26 @@ export const POST = async (req: NextRequest) => {
         role: "user",
         content: `Use the following pieces of context (or previous conversaton if needed) to generate a cover letter for the user. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter but dont go out of the context.
 
+
   \n----------------\n
+
+
   CONTEXT:
-  ${results.map((r) => r.pageContent).join("\n\n")}
+  ${results.map((result) => result.pageContent).join("\n\n")}
   `,
       },
     ],
   });
 
-  const stream = OpenAIStream(response);
+  const stream = OpenAIStream(response, {
+    async onCompletion(completion) {
+      await db.coverLetter.create({
+        data: {
+          name: `${user.given_name} ${user.family_name} coveretter `,
+        },
+      });
+    },
+  });
 
   // Respond with the stream
   return new StreamingTextResponse(stream);
