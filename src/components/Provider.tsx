@@ -1,7 +1,9 @@
 "use client";
 
+import { trpc } from "@/app/_trpc/client";
 import { useMutation } from "@tanstack/react-query";
 import { ReactNode, createContext, useState } from "react";
+import { toast } from "sonner";
 
 type ResumeResponse = {
   generateCoverLetter: () => void;
@@ -22,7 +24,12 @@ type ContextProps = {
 
 export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { mutate: pleb } = useMutation({
+  const utils = trpc.useUtils();
+  const {
+    mutate: pleb,
+    data,
+    isLoading: loading,
+  } = useMutation({
     mutationFn: async () => {
       const response = await fetch("/api/coverletter", {
         method: "POST",
@@ -34,6 +41,15 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         throw new Error("Failed to generate cover letter");
       }
       return response.body;
+    },
+    onSuccess: async (stream) => {
+      if (!stream) {
+        return toast.error("There was an error generating your cover letter");
+      }
+      const reader = stream.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+      let accumulatedResponse = "";
     },
   });
   const generateCoverLetter = () => pleb();
