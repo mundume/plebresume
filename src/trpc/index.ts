@@ -39,20 +39,6 @@ export const appRouter = router({
       },
     });
   }),
-  getCoverLetterFile: privateProcedure
-    .input(z.object({ fileId: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const { userId } = ctx;
-      const { fileId } = input;
-      const coverLetter = await db.coverLetter.findFirst({
-        where: {
-          id: fileId,
-          userId,
-        },
-      });
-      if (!coverLetter) throw new TRPCError({ code: "NOT_FOUND" });
-      return coverLetter;
-    }),
   getFile: privateProcedure
     .input(z.object({ key: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -82,8 +68,30 @@ export const appRouter = router({
         where: {
           id: input.id,
         },
+        select: {
+          coverLetters: {
+            where: {
+              id: input.id,
+              userId,
+            },
+          },
+        },
       });
       return file;
+    }),
+  getCoverLetter: privateProcedure
+    .input(z.object({ fileId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const { fileId } = input;
+      const coverLetter = await db.coverLetter.findFirst({
+        where: {
+          id: fileId,
+          userId: userId,
+        },
+      });
+      if (!coverLetter) throw new TRPCError({ code: "NOT_FOUND" });
+      return coverLetter;
     }),
 });
 

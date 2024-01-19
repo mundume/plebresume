@@ -16,6 +16,7 @@ import {
 import { ChevronRight, FileText, Loader, Trash } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
+import DeleteFileButton from "./DeleteFileButton";
 
 type User = KindeUser;
 const Dashboard = ({ user }: { user: User }) => {
@@ -54,9 +55,7 @@ const Dashboard = ({ user }: { user: User }) => {
                   </h1>
 
                   <div className="absolute flex items-center top-1 right-1 ">
-                    <Button size={"icon"}>
-                      <Trash className="w-4 h-4 text-red-500" />
-                    </Button>
+                    <DeleteFileButton fileId={file.id} />
                   </div>
                 </div>
               </CardContent>

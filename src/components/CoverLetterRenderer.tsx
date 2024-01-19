@@ -27,7 +27,13 @@ const CoverLetterRenderer = () => {
     data: coverLetter,
     isLoading,
     isError,
-  } = trpc.getCoverLetterFile.useQuery({ fileId });
+    error,
+  } = trpc.getCoverLetter.useQuery(
+    { fileId },
+    {
+      retry: false,
+    }
+  );
   const { ref, height } = useResizeDetector();
 
   return (
@@ -38,7 +44,11 @@ const CoverLetterRenderer = () => {
             <Page size="A4" style={tw("p-12 flex flex-col")}>
               <View style={tw("p-20 bg-gray-100")}>
                 <Text style={tw("text-custom text-3xl")}>
-                  {isLoading ? "Loading..." : coverLetter?.text}
+                  {isError
+                    ? error?.message
+                    : isLoading
+                    ? "Loading..."
+                    : coverLetter?.text}
                 </Text>
               </View>
               <View style={tw("mt-12 px-8 rotate-2")}>
