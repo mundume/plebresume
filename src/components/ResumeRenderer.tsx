@@ -11,6 +11,7 @@ import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
 import GenerateCoverLetter from "./GenerateCoverLetter";
 import { ResumeContext } from "./Provider";
+import { trpc } from "@/app/_trpc/client";
 
 //pdfjs add globalworker options
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -27,7 +28,7 @@ const PdfRenderer = ({ url, id }: Props) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { generateCoverLetter, fileId, isLoading } = useContext(ResumeContext);
   console.log(fileId);
-
+  const utils = trpc.useUtils();
   const { ref, width } = useResizeDetector();
 
   return (
@@ -56,11 +57,12 @@ const PdfRenderer = ({ url, id }: Props) => {
           disabled={isLoading}
           className="mx-4"
           onClick={async () => {
-            generateCoverLetter();
+            await generateCoverLetter();
+            utils.getCoverLetter.invalidate();
           }}
         >
           <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
-          Generate Resume
+          Generate Cover letter
         </Button>
       </div>
       <div className="w-full min-h-screen">

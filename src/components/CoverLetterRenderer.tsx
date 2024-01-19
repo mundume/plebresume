@@ -14,11 +14,7 @@ const tw = createTw({
     fontFamily: {
       sans: ["Comic Sans"],
     },
-    extend: {
-      colors: {
-        custom: "#bada55",
-      },
-    },
+    extend: {},
   },
 });
 
@@ -32,7 +28,7 @@ const CoverLetterRenderer = () => {
 
   if (isLoading) {
     return (
-      <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-44" />
+      <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-44 animate-spin" />
     );
   }
   return (
@@ -40,14 +36,14 @@ const CoverLetterRenderer = () => {
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
         <div ref={ref}>
           <Document>
-            <Page size="A4" style={tw("p-12 flex flex-col")}>
+            <Page
+              size="A4"
+              style={tw("p-12 flex flex-col border border-slste-600")}
+            >
               <View style={tw(" bg-white")}>
                 <Text style={tw("text-custom text-xl")}>
-                  <MarkDown skipHtml={true}>{coverLetter?.text}</MarkDown>
+                  <MarkDown>{coverLetter?.text}</MarkDown>
                 </Text>
-              </View>
-              <View style={tw("mt-12 px-8 rotate-2")}>
-                <Text style={tw("text-amber-600 text-2xl")}>Section #2</Text>
               </View>
             </Page>
           </Document>

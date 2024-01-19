@@ -52,11 +52,11 @@ export const POST = async (req: NextRequest) => {
       {
         role: "system",
         content:
-          "Use the following pieces of context (or previous conversaton if needed) to generate a cover letter for the user. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter in markdown format but dont go out of the context",
+          "Use the following pieces of context to generate a cover letter for the user. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter in markdown format with heading and proper spacings but dont go out of the context",
       },
       {
         role: "user",
-        content: `Use the following pieces of context (or previous conversaton if needed) to generate a cover letter for the user. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter in markdown format but dont go out of the context.
+        content: `Use the following pieces of context  to generate a cover letter for the user. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter in markdown format with heading and proper spacings but dont go out of the context.
 
 
   \n----------------\n
@@ -71,6 +71,22 @@ export const POST = async (req: NextRequest) => {
 
   const stream = OpenAIStream(response, {
     async onCompletion(completion) {
+      const pleb = await db.coverLetter.findFirst({
+        where: {
+          userId: id,
+          fileId,
+        },
+      });
+      if (pleb) {
+        await db.coverLetter.update({
+          where: {
+            id: pleb.id,
+          },
+          data: {
+            text: completion,
+          },
+        });
+      }
       await db.coverLetter.create({
         data: {
           name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
