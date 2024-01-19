@@ -13,11 +13,12 @@ datasource db {
 }
 
 model User {
-  id        String @id @unique //matches auth id
-  email     String @unique
-  firstName String
-  lastName  String
-  file      File[]
+  id          String        @id @unique //matches auth id
+  email       String        @unique
+  firstName   String
+  lastName    String
+  file        File[]
+  coverLetter CoverLetter[]
 }
 
 enum UploadStatus {
@@ -50,4 +51,6 @@ model CoverLetter {
   updatedAt DateTime @updatedAt
   file      File?    @relation(fields: [fileId], references: [id])
   fileId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
