@@ -23,17 +23,6 @@ const tw = createTw({
 const CoverLetterRenderer = () => {
   const { fileId } = useContext(ResumeContext);
   console.log(fileId);
-  const {
-    data: coverLetter,
-    isLoading,
-    isError,
-    error,
-  } = trpc.getCoverLetter.useQuery(
-    { fileId },
-    {
-      retry: false,
-    }
-  );
   const { ref, height } = useResizeDetector();
 
   return (
@@ -43,13 +32,7 @@ const CoverLetterRenderer = () => {
           <Document>
             <Page size="A4" style={tw("p-12 flex flex-col")}>
               <View style={tw("p-20 bg-gray-100")}>
-                <Text style={tw("text-custom text-3xl")}>
-                  {isError
-                    ? error?.message
-                    : isLoading
-                    ? "Loading..."
-                    : coverLetter?.text}
-                </Text>
+                <Text style={tw("text-custom text-3xl")}></Text>
               </View>
               <View style={tw("mt-12 px-8 rotate-2")}>
                 <Text style={tw("text-amber-600 text-2xl")}>Section #2</Text>
