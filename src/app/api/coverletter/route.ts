@@ -76,6 +76,7 @@ export const POST = async (req: NextRequest) => {
           name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
           text: completion,
           fileId,
+          userId: id,
         },
       });
     },

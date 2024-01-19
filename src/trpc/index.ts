@@ -68,10 +68,11 @@ export const appRouter = router({
         where: {
           id: input.id,
         },
-        select: {
+        include: {
           coverLetters: {
             where: {
               id: input.id,
+              userId,
             },
           },
         },
@@ -86,6 +87,7 @@ export const appRouter = router({
       const coverLetter = await db.coverLetter.findFirst({
         where: {
           id: fileId,
+          userId,
         },
       });
       if (!coverLetter) throw new TRPCError({ code: "NOT_FOUND" });
