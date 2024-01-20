@@ -36,28 +36,28 @@ const CoverLetterRenderer = () => {
       retry: false,
     }
   );
+
   if (!coverLetter) {
-    <div className="w-full min-h-screen text-slate-600">No Coverletter</div>;
+    <div className="w-full min-h-screen text-slate-600 ">No Coverletter</div>;
   }
   if (isLoading) {
     return (
       <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-44 animate-spin" />
     );
   }
+  console.log(coverLetter?.text);
   return (
-    <div className="w-full min-h-screen">
-      <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
+    <div className="w-full min-h-screen overflow-hidden border">
+      <SimpleBar autoHide={false} className="max-h-[calc(100vh-4rem)]">
         <div ref={ref}>
           <Document>
-            <Page
-              size="A4"
-              style={tw("p-12 flex flex-col border border-slste-600")}
-            >
-              <View style={tw(" bg-white")}>
-                <Text style={tw("")}>
+            <Page style={tw("p-6 flex flex-col h-full ")}>
+              <View style={tw(" bg-white .markdown")}>
+                <Text style={tw(".markdown")}>
                   <MarkDown
-                    rehypePlugins={[rehypeHighlight, rehypeReact]}
-                    remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
+                    rehypePlugins={[]}
+                    remarkPlugins={[remarkGfm, remarkParse]}
+                    className=""
                   >
                     {coverLetter?.text}
                   </MarkDown>
