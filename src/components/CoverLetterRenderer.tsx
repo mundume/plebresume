@@ -42,22 +42,22 @@ const CoverLetterRenderer = () => {
   }
   if (isLoading) {
     return (
-      <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-44 animate-spin" />
+      <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-96 animate-spin" />
     );
   }
   console.log(coverLetter?.text);
   return (
-    <div className="w-full min-h-screen overflow-hidden border">
+    <div className="w-full min-h-full overflow-none">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-4rem)]">
         <div ref={ref}>
           <Document>
-            <Page style={tw("p-6 flex flex-col h-full ")}>
-              <View style={tw(" bg-white .markdown")}>
-                <Text style={tw(".markdown")}>
+            <Page style={tw("p-6 flex flex-col h-fit ")}>
+              <View style={tw(" bg-white")}>
+                <Text style={tw("prose")}>
                   <MarkDown
                     rehypePlugins={[]}
                     remarkPlugins={[remarkGfm, remarkParse]}
-                    className=""
+                    className="prose"
                   >
                     {coverLetter?.text}
                   </MarkDown>

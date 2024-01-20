@@ -17,6 +17,7 @@ import { ChevronRight, FileText, Loader, Trash } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import DeleteFileButton from "./DeleteFileButton";
+import Markdown from "react-markdown";
 
 type User = KindeUser;
 const Dashboard = ({ user }: { user: User }) => {
