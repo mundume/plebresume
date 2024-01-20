@@ -28,7 +28,6 @@ const PdfRenderer = ({ url, id }: Props) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { generateCoverLetter, fileId, isLoading } = useContext(ResumeContext);
   console.log(fileId);
-  const utils = trpc.useUtils();
   const { ref, width } = useResizeDetector();
 
   return (
@@ -57,8 +56,7 @@ const PdfRenderer = ({ url, id }: Props) => {
           disabled={isLoading}
           className="mx-4"
           onClick={async () => {
-            await generateCoverLetter();
-            utils.getCoverLetter.invalidate();
+            generateCoverLetter();
           }}
         >
           <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
