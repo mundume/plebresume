@@ -7,6 +7,12 @@ import SimpleBar from "simplebar-react";
 import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
 import { Loader } from "lucide-react";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
+import rehypeReact from "rehype-react";
+
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
 import MarkDown from "react-markdown";
 
 const tw = createTw({
@@ -22,10 +28,17 @@ const CoverLetterRenderer = () => {
   const { fileId } = useContext(ResumeContext);
   console.log(fileId);
   const { ref, height } = useResizeDetector();
-  const { data: coverLetter, isLoading } = trpc.getCoverLetter.useQuery({
-    fileId,
-  });
-
+  const { data: coverLetter, isLoading } = trpc.getCoverLetter.useQuery(
+    {
+      fileId,
+    },
+    {
+      retry: false,
+    }
+  );
+  if (!coverLetter) {
+    <div className="w-full min-h-screen text-slate-600">No Coverletter</div>;
+  }
   if (isLoading) {
     return (
       <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-44 animate-spin" />
@@ -41,8 +54,13 @@ const CoverLetterRenderer = () => {
               style={tw("p-12 flex flex-col border border-slste-600")}
             >
               <View style={tw(" bg-white")}>
-                <Text style={tw("text-custom text-xl")}>
-                  <MarkDown>{coverLetter?.text}</MarkDown>
+                <Text style={tw("")}>
+                  <MarkDown
+                    rehypePlugins={[rehypeHighlight, rehypeReact]}
+                    remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
+                  >
+                    {coverLetter?.text}
+                  </MarkDown>
                 </Text>
               </View>
             </Page>

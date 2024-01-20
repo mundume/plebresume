@@ -71,6 +71,7 @@ export const POST = async (req: NextRequest) => {
 
   const stream = OpenAIStream(response, {
     async onCompletion(completion) {
+      console.log(completion);
       const pleb = await db.coverLetter.findFirst({
         where: {
           userId: id,
