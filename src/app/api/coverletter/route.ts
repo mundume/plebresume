@@ -46,7 +46,7 @@ export const POST = async (req: NextRequest) => {
 
   const response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    temperature: 0.3,
+    temperature: 0.6,
     stream: true,
     messages: [
       {
@@ -74,14 +74,16 @@ export const POST = async (req: NextRequest) => {
       console.log(completion);
       const pleb = await db.coverLetter.findFirst({
         where: {
-          userId: id,
           fileId,
         },
       });
+
       if (pleb) {
+        console.log(pleb.text);
         await db.coverLetter.update({
           where: {
-            id: pleb.id,
+            fileId,
+            id: user.id,
           },
           data: {
             text: completion,
