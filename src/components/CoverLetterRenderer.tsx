@@ -36,6 +36,7 @@ const CoverLetterRenderer = ({}) => {
     );
   }
   console.log(coverLetter?.text);
+  const html = coverLetter?.text;
   return (
     <div className="w-full min-h-full overflow-none">
       {isRendered && (
