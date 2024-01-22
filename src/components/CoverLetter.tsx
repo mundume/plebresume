@@ -43,7 +43,13 @@ const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
       <Page style={tw("p-6 flex flex-col h-fit ")} wrap={false}>
         <View style={tw(" bg-white")}>
           <Text style={tw("prose")}>
-            <MarkDown className="prose">{coverLetter}</MarkDown>
+            <MarkDown
+              className="prose"
+              rehypePlugins={[rehypeHighlight, rehypeReact]}
+              remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
+            >
+              {coverLetter}
+            </MarkDown>
           </Text>
         </View>
       </Page>
