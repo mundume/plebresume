@@ -50,8 +50,8 @@ const CoverLetterRenderer = () => {
     <div className="w-full min-h-full overflow-none">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-4rem)]">
         <div ref={ref}>
-          <Document>
-            <Page style={tw("p-6 flex flex-col h-fit ")}>
+          <Document pageLayout="singlePage">
+            <Page style={tw("p-6 flex flex-col h-fit ")} wrap={false}>
               <View style={tw(" bg-white")}>
                 <Text style={tw("prose")}>
                   <MarkDown

@@ -86,8 +86,8 @@ export const appRouter = router({
       const { fileId } = input;
       const coverLetter = await db.coverLetter.findFirst({
         where: {
+          id: fileId,
           userId,
-          fileId,
         },
       });
       if (!coverLetter) throw new TRPCError({ code: "NOT_FOUND" });
