@@ -1,39 +1,29 @@
 "use client";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-import { useContext } from "react";
-import { createTw } from "react-pdf-tailwind";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
+import CoverLetter from "./CoverLetter";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
+import { useContext, useEffect, useState } from "react";
 import { Loader } from "lucide-react";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-import rehypeReact from "rehype-react";
 
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import MarkDown from "react-markdown";
+const CoverLetterRenderer = ({}) => {
+  const [isRendered, setIsRendered] = useState(false);
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+  const { height, ref } = useResizeDetector();
 
-const tw = createTw({
-  theme: {
-    fontFamily: {
-      sans: ["Comic Sans"],
-    },
-    extend: {},
-  },
-});
-
-const CoverLetterRenderer = () => {
   const { fileId } = useContext(ResumeContext);
   console.log(fileId);
-  const { ref, height } = useResizeDetector();
+
   const { data: coverLetter, isLoading } = trpc.getCoverLetter.useQuery(
     {
       fileId,
     },
     {
-      retry: false,
+      retry: true,
     }
   );
 
@@ -48,23 +38,19 @@ const CoverLetterRenderer = () => {
   console.log(coverLetter?.text);
   return (
     <div className="w-full min-h-full overflow-none">
+      {isRendered && (
+        <PDFDownloadLink
+          document={<CoverLetter coverLetter={coverLetter?.text!} />}
+          fileName="somename.pdf"
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? "Loading document..." : "Download now!"
+          }
+        </PDFDownloadLink>
+      )}
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-4rem)]">
         <div ref={ref}>
-          <Document pageLayout="singlePage">
-            <Page style={tw("p-6 flex flex-col h-fit ")} wrap={false}>
-              <View style={tw(" bg-white")}>
-                <Text style={tw("prose")}>
-                  <MarkDown
-                    rehypePlugins={[]}
-                    remarkPlugins={[remarkGfm, remarkParse]}
-                    className="prose"
-                  >
-                    {coverLetter?.text}
-                  </MarkDown>
-                </Text>
-              </View>
-            </Page>
-          </Document>
+          <CoverLetter coverLetter={coverLetter?.text!} />
         </div>
       </SimpleBar>
     </div>
