@@ -48,6 +48,7 @@ const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
               rehypePlugins={[rehypeHighlight, rehypeReact]}
               remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
             >
+              {/* @ts-ignore */}
               {coverLetter}
             </MarkDown>
           </Text>
