@@ -369,7 +369,7 @@ const initialValue = [
   },
 ];
 
-export function PlateEditor() {
+export function PlateEditor({ coverLetter }: { coverLetter: string }) {
   return (
     <DndProvider backend={HTML5Backend}>
       <CommentsProvider users={{}} myUserId="1">
@@ -378,7 +378,7 @@ export function PlateEditor() {
             <FixedToolbarButtons />
           </FixedToolbar>
 
-          <Editor />
+          <Editor>{coverLetter}</Editor>
 
           <FloatingToolbar>
             <FloatingToolbarButtons />

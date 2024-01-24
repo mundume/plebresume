@@ -7,6 +7,7 @@ import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
 import { useContext, useEffect, useState } from "react";
 import { Loader } from "lucide-react";
+import { PlateEditor } from "./editor/plateEditor";
 
 const CoverLetterRenderer = ({}) => {
   const [isRendered, setIsRendered] = useState(false);
@@ -54,6 +55,7 @@ const CoverLetterRenderer = ({}) => {
           <CoverLetter coverLetter={coverLetter?.text!} />
         </div>
       </SimpleBar>
+      <PlateEditor coverLetter={coverLetter?.text} />
     </div>
   );
 };

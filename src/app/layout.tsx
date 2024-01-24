@@ -5,6 +5,7 @@ import { NavBar } from "@/components/NavBar";
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "sonner";
 import "simplebar-react/dist/simplebar.min.css";
+import { TooltipProvider } from "@/components/plate-ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <Provider>
         <body className={GeistSans.className}>
-          <NavBar />
-          <Toaster />
-          {children}
+          <TooltipProvider>
+            <NavBar />
+            <Toaster />
+            {children}
+          </TooltipProvider>
         </body>
       </Provider>
     </html>

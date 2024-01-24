@@ -25,7 +25,6 @@ import MarkDown from "react-markdown";
 import { Button, buttonVariants } from "./ui/button";
 import { Html } from "react-pdf-html";
 import Markdown, { Components } from "react-markdown";
-import { PlateEditor } from "./editor/plateEditor";
 
 const tw = createTw({
   theme: {
@@ -53,7 +52,6 @@ const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
             </MarkDown>
           </Text>
         </View>
-        {/* <PlateEditor /> */}
       </Page>
     </Document>
   );
