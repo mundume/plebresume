@@ -48,43 +48,12 @@ const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
               rehypePlugins={[rehypeHighlight, rehypeReact]}
               remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
             >
-              {/* @ts-ignore */}
               {coverLetter}
             </MarkDown>
           </Text>
         </View>
       </Page>
     </Document>
-
-    // <Document>
-    //   <Page size="A4" style={tw("p-6 flex flex-col h-fit ")} wrap={false}>
-    //     <View style={tw("prose block")}>
-    //       <Markdown
-    //         className=""
-    //         components={{
-    //           h1: ({ children }) => (
-    //             <Text style={tw("text-4xl py-4 text-red-500 prose")}>
-    //               {children}
-    //             </Text>
-    //           ),
-    //           p: ({ children }) => (
-    //             <View style={tw("prose text-red-500")}>{children}</View>
-    //           ),
-    //           strong: ({ children }) => (
-    //             <Text style={tw("font-bold prose")}>{children}</Text>
-    //           ),
-    //           a: ({ children, href }) => (
-    //             <Link src={href!} style={tw("text-blue-500 prose")}>
-    //               {children}
-    //             </Link>
-    //           ),
-    //         }}
-    //       >
-    //         {coverLetter}
-    //       </Markdown>
-    //     </View>
-    //   </Page>
-    // </Document>
   );
 };
 
