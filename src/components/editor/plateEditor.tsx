@@ -42,6 +42,7 @@ import {
   ELEMENT_MEDIA_EMBED,
 } from "@udecode/plate-media";
 import { createCaptionPlugin } from "@udecode/plate-caption";
+
 import {
   createMentionPlugin,
   ELEMENT_MENTION,
@@ -361,24 +362,23 @@ const plugins = createPlugins(
   }
 );
 
-const initialValue = [
-  {
-    id: "1",
-    type: "p",
-    children: [{ text: "Hello, World!" }],
-  },
-];
-
 export function PlateEditor({ coverLetter }: { coverLetter: string }) {
+  const value = [
+    {
+      id: "1",
+      type: "p",
+      children: [{ text: coverLetter }],
+    },
+  ];
   return (
     <DndProvider backend={HTML5Backend}>
       <CommentsProvider users={{}} myUserId="1">
-        <Plate plugins={plugins} initialValue={initialValue}>
+        <Plate plugins={plugins} value={value}>
           <FixedToolbar>
             <FixedToolbarButtons />
           </FixedToolbar>
 
-          <Editor>{coverLetter}</Editor>
+          <Editor />
 
           <FloatingToolbar>
             <FloatingToolbarButtons />
