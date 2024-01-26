@@ -11,14 +11,14 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     trpc.createClient({
       links: [
         httpLink({
-          //
+          
           url: "/api/trpc",
         }),
       ],
     })
   );
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </trpc.Provider>
   );

@@ -24,7 +24,7 @@ const Page = () => {
     retryDelay: 500,
   });
   return (
-    <div className="flex justify-center w-full mt-24">
+    <div className="flex justify-center w-full mt-24" >
       <div className="flex flex-col items-center gap-2">
         <Loader className="w-8 h-8 animate-spin" />
 
