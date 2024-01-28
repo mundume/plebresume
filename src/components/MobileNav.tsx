@@ -36,6 +36,7 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
   return (
     <div className=" sm:hidden text-slate-900">
       <NotificationsDrawerMobile />
+
       <Button
         size={"icon"}
         onClick={toggleOpen}
@@ -50,7 +51,7 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
 
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
-          <ul className="absolute grid w-full gap-3 px-10 pt-20 pb-8 mt-10 bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-4rem)]">
+          <ul className="absolute grid w-full gap-3 px-10 pt-20  mt-10 bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]">
             {!user ? (
               <>
                 <li>
