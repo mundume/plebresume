@@ -49,8 +49,8 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
       </Button>
 
       {isOpen ? (
-        <div className="fixed inset-0 z-0 w-full animate-in slide-in-from-top-20 fade-in-50">
-          <ul className="absolute grid w-full gap-3 px-10 pt-20 pb-8 mt-10 bg-white border-b shadow-xl dark:bg-background ">
+        <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
+          <ul className="absolute grid w-full gap-3 px-10 pt-20 pb-8 mt-10 bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-4rem)]">
             {!user ? (
               <>
                 <li>
@@ -75,11 +75,6 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
                 <li className="h-px my-3 bg-gray-300" />
               </>
             ) : (
-
-
-
-
-            
               <div className="">
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-slate-500">{user.email}</p>
