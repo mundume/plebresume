@@ -100,7 +100,6 @@ import {
 import { createNodeIdPlugin } from "@udecode/plate-node-id";
 import { createResetNodePlugin } from "@udecode/plate-reset-node";
 import {
-  createSelectOnBackspacePlugin,
   createDeletePlugin,
 } from "@udecode/plate-select";
 import { createTabbablePlugin } from "@udecode/plate-tabbable";
@@ -268,15 +267,6 @@ const plugins = createPlugins(
         rules: [
           // Usage: https://platejs.org/docs/reset-node
         ],
-      },
-    }),
-    createSelectOnBackspacePlugin({
-      options: {
-        query: {
-          allow: [
-            // ELEMENT_IMAGE, ELEMENT_HR
-          ],
-        },
       },
     }),
     createDeletePlugin(),

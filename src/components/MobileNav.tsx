@@ -75,12 +75,18 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
                 <li className="h-px my-3 bg-gray-300" />
               </>
             ) : (
+
+
+
+
+            
               <div className="">
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-slate-500">{user.email}</p>
                   <Avatar>
                     <AvatarImage src={user.picture!} />
                     <AvatarFallback className="border text-zinc-800">
+                      {/* biome-ignore lint/style/noNonNullAssertion: <explanation> */}
                       {getInitials(user.given_name!, user.family_name!)}
                     </AvatarFallback>
                   </Avatar>

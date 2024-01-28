@@ -51,7 +51,7 @@ const Dashboard = ({ user }: { user: User }) => {
                   <FileText className="w-4 h-4 text-slate-500 shrink-0" />
                   <h1 className={`text-sm truncate  `}>
                     {file.name.length > 10
-                      ? file.name.slice(0, 10) + "..."
+                      ? `${file.name.slice(0, 10)}...`
                       : file.name}
                   </h1>
 

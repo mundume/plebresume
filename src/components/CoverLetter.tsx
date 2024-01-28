@@ -25,6 +25,8 @@ import MarkDown from "react-markdown";
 import { Button, buttonVariants } from "./ui/button";
 import { Html } from "react-pdf-html";
 import Markdown, { Components } from "react-markdown";
+import { Editor } from "./plate-ui/editor";
+import { PlateEditor } from "./editor/plateEditor";
 
 const tw = createTw({
   theme: {
@@ -35,25 +37,10 @@ const tw = createTw({
   },
 });
 
-const components = {};
 
 const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
   return (
-    <Document pageLayout="singlePage">
-      <Page style={tw("p-6 flex flex-col h-fit ")} wrap={false}>
-        <View style={tw(" bg-white")}>
-          <Text style={tw("prose")}>
-            <MarkDown
-              className="prose"
-              rehypePlugins={[rehypeHighlight, rehypeReact]}
-              remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
-            >
-              {coverLetter}
-            </MarkDown>
-          </Text>
-        </View>
-      </Page>
-    </Document>
+     <PlateEditor coverLetter={coverLetter} />
   );
 };
 
