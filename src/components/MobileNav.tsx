@@ -10,7 +10,7 @@ import NotificationsDrawerMobile from "./NotificationsDrawerMobile";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-const MobileNav = ({ user }: { user: KindeUser | null }) => {
+const MobileNav = ({ user }: { user: KindeUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
@@ -35,6 +35,7 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
 
   return (
     <div className="relative sm:hidden text-slate-900">
+      <NotificationsDrawerMobile />
       <Button
         size={"icon"}
         onClick={toggleOpen}
@@ -49,7 +50,7 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
 
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
-          <ul className="absolute grid w-full gap-3 px-10 pt-20  mt-10 bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]">
+          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)] ">
             {!user ? (
               <>
                 <li>
@@ -78,7 +79,7 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-slate-500">{user.email}</p>
                   <Avatar>
-                    <AvatarImage src={user.picture} />
+                    <AvatarImage src={user?.picture} />
                     <AvatarFallback className="border text-zinc-800">
                       {/* biome-ignore lint/style/noNonNullAssertion: <explanation> */}
                       {getInitials(user.given_name!, user.family_name!)}
