@@ -69,28 +69,29 @@ export const POST = async (req: NextRequest) => {
  \n----------------\n
  COVER LETTER SAMPLE:
 
-Applicant Name,
-Phone Number,
-email,        
+---
+title: Application for Auditor Position at Divoc Financials
+---
 
-${format(new Date().toLocaleDateString(), "MM/dd/yyyy")}
+# Kyla Williams
+Philadelphia, PA  
+Phone: 999-555-4578  
+Email: kyla.williams@email.com
 
-Dear Hiring Manager,
+May 6, 2023
 
-I am writing to apply for the Associate Software Engineer position with Up and Yonder Technologies. As an engineer with more than 10 years of experience with coding and project development, I believe I can add value to your team and help your organization accomplish its goals. I've always been interested in the development of middleware software platforms and would love to contribute to your current beta project for the construction of Up and Yonder's H20 Middleware Platform.
+Dear Leslie Anderson,
 
-As an undergraduate at Blue Lake University, I gained cyber security and software development experience through my computer science internship with renowned computer scientists from Blue Lake. I've also developed and released several of my own programs, including the Giggawhat Design Suite and Lightdrawn Navigation for mobile.
+I'm delighted to submit my application for the open position of Auditor with Divoc Financials. I have seven years of professional financial experience, including three years of experience in consulting and auditing with a focus on external and payroll audits. My experience and skills have helped me become a valuable member of my current financial team, and I look forward to entering the next phase of my career by joining your company.
 
-My excellent attention to detail and quest for perfection allow me to produce quality code that requires less debugging. I pair excellent technical knowledge with collaboration and communication to ensure I support my team members while producing high-quality work.
+I'm an accredited accountant and believe that my experiences align perfectly with the open position. I have most recently worked for Anderson, Phillips and Pollyson Inc., where I coordinate external and payroll audits for over 50 clients. My knowledge of tax law and state Pennsylvania state financial regulations also helps me give sound financial advice to clients. In previous roles, I have completed a wide range of auditing duties, including examining reports and financial records for inconsistencies, documenting my findings and preparing fraud reports. My skills include communication, critical thinking and financial software operation.
 
-During my time working with Smith & Rodriguez Technology Services and Products, I helped implement a new software review system that improved efficiency by 55% for the team. I also received positive feedback for my ability to both understand software and communicate its uses to potential customers and partners. As a lead software engineer with Smith & Rodriguez, I managed a small team of coding professionals and finished more than 50 software development projects over the course of the year.
+In my work, I value honesty, integrity, and compassion. These are the values with which I approach every client, and I see those same values in the Divoc mission statement. I look forward to working with a company that shares my attitude as a financial professional and to collaborating with the incredible peers I'm sure to meet. I believe working with Divoc Financials is an excellent opportunity for me to expand my practice to include publicly held companies and government organizations. Last summer, I completed a relevant auditing course and look forward to putting my new skills into practice.
 
-I'm grateful that you've taken the time to consider me for the position. Please contact me if you have questions or want to discuss my candidacy further. I'm positive I can help Up & Yonder Technologies strive for greatness.
+Thank you for taking the time to review my application and consider me for the position of Auditor. I hope that this letter conveys my excitement and my qualifications for the role. If you'd like to discuss the matter further or learn more about me and my experiences, please don't hesitate to contact me by phone or by email.
 
-Sincerely,
-
-Applicants name
-
+Sincerely,  
+Kyla Williams
 
 
   `,

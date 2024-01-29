@@ -1,22 +1,24 @@
-Nzai Kilonzo,
-Nairobi, Kenya,
-+254114109808,
-nzaih18@gmail.com,
+---
+title: Application for Auditor Position at Divoc Financials
+---
 
-01/29/2024
+# Kyla Williams
 
-Dear Hiring Manager,
+Philadelphia, PA  
+Phone: 999-555-4578  
+Email: kyla.williams@email.com
 
-I am writing to apply for the UI Engineer position at Mugogo Inc. With my experience in developing user-friendly interfaces and my passion for creating seamless navigation and improving user experience, I believe I would be a valuable addition to your team.
+May 6, 2023
 
-As an engineer with 3 years of experience in web development, I have a strong background in CSS, Typescript, React, Nextjs, and HTML. I have successfully implemented user-friendly interfaces for web applications, incorporating best practices in UX design. I have also collaborated with cross-functional teams to translate wireframes and design mockups into interactive prototypes, streamlining the development process and reducing time-to-market.
+Dear Leslie Anderson,
 
-One of my key strengths is my ability to gather user feedback and conduct usability tests to iterate on UI designs. This has resulted in improved user satisfaction and increased adoption rates for the applications I have worked on. Additionally, I have optimized front-end performance by identifying and resolving performance bottlenecks, resulting in faster page load times and enhanced user experience.
+I'm delighted to submit my application for the open position of Auditor with Divoc Financials. I have seven years of professional financial experience, including three years of experience in consulting and auditing with a focus on external and payroll audits. My experience and skills have helped me become a valuable member of my current financial team, and I look forward to entering the next phase of my career by joining your company.
 
-In addition to my professional experience, I am also actively involved in the open-source community as an Open Source Engineer. I guide beginners and newbies in making their first open-source contributions, conduct code reviews, and collaborate with people from around the world. This experience has further honed my technical skills and taught me the value of teamwork and collaboration.
+I'm an accredited accountant and believe that my experiences align perfectly with the open position. I have most recently worked for Anderson, Phillips and Pollyson Inc., where I coordinate external and payroll audits for over 50 clients. My knowledge of tax law and state Pennsylvania state financial regulations also helps me give sound financial advice to clients. In previous roles, I have completed a wide range of auditing duties, including examining reports and financial records for inconsistencies, documenting my findings and preparing fraud reports. My skills include communication, critical thinking and financial software operation.
 
-I am excited about the opportunity to contribute my skills and expertise to Mugogo Inc. I am confident that my technical knowledge, attention to detail, and passion for creating meaningful user experiences make me a strong candidate for this role. Thank you for considering my application. I look forward to the possibility of discussing my candidacy further.
+In my work, I value honesty, integrity, and compassion. These are the values with which I approach every client, and I see those same values in the Divoc mission statement. I look forward to working with a company that shares my attitude as a financial professional and to collaborating with the incredible peers I'm sure to meet. I believe working with Divoc Financials is an excellent opportunity for me to expand my practice to include publicly held companies and government organizations. Last summer, I completed a relevant auditing course and look forward to putting my new skills into practice.
 
-Sincerely,
+Thank you for taking the time to review my application and consider me for the position of Auditor. I hope that this letter conveys my excitement and my qualifications for the role. If you'd like to discuss the matter further or learn more about me and my experiences, please don't hesitate to contact me by phone or by email.
 
-Nzai Kilonzo
+Sincerely,  
+Kyla Williams
