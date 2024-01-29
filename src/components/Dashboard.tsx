@@ -49,7 +49,7 @@ const Dashboard = ({ user }: { user: User }) => {
               <CardContent className="p-4 ">
                 <div className="flex flex-wrap items-center flex-1 gap-2">
                   <FileText className="w-4 h-4 text-slate-500 shrink-0" />
-                  <h1 className={`text-sm truncate  `}>
+                  <h1 className="text-sm truncate ">
                     {file.name.length > 10
                       ? `${file.name.slice(0, 10)}...`
                       : file.name}

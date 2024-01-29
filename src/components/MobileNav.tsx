@@ -34,9 +34,7 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
   }
 
   return (
-    <div className=" sm:hidden text-slate-900">
-      <NotificationsDrawerMobile />
-
+    <div className="relative sm:hidden text-slate-900">
       <Button
         size={"icon"}
         onClick={toggleOpen}
@@ -80,7 +78,7 @@ const MobileNav = ({ user }: { user: KindeUser | null }) => {
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-slate-500">{user.email}</p>
                   <Avatar>
-                    <AvatarImage src={user.picture!} />
+                    <AvatarImage src={user.picture} />
                     <AvatarFallback className="border text-zinc-800">
                       {/* biome-ignore lint/style/noNonNullAssertion: <explanation> */}
                       {getInitials(user.given_name!, user.family_name!)}

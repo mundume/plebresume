@@ -75,7 +75,7 @@ title: Application for Auditor Position at Divoc Financials
 
 # Kyla Williams
 Philadelphia, PA  
-Phone: 999-555-4578  
+Phone: 999-555-4578
 Email: kyla.williams@email.com
 
 May 6, 2023
@@ -90,7 +90,7 @@ In my work, I value honesty, integrity, and compassion. These are the values wit
 
 Thank you for taking the time to review my application and consider me for the position of Auditor. I hope that this letter conveys my excitement and my qualifications for the role. If you'd like to discuss the matter further or learn more about me and my experiences, please don't hesitate to contact me by phone or by email.
 
-Sincerely,  
+Sincerely,
 Kyla Williams
 
 
