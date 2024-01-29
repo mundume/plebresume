@@ -37,10 +37,15 @@ const tw = createTw({
   },
 });
 
-
 const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
   return (
-     <PlateEditor coverLetter={coverLetter} />
+    <div>
+      <SimpleBar>
+        <MarkDown className="prose" rehypePlugins={}>
+          {coverLetter}
+        </MarkDown>
+      </SimpleBar>
+    </div>
   );
 };
 

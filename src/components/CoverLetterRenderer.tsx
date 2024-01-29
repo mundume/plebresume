@@ -14,10 +14,6 @@ const CoverLetterRenderer = () => {
   useEffect(() => {
     setIsRendered(true);
 
-
-
-
-
     return () => {
       setIsRendered(false);
     };
@@ -43,22 +39,16 @@ const CoverLetterRenderer = () => {
     return (
       <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-96 animate-spin" />
     );
-
-
-    
-
-
   }
- if(!coverLetter?.text) return;
+  if (!coverLetter?.text) return;
   const html = coverLetter?.text;
   return (
-    <div className="w-full min-h-full overflow-none">
+    <div className="w-full min-h-full mx-4 my-4 overflow-none">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-4rem)]">
         <div ref={ref}>
           <CoverLetter coverLetter={coverLetter?.text} />
         </div>
       </SimpleBar>
-     
     </div>
   );
 };

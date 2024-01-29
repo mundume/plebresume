@@ -99,9 +99,7 @@ import {
 } from "@udecode/plate-break";
 import { createNodeIdPlugin } from "@udecode/plate-node-id";
 import { createResetNodePlugin } from "@udecode/plate-reset-node";
-import {
-  createDeletePlugin,
-} from "@udecode/plate-select";
+import { createDeletePlugin } from "@udecode/plate-select";
 import { createTabbablePlugin } from "@udecode/plate-tabbable";
 import { createTrailingBlockPlugin } from "@udecode/plate-trailing-block";
 import {
