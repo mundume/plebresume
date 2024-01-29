@@ -44,7 +44,10 @@ const CoverLetterRenderer = () => {
   const html = coverLetter?.text;
   return (
     <div className="w-full min-h-screen my-4 overflow-hidden">
-      <SimpleBar autoHide={false} className="max-h-[calc(100vh-4rem)]">
+      <SimpleBar
+        autoHide={false}
+        className="max-h-[calc(100vh-4rem)] border-none focus-visible:border-none"
+      >
         <div ref={ref}>
           <CoverLetter coverLetter={coverLetter?.text} />
         </div>

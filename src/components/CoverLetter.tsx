@@ -25,11 +25,12 @@ const tw = createTw({
 
 const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
   return (
-    <div className="px-6">
+    <div className="px-4 prose bg-white/90">
       <MarkDown
-        className="prose text-wrap "
+        className="prose prose-p:text-wrap"
         rehypePlugins={[rehypeHighlight, rehypeReact]}
         remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
+        skipHtml
       >
         {coverLetter}
       </MarkDown>
