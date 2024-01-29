@@ -1,14 +1,5 @@
 "use client";
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  Link,
-  usePDF,
-  PDFDownloadLink,
-} from "@react-pdf/renderer";
-import { useContext, useEffect, useState } from "react";
+
 import { createTw } from "react-pdf-tailwind";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
@@ -22,11 +13,6 @@ import rehypeReact from "rehype-react";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import MarkDown from "react-markdown";
-import { Button, buttonVariants } from "./ui/button";
-import { Html } from "react-pdf-html";
-import Markdown, { Components } from "react-markdown";
-import { Editor } from "./plate-ui/editor";
-import { PlateEditor } from "./editor/plateEditor";
 
 const tw = createTw({
   theme: {
@@ -39,12 +25,14 @@ const tw = createTw({
 
 const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
   return (
-    <div>
-      <SimpleBar>
-        <MarkDown className="prose" rehypePlugins={}>
-          {coverLetter}
-        </MarkDown>
-      </SimpleBar>
+    <div className="px-6">
+      <MarkDown
+        className="items-center justify-center prose"
+        rehypePlugins={[rehypeHighlight, rehypeReact]}
+        remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
+      >
+        {coverLetter}
+      </MarkDown>
     </div>
   );
 };
