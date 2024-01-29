@@ -89,7 +89,7 @@ I'm grateful that you've taken the time to consider me for the position. Please 
 
 Sincerely,
 
-Ralph Perez
+Applicants name
 
 
 
@@ -117,15 +117,16 @@ Ralph Perez
             text: completion,
           },
         });
+      } else {
+        await db.coverLetter.create({
+          data: {
+            name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
+            text: completion,
+            id: fileId,
+            userId: id,
+          },
+        });
       }
-      await db.coverLetter.create({
-        data: {
-          name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
-          text: completion,
-          id: fileId,
-          userId: id,
-        },
-      });
     },
   });
 

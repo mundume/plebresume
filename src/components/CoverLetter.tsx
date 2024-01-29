@@ -27,7 +27,7 @@ const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
   return (
     <div className="px-6">
       <MarkDown
-        className="items-center justify-center prose"
+        className="prose text-wrap "
         rehypePlugins={[rehypeHighlight, rehypeReact]}
         remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
       >
