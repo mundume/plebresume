@@ -48,8 +48,33 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       }
       const reader = stream.getReader();
       const decoder = new TextDecoder();
+
       let done = false;
+
       let accumulatedResponse = "";
+      while (!done) {
+        const { done: doneReading, value } = await reader.read();
+        done = doneReading;
+        const chunkValue = decoder.decode(value);
+        accumulatedResponse += chunkValue;
+        console.log(accumulatedResponse);
+        utils.getCoverLetter.setInfiniteData(
+          {
+            fileId,
+          },
+          (oldData) => {
+            if (!oldData)
+              return {
+                pages: [],
+                pageParams: [],
+              };
+            let aiResponse = oldData.pages.some(
+              (page) => page.id === "ai-response"
+            );
+          }
+        );
+        //append the chunk to the message
+      }
     },
     onSettled: () => {
       utils.getCoverLetter.invalidate();

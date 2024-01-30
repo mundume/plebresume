@@ -6,18 +6,21 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
 import { useContext, useEffect, useState } from "react";
-import { Loader } from "lucide-react";
+import { Eye, Loader, View } from "lucide-react";
 import { PlateEditor } from "./editor/plateEditor";
+import { Button } from "./ui/button";
 
 const CoverLetterRenderer = () => {
-  const [isRendered, setIsRendered] = useState(false);
-  useEffect(() => {
-    setIsRendered(true);
+  const [preview, setPreview] = useState<boolean>(false);
 
-    return () => {
-      setIsRendered(false);
-    };
-  }, []);
+  // useEffect(() => {
+  //   setIsRendered(true);
+
+  //   return () => {
+  //     setIsRendered(false);
+  //   };
+  // }, []);
+
   const { height, ref } = useResizeDetector();
 
   const { fileId } = useContext(ResumeContext);
@@ -32,6 +35,8 @@ const CoverLetterRenderer = () => {
     }
   );
 
+  const onChange = () => setPreview((prev) => !prev);
+
   if (!coverLetter) {
     <div className="w-full min-h-screen text-slate-600 ">No Coverletter</div>;
   }
@@ -44,12 +49,18 @@ const CoverLetterRenderer = () => {
   const html = coverLetter?.text;
   return (
     <div className="w-full min-h-screen my-4 overflow-hidden">
+      <div className="flex items-center justify-start gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
+        <Button onClick={onChange} size={"icon"}>
+          <Eye className="w-4 h-4 text-slate-600" />
+        </Button>
+      </div>
+
       <SimpleBar
         autoHide={false}
         className="max-h-[calc(100vh-4rem)] border-none focus-visible:border-none"
       >
         <div ref={ref}>
-          <CoverLetter coverLetter={coverLetter?.text} />
+          <CoverLetter coverLetter={coverLetter?.text} preview={preview} />
         </div>
       </SimpleBar>
     </div>
