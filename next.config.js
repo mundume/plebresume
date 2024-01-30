@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-const removeImports = require("next-remove-imports")();
 const nextConfig = {
   async redirects() {
     return [
@@ -23,7 +22,6 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-module.exports = removeImports(nextConfig);
 
 // Injected content via Sentry wizard below
 
