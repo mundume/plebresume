@@ -7,6 +7,9 @@ import rehypeReact from "rehype-react";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import MarkDown from "react-markdown";
+import { MDXEditor } from "@mdxeditor/editor";
+import "@mdxeditor/editor/style.css";
+import { ForwardRefEditor } from "./ForwardedRefEditor";
 
 const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
   const [updateCoverLetter, setUpdateCoverLetter] =
@@ -22,14 +25,7 @@ const CoverLetter = ({ coverLetter }: { coverLetter: string }) => {
     <>
       <div className="px-4 prose border border-dashed bg-white/90">
         <div className="mt-2">
-          <MarkDown
-            className="prose prose-p:text-wrap"
-            rehypePlugins={[rehypeHighlight, rehypeReact]}
-            remarkPlugins={[remarkGfm, remarkParse, remarkRehype]}
-            skipHtml
-          >
-            {updateCoverLetter}
-          </MarkDown>
+          <ForwardRefEditor markdown={updateCoverLetter} />
         </div>
       </div>
     </>
