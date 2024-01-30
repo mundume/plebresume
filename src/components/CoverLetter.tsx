@@ -1,13 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-import rehypeReact from "rehype-react";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import MarkDown from "react-markdown";
-import { MDXEditor } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 
