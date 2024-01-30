@@ -70,29 +70,28 @@ export const POST = async (req: NextRequest) => {
  COVER LETTER SAMPLE:
 
 ---
-title: Application for Auditor Position at Divoc Financials
+title: Application for [job] Position at [Company Name]
 ---
 
-# Kyla Williams
-Philadelphia, PA  
-Phone: 999-555-4578
-Email: kyla.williams@email.com
+## Applicants Name
 
-May 6, 2023
+Applicants Address  
+Phone: Applicants Phone
+Email: Applicants Email
 
-Dear Leslie Anderson,
+[Date]
+[Name of employer]
+[Mailing address of employer]
+Dear [Hiring manager's name],
+[Greet the hiring manager and state your name as well as the position you're applying for. These second and third sentences can mention how you found the position and express enthusiasm for the job. You can also mention if you heard about the position from a friend or if a colleague referred you.]
 
-I'm delighted to submit my application for the open position of Auditor with Divoc Financials. I have seven years of professional financial experience, including three years of experience in consulting and auditing with a focus on external and payroll audits. My experience and skills have helped me become a valuable member of my current financial team, and I look forward to entering the next phase of my career by joining your company.
+[This first sentence in your second paragraph can introduce the skills you've gained from educational courses, volunteer experience or extracurricular activities. You can feature examples of these specific skills and tie together how you can apply them to this job position during these next few sentences. Mention any other related achievements or awards and how they may benefit the company.]
 
-I'm an accredited accountant and believe that my experiences align perfectly with the open position. I have most recently worked for Anderson, Phillips and Pollyson Inc., where I coordinate external and payroll audits for over 50 clients. My knowledge of tax law and state Pennsylvania state financial regulations also helps me give sound financial advice to clients. In previous roles, I have completed a wide range of auditing duties, including examining reports and financial records for inconsistencies, documenting my findings and preparing fraud reports. My skills include communication, critical thinking and financial software operation.
-
-In my work, I value honesty, integrity, and compassion. These are the values with which I approach every client, and I see those same values in the Divoc mission statement. I look forward to working with a company that shares my attitude as a financial professional and to collaborating with the incredible peers I'm sure to meet. I believe working with Divoc Financials is an excellent opportunity for me to expand my practice to include publicly held companies and government organizations. Last summer, I completed a relevant auditing course and look forward to putting my new skills into practice.
-
-Thank you for taking the time to review my application and consider me for the position of Auditor. I hope that this letter conveys my excitement and my qualifications for the role. If you'd like to discuss the matter further or learn more about me and my experiences, please don't hesitate to contact me by phone or by email.
-
+[Your next paragraph can explain why you're the best candidate for the role. Mention any details you noticed on their website that you believe reflect your passion or motivations. You can also explain your dedication to learning more about the role and you're willingness to develop new skills in the position.]
+[In your closing paragraph, explain your excitement for the role one last time. Thank the employer for their time and request an interview. Mention that you look forward to hearing from them soon.]
 Sincerely,
-Kyla Williams
-
+[Your name]
+[Your signature]
 
   `,
       },
