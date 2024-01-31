@@ -11,7 +11,6 @@ import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
 import GenerateCoverLetter from "./GenerateCoverLetter";
 import { ResumeContext } from "./Provider";
-import { trpc } from "@/app/_trpc/client";
 
 //pdfjs add globalworker options
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(

@@ -31,8 +31,7 @@ const CoverLetterRenderer = () => {
 
   const { height, ref } = useResizeDetector();
 
-  const { fileId, generateCoverLetter } = useContext(ResumeContext);
-  console.log(fileId);
+  const { fileId, isLoading: loading, response } = useContext(ResumeContext);
 
   const { data: coverLetter, isLoading } = trpc.getCoverLetter.useQuery(
     {
@@ -45,10 +44,7 @@ const CoverLetterRenderer = () => {
 
   const onChange = () => setPreview((prev) => !prev);
 
-  if (!coverLetter) {
-    <div className="w-full min-h-screen text-slate-600 ">No Coverletter</div>;
-  }
-  if (isLoading) {
+  if (loading) {
     return (
       <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-96 animate-spin" />
     );
@@ -56,10 +52,7 @@ const CoverLetterRenderer = () => {
   if (!coverLetter?.text) return;
   const html = coverLetter?.text;
   return (
-    <form
-      className="w-full min-h-screen my-4 overflow-hidden"
-      onSubmit={handleSubmit}
-    >
+    <div className="w-full min-h-screen my-4 overflow-hidden">
       <div className="flex items-center justify-start gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
         <Button onClick={onChange} size={"icon"}>
           <Eye className="w-4 h-4 text-slate-600" />
@@ -71,15 +64,16 @@ const CoverLetterRenderer = () => {
         className="max-h-[calc(100vh-4rem)] border-none focus-visible:border-none"
       >
         <div ref={ref}>
-          <CoverLetter coverLetter={coverLetter?.text} preview={preview} />
+          <CoverLetter
+            coverLetter={coverLetter?.text}
+            response={response}
+            preview={preview}
+          />
         </div>
       </SimpleBar>
 
       {plebbing ? "..." : completion}
-      <Button type="submit" disabled={plebbing}>
-        pleb
-      </Button>
-    </form>
+    </div>
   );
 };
 

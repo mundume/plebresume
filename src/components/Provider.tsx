@@ -10,14 +10,14 @@ type ResumeResponse = {
   generateCoverLetter: () => void;
   fileId: string;
   isLoading: boolean;
-  response: ChatCompletion | undefined;
+  response: string;
 };
 
 export const ResumeContext = createContext<ResumeResponse>({
   generateCoverLetter: () => {},
   fileId: "",
   isLoading: false,
-  response: undefined,
+  response: "",
 });
 
 type ContextProps = {
@@ -27,13 +27,9 @@ type ContextProps = {
 
 export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<ChatCompletion | undefined>();
+  const [response, setResponse] = useState<string>("");
   const utils = trpc.useUtils();
-  const {
-    mutate: pleb,
-    data,
-    isLoading: loading,
-  } = useMutation({
+  const { mutate: pleb } = useMutation({
     mutationFn: async () => {
       const response = await fetch("/api/coverletter", {
         method: "POST",
@@ -45,6 +41,10 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         throw new Error("Failed to generate cover letter");
       }
       return response.body;
+    },
+    onMutate: () => {
+      setIsLoading(true);
+      setResponse("");
     },
     onSuccess: async (stream) => {
       if (!stream) {
@@ -61,6 +61,9 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         done = doneReading;
         const chunkValue = decoder.decode(value);
         accumulatedResponse += chunkValue;
+
+        setResponse(accumulatedResponse);
+        setIsLoading(false);
       }
     },
     onSettled: () => {
