@@ -7,7 +7,6 @@ import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
 import { useContext, useEffect, useState } from "react";
 import { Eye, Loader, View } from "lucide-react";
-import { PlateEditor } from "./editor/plateEditor";
 import { Button } from "./ui/button";
 import { useCompletion } from "ai/react";
 
@@ -46,7 +45,19 @@ const CoverLetterRenderer = () => {
 
   if (loading) {
     return (
-      <Loader className="flex items-center justify-center w-8 h-8 text-slate-600 my-44 mx-96 animate-spin" />
+      <div className="flex flex-col items-center justify-center pt-64 mx-auto ">
+        <div className="w-8 h-8 rounded-full ">
+          <Loader className="w-8 h-8 text-slate-600 animate-spin " />
+        </div>
+        <p className="text-sm prose ">
+          Your cover letter is generating you{" "}
+          <span className="text-lg font-bold text-yellow-500">
+            useless degen
+          </span>{" "}
+          who cant even write thier own cover letter and youre hopping to get a
+          job
+        </p>
+      </div>
     );
   }
   if (!coverLetter?.text) return;

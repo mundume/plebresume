@@ -239,6 +239,9 @@ dependencies:
   langchain:
     specifier: ^0.1.2
     version: 0.1.2(@pinecone-database/pinecone@1.1.2)(pdf-parse@1.1.1)(ws@8.16.0)
+  lexical:
+    specifier: ^0.13.1
+    version: 0.13.1
   lucide-react:
     specifier: ^0.304.0
     version: 0.304.0(react@18.2.0)
@@ -1417,11 +1420,23 @@ packages:
     peerDependencies:
       lexical: 0.12.6
     dependencies:
-      '@lexical/html': 0.12.6(lexical@0.12.6)
-      '@lexical/list': 0.12.6(lexical@0.12.6)
-      '@lexical/selection': 0.12.6(lexical@0.12.6)
-      '@lexical/utils': 0.12.6(lexical@0.12.6)
+      '@lexical/html': 0.12.6(lexical@0.13.1)
+      '@lexical/list': 0.12.6(lexical@0.13.1)
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
       lexical: 0.12.6
+    dev: false
+
+  /@lexical/clipboard@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-rJFp7tXzawCrMWWRsjCR80dZoIkLJ/EPgPmTk3xqpc+9ntlwbkm3LUOdFmgN+pshnhiZTQBwbFqg/QbsA1Pw9g==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/html': 0.12.6(lexical@0.13.1)
+      '@lexical/list': 0.12.6(lexical@0.13.1)
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
     dev: false
 
   /@lexical/code@0.12.6(lexical@0.12.6):
@@ -1460,14 +1475,14 @@ packages:
       lexical: 0.12.6
     dev: false
 
-  /@lexical/html@0.12.6(lexical@0.12.6):
+  /@lexical/html@0.12.6(lexical@0.13.1):
     resolution: {integrity: sha512-HVlJLCkazLbLpxdw0mwMkteQuv6OMkJTlAi6qGJimtuqJLm45BpaQ16PTpUmFWpWeIHL2XpvcDX/lj5fm68XPA==}
     peerDependencies:
       lexical: 0.12.6
     dependencies:
-      '@lexical/selection': 0.12.6(lexical@0.12.6)
-      '@lexical/utils': 0.12.6(lexical@0.12.6)
-      lexical: 0.12.6
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
     dev: false
 
   /@lexical/link@0.12.6(lexical@0.12.6):
@@ -1486,6 +1501,15 @@ packages:
     dependencies:
       '@lexical/utils': 0.12.6(lexical@0.12.6)
       lexical: 0.12.6
+    dev: false
+
+  /@lexical/list@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-9DFe8vpSxZ8NQZ/67ZFNiRptB3XPa7mUl0Rmd5WpbJHJHmiORyngYkYgKOW56T/TCtYcLfkTbctMhsIt8OeIqQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
     dev: false
 
   /@lexical/mark@0.12.6(lexical@0.12.6):
@@ -1538,9 +1562,9 @@ packages:
       '@lexical/utils': 0.12.6
       lexical: 0.12.6
     dependencies:
-      '@lexical/clipboard': 0.12.6(lexical@0.12.6)
-      '@lexical/selection': 0.12.6(lexical@0.12.6)
-      '@lexical/utils': 0.12.6(lexical@0.12.6)
+      '@lexical/clipboard': 0.12.6(lexical@0.13.1)
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
       lexical: 0.12.6
     dev: false
 
@@ -1584,9 +1608,9 @@ packages:
       '@lexical/utils': 0.12.6
       lexical: 0.12.6
     dependencies:
-      '@lexical/clipboard': 0.12.6(lexical@0.12.6)
-      '@lexical/selection': 0.12.6(lexical@0.12.6)
-      '@lexical/utils': 0.12.6(lexical@0.12.6)
+      '@lexical/clipboard': 0.12.6(lexical@0.13.1)
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
       lexical: 0.12.6
     dev: false
 
@@ -1598,6 +1622,14 @@ packages:
       lexical: 0.12.6
     dev: false
 
+  /@lexical/selection@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-HJBEazVwOe6duyHV6+vB/MS4kUBlCV05Cfcigdx8HlLLFQRWPqHrTpaxKz4jfb9ar0SlI2W1BUNbySAxMkC/HQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      lexical: 0.13.1
+    dev: false
+
   /@lexical/table@0.12.6(lexical@0.12.6):
     resolution: {integrity: sha512-rUh9/fN831T6UpNiPuzx0x6HNi/eQ7W5AQrVBwwzEwkbwAqnE0n28DP924AUbX72UsQNHtywgmDApMoEV7W2iQ==}
     peerDependencies:
@@ -1605,6 +1637,15 @@ packages:
     dependencies:
       '@lexical/utils': 0.12.6(lexical@0.12.6)
       lexical: 0.12.6
+    dev: false
+
+  /@lexical/table@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-rUh9/fN831T6UpNiPuzx0x6HNi/eQ7W5AQrVBwwzEwkbwAqnE0n28DP924AUbX72UsQNHtywgmDApMoEV7W2iQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
     dev: false
 
   /@lexical/text@0.12.6(lexical@0.12.6):
@@ -1624,6 +1665,17 @@ packages:
       '@lexical/selection': 0.12.6(lexical@0.12.6)
       '@lexical/table': 0.12.6(lexical@0.12.6)
       lexical: 0.12.6
+    dev: false
+
+  /@lexical/utils@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-hK5r/TD2nH5TfWSiCxy7/lh0s11qJcI1wo++PBQOR9o937pQ+/Zr/1tMOc8MnrTpl89mtmYtPfWW3f++HH1Yog==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/list': 0.12.6(lexical@0.13.1)
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/table': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
     dev: false
 
   /@lexical/yjs@0.12.6(lexical@0.12.6)(yjs@13.6.11):
@@ -1716,15 +1768,15 @@ packages:
       '@codemirror/state': 6.4.0
       '@codemirror/view': 6.23.1
       '@codesandbox/sandpack-react': 2.11.3(@lezer/common@1.2.1)(react-dom@18.2.0)(react@18.2.0)
-      '@lexical/clipboard': 0.12.6(lexical@0.12.6)
+      '@lexical/clipboard': 0.12.6(lexical@0.13.1)
       '@lexical/link': 0.12.6(lexical@0.12.6)
       '@lexical/list': 0.12.6(lexical@0.12.6)
       '@lexical/markdown': 0.12.6(@lexical/clipboard@0.12.6)(@lexical/selection@0.12.6)(lexical@0.12.6)
       '@lexical/plain-text': 0.12.6(@lexical/clipboard@0.12.6)(@lexical/selection@0.12.6)(@lexical/utils@0.12.6)(lexical@0.12.6)
       '@lexical/react': 0.12.6(lexical@0.12.6)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.11)
       '@lexical/rich-text': 0.12.6(@lexical/clipboard@0.12.6)(@lexical/selection@0.12.6)(@lexical/utils@0.12.6)(lexical@0.12.6)
-      '@lexical/selection': 0.12.6(lexical@0.12.6)
-      '@lexical/utils': 0.12.6(lexical@0.12.6)
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
       '@mdxeditor/gurx': 1.1.1
       '@radix-ui/colors': 3.0.0
       '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
@@ -8731,6 +8783,10 @@ packages:
 
   /lexical@0.12.6:
     resolution: {integrity: sha512-Nlfjc+k9cIWpOMv7XufF0Mv09TAXSemNAuAqFLaOwTcN+RvhvYTDtVLSp9D9r+5I097fYs1Vf/UYwH2xEpkFfQ==}
+    dev: false
+
+  /lexical@0.13.1:
+    resolution: {integrity: sha512-jaqRYzVEfBKbX4FwYpd/g+MyOjRaraAel0iQsTrwvx3hyN0bswUZuzb6H6nGlFSjcdrc77wKpyKwoWj4aUd+Bw==}
     dev: false
 
   /lib0@0.2.88:

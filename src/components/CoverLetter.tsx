@@ -28,12 +28,12 @@ const CoverLetter = ({
       <div className="px-4 prose border border-dashed bg-white/90">
         <div className="mt-2">
           <MarkDown>{response}</MarkDown>
-          <ForwardRefEditor
+          {/* <ForwardRefEditor
             markdown={response}
             onChange={() => {
               console.log("changed");
             }}
-          />
+          /> */}
         </div>
       </div>
     </>
