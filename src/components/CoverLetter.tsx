@@ -18,11 +18,6 @@ const CoverLetter = ({
   const [updateCoverLetter, setUpdateCoverLetter] =
     useState<string>(coverLetter);
 
-  const handleTextareaChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setUpdateCoverLetter(event.target.value);
-  };
   const ref = useRef<MDXEditorMethods>(null);
 
   return (

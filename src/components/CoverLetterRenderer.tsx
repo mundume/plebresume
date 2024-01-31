@@ -5,28 +5,12 @@ import CoverLetter from "./CoverLetter";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
-import { useContext, useEffect, useState } from "react";
-import { Eye, Loader, View } from "lucide-react";
+import { useContext, useState } from "react";
+import { Eye, Loader } from "lucide-react";
 import { Button } from "./ui/button";
-import { useCompletion } from "ai/react";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(false);
-  const {
-    completion,
-    handleSubmit,
-    isLoading: plebbing,
-  } = useCompletion({
-    api: "/api/coverletter",
-  });
-
-  // useEffect(() => {
-  //   setIsRendered(true);
-
-  //   return () => {
-  //     setIsRendered(false);
-  //   };
-  // }, []);
 
   const { height, ref } = useResizeDetector();
 
@@ -82,8 +66,6 @@ const CoverLetterRenderer = () => {
           />
         </div>
       </SimpleBar>
-
-      {plebbing ? "..." : completion}
     </div>
   );
 };
