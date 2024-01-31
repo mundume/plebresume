@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "@mdxeditor/editor/style.css";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 import MarkDown from "react-markdown";
+import { MDXEditorMethods } from "@mdxeditor/editor";
 
 const CoverLetter = ({
   coverLetter,
@@ -22,6 +23,7 @@ const CoverLetter = ({
   ) => {
     setUpdateCoverLetter(event.target.value);
   };
+  const ref = useRef<MDXEditorMethods>(null);
 
   return (
     <>
@@ -30,9 +32,10 @@ const CoverLetter = ({
           <MarkDown>{response}</MarkDown>
           {/* <ForwardRefEditor
             markdown={response}
-            onChange={() => {
-              console.log("changed");
+            onChange={(e) => {
+            console.log(e);
             }}
+            ref={ref}
           /> */}
         </div>
       </div>
