@@ -4,17 +4,20 @@ import { trpc } from "@/app/_trpc/client";
 import { useMutation } from "@tanstack/react-query";
 import { ReactNode, createContext, useState } from "react";
 import { toast } from "sonner";
+import { ChatCompletion } from "openai/resources/index";
 
 type ResumeResponse = {
   generateCoverLetter: () => void;
   fileId: string;
   isLoading: boolean;
+  response: ChatCompletion | undefined;
 };
 
 export const ResumeContext = createContext<ResumeResponse>({
   generateCoverLetter: () => {},
   fileId: "",
   isLoading: false,
+  response: undefined,
 });
 
 type ContextProps = {
@@ -24,6 +27,7 @@ type ContextProps = {
 
 export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [response, setResponse] = useState<ChatCompletion | undefined>();
   const utils = trpc.useUtils();
   const {
     mutate: pleb,
@@ -57,23 +61,6 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         done = doneReading;
         const chunkValue = decoder.decode(value);
         accumulatedResponse += chunkValue;
-        console.log(accumulatedResponse);
-        utils.getCoverLetter.setInfiniteData(
-          {
-            fileId,
-          },
-          (oldData) => {
-            if (!oldData)
-              return {
-                pages: [],
-                pageParams: [],
-              };
-            let aiResponse = oldData.pages.some(
-              (page) => page.id === "ai-response"
-            );
-          }
-        );
-        //append the chunk to the message
       }
     },
     onSettled: () => {
@@ -87,6 +74,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         generateCoverLetter,
         fileId,
         isLoading,
+        response,
       }}
     >
       {children}

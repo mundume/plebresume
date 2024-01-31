@@ -9,9 +9,17 @@ import { useContext, useEffect, useState } from "react";
 import { Eye, Loader, View } from "lucide-react";
 import { PlateEditor } from "./editor/plateEditor";
 import { Button } from "./ui/button";
+import { useCompletion } from "ai/react";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(false);
+  const {
+    completion,
+    handleSubmit,
+    isLoading: plebbing,
+  } = useCompletion({
+    api: "/api/coverletter",
+  });
 
   // useEffect(() => {
   //   setIsRendered(true);
@@ -23,7 +31,7 @@ const CoverLetterRenderer = () => {
 
   const { height, ref } = useResizeDetector();
 
-  const { fileId } = useContext(ResumeContext);
+  const { fileId, generateCoverLetter } = useContext(ResumeContext);
   console.log(fileId);
 
   const { data: coverLetter, isLoading } = trpc.getCoverLetter.useQuery(
@@ -48,7 +56,10 @@ const CoverLetterRenderer = () => {
   if (!coverLetter?.text) return;
   const html = coverLetter?.text;
   return (
-    <div className="w-full min-h-screen my-4 overflow-hidden">
+    <form
+      className="w-full min-h-screen my-4 overflow-hidden"
+      onSubmit={handleSubmit}
+    >
       <div className="flex items-center justify-start gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
         <Button onClick={onChange} size={"icon"}>
           <Eye className="w-4 h-4 text-slate-600" />
@@ -63,7 +74,12 @@ const CoverLetterRenderer = () => {
           <CoverLetter coverLetter={coverLetter?.text} preview={preview} />
         </div>
       </SimpleBar>
-    </div>
+
+      {plebbing ? "..." : completion}
+      <Button type="submit" disabled={plebbing}>
+        pleb
+      </Button>
+    </form>
   );
 };
 

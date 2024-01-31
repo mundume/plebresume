@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import "@mdxeditor/editor/style.css";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
+import MarkDown from "react-markdown";
 
 const CoverLetter = ({
   coverLetter,
@@ -24,7 +25,7 @@ const CoverLetter = ({
     <>
       <div className="px-4 prose border border-dashed bg-white/90">
         <div className="mt-2">
-          <ForwardRefEditor markdown={updateCoverLetter} readOnly={preview} />
+          <MarkDown>{updateCoverLetter}</MarkDown>
         </div>
       </div>
     </>
