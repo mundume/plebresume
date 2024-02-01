@@ -87,7 +87,6 @@
     "geist": "^1.2.0",
     "jotai": "^2.6.2",
     "langchain": "^0.1.2",
-    "lexical": "^0.13.1",
     "lucide-react": "^0.304.0",
     "markdown-to-jsx": "^7.4.0",
     "mermaid": "^10.7.0",
