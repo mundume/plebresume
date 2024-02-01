@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ReactNode, createContext, useState } from "react";
 import { toast } from "sonner";
 import { ChatCompletion } from "openai/resources/index";
-import { Delete } from "lucide-react";
+import { Annoyed, Delete } from "lucide-react";
 
 type ResumeResponse = {
   generateCoverLetter: () => void;
@@ -51,6 +51,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       if (!stream) {
         return toast.error("There was an error generating your cover letter");
       }
+      //get the stream
       const reader = stream.getReader();
       const decoder = new TextDecoder();
 
@@ -71,12 +72,13 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       utils.getCoverLetter.invalidate();
     },
     onError: () => {
-      toast.error("There was an error generating your cover letter", {
+      toast.error(<Annoyed className="w-6 h-6 text-yellow-400" />, {
         style: {
           background: "white",
           color: "#F98080",
         },
         position: "top-right",
+        description: "There was an error generating your cover letter",
       });
       setIsLoading(false);
       setResponse("");
