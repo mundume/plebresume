@@ -32,7 +32,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const utils = trpc.useUtils();
   const { mutate: pleb } = useMutation({
     mutationFn: async () => {
-      const response = await fetch("/api/coverletterrr", {
+      const response = await fetch("/api/coverletter", {
         method: "POST",
         body: JSON.stringify({
           fileId,
@@ -75,7 +75,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       toast.error(<Annoyed className="w-6 h-6 text-yellow-400" />, {
         style: {
           background: "white",
-          color: "#F98080",
+          color: "red",
         },
         position: "top-right",
         description: "There was an error generating your cover letter",
