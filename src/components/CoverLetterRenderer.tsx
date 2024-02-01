@@ -8,6 +8,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useContext, useState } from "react";
 import { Eye, Loader } from "lucide-react";
 import { Button } from "./ui/button";
+import { ForwardRefEditor } from "./ForwardedRefEditor";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(false);
@@ -35,7 +36,7 @@ const CoverLetterRenderer = () => {
         </div>
         <p className="text-sm prose ">
           Your cover letter is generating you{" "}
-          <span className="text-lg font-bold text-yellow-500">
+          <span className="text-lg font-bold text-yellow-400">
             useless degen
           </span>{" "}
           who cant even write thier own cover letter and youre hopping to get a
@@ -58,11 +59,11 @@ const CoverLetterRenderer = () => {
         autoHide={false}
         className="max-h-[calc(100vh-4rem)] border-none focus-visible:border-none"
       >
-        <div ref={ref}>
+        <div>
           <CoverLetter
-            coverLetter={coverLetter?.text}
-            response={response}
+            coverLetter={coverLetter.text}
             preview={preview}
+            response={response}
           />
         </div>
       </SimpleBar>

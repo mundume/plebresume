@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import "@mdxeditor/editor/style.css";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 import MarkDown from "react-markdown";
 import { MDXEditorMethods } from "@mdxeditor/editor";
-import { Button } from "./ui/button";
 
 const CoverLetter = ({
   coverLetter,
@@ -17,7 +17,7 @@ const CoverLetter = ({
 }) => {
   const [updateCoverLetter, setUpdateCoverLetter] = useState<string>(response);
 
-  // const ref = useRef<MDXEditorMethods>(null);
+  const ref = useRef<MDXEditorMethods>(null);
 
   return (
     <>
@@ -27,7 +27,11 @@ const CoverLetter = ({
             Set new markdown
           </Button> */}
           <MarkDown>{response}</MarkDown>
-          <ForwardRefEditor markdown={coverLetter} />
+          <ForwardRefEditor
+            markdown={updateCoverLetter}
+            onChange={() => {}}
+            ref={ref}
+          />
         </div>
       </div>
     </>

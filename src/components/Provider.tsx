@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ReactNode, createContext, useState } from "react";
 import { toast } from "sonner";
 import { ChatCompletion } from "openai/resources/index";
+import { Delete } from "lucide-react";
 
 type ResumeResponse = {
   generateCoverLetter: () => void;
@@ -31,7 +32,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const utils = trpc.useUtils();
   const { mutate: pleb } = useMutation({
     mutationFn: async () => {
-      const response = await fetch("/api/coverletter", {
+      const response = await fetch("/api/coverletterrr", {
         method: "POST",
         body: JSON.stringify({
           fileId,
@@ -68,6 +69,17 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
     },
     onSettled: () => {
       utils.getCoverLetter.invalidate();
+    },
+    onError: () => {
+      toast.error("There was an error generating your cover letter", {
+        style: {
+          background: "white",
+          color: "#F98080",
+        },
+        position: "top-right",
+      });
+      setIsLoading(false);
+      setResponse("");
     },
   });
   const generateCoverLetter = () => pleb();
