@@ -18,8 +18,15 @@ import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import DeleteFileButton from "./DeleteFileButton";
 import Markdown from "react-markdown";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 type User = KindeUser;
+const markdown = `
+Hello **world**!
+`;
+
+const EditorComp = dynamic(() => import("./EditorComponent"), { ssr: false });
 const Dashboard = ({ user }: { user: User }) => {
   const {
     data: getUserFiles,
@@ -74,6 +81,9 @@ const Dashboard = ({ user }: { user: User }) => {
             </Card>
           ))
         )}
+        <Suspense fallback={<Loader className="w-8 h-8 animate-spin" />}>
+          <EditorComp markdown={markdown} />
+        </Suspense>
       </div>
     </>
   );

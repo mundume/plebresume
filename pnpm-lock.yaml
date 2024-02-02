@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.0.13
     version: 2.0.13(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
   '@mdxeditor/editor':
-    specifier: ^2.5.0
-    version: 2.5.0(@codemirror/language@6.10.0)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.11)
+    specifier: ^2.5.1
+    version: 2.5.1(@codemirror/language@6.10.0)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.11)
   '@neondatabase/serverless':
     specifier: ^0.6.1
     version: 0.6.1
@@ -658,7 +658,7 @@ packages:
     dependencies:
       '@codemirror/autocomplete': 6.12.0(@codemirror/language@6.10.0)(@codemirror/state@6.4.0)(@codemirror/view@6.23.1)(@lezer/common@1.2.1)
       '@codemirror/language': 6.10.0
-      '@codemirror/lint': 6.4.2
+      '@codemirror/lint': 6.5.0
       '@codemirror/state': 6.4.0
       '@codemirror/view': 6.23.1
       '@lezer/common': 1.2.1
@@ -688,8 +688,8 @@ packages:
       style-mod: 4.1.0
     dev: false
 
-  /@codemirror/lint@6.4.2:
-    resolution: {integrity: sha512-wzRkluWb1ptPKdzlsrbwwjYCPLgzU6N88YBAmlZi8WFyuiEduSd05MnJYNogzyc8rPK7pj6m95ptUApc8sHKVA==}
+  /@codemirror/lint@6.5.0:
+    resolution: {integrity: sha512-+5YyicIaaAZKU8K43IQi8TBy6mF6giGeWAH7N96Z5LC30Wm5JMjqxOYIE9mxwMG1NbhT2mA3l9hA4uuKUM3E5g==}
     dependencies:
       '@codemirror/state': 6.4.0
       '@codemirror/view': 6.23.1
@@ -1578,8 +1578,8 @@ packages:
     dev: false
     optional: true
 
-  /@mdxeditor/editor@2.5.0(@codemirror/language@6.10.0)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.11):
-    resolution: {integrity: sha512-iSJuRuj5BXNXOA0w8CjHOpZxrOa5CKXe52MRSSkrGC8gsse7bUioCydDKIEm9i10OsPmQf4+IoznxydRET/asQ==}
+  /@mdxeditor/editor@2.5.1(@codemirror/language@6.10.0)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.11):
+    resolution: {integrity: sha512-aoIutHtZKJS6PosiBT4KgdXUsyDGJ+tgZSm8W6C6++tF4H27N7n8LxipQ5VNawPjHQ6LaEgfxuLQ9Qwu5wxT0g==}
     engines: {node: '>=16'}
     peerDependencies:
       react: ^18.2.0
@@ -4525,7 +4525,7 @@ packages:
       '@codemirror/autocomplete': 6.12.0(@codemirror/language@6.10.0)(@codemirror/state@6.4.0)(@codemirror/view@6.23.1)(@lezer/common@1.2.1)
       '@codemirror/commands': 6.3.3
       '@codemirror/language': 6.10.0
-      '@codemirror/lint': 6.4.2
+      '@codemirror/lint': 6.5.0
       '@codemirror/search': 6.5.5
       '@codemirror/state': 6.4.0
       '@codemirror/view': 6.23.1
