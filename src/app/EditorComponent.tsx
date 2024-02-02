@@ -18,7 +18,6 @@ const Editor: FC<EditorProps> = ({ markdown, editorRef }) => {
       ref={editorRef}
       markdown={markdown}
       plugins={[headingsPlugin()]}
-      onChange={() => {}}
     />
   );
 };

@@ -103,8 +103,5 @@
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
-  },
-  "peerDependencies": {
-    "lexical": "^0.13.1"
   }
 }
