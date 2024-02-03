@@ -16,10 +16,6 @@ Hello **world**!
 export default function Home() {
   return (
     <MaxWidthWrapper>
-      <Suspense fallback="........">
-        <EditorComp markdown={markdown} />
-      </Suspense>
-
       <h1 className="text-6xl">Welcome to Brixton</h1>
     </MaxWidthWrapper>
   );

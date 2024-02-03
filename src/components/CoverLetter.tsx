@@ -26,7 +26,7 @@ const CoverLetter = ({
           {/* <Button onClick={() => ref.current?.setMarkdown("## new markdown")}>
             Set new markdown
           </Button> */}
-          <MarkDown>{response}</MarkDown>
+          <MarkDown className={"prose"}>{response}</MarkDown>
           <ForwardRefEditor
             markdown={updateCoverLetter}
             onChange={() => {}}

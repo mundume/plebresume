@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 declare global {
-  // eslint-disable-next-line no-var
+  // biome-ignore lint/style/noVar: <explanation>
   var cachedPrisma: PrismaClient;
 }
 
