@@ -7,9 +7,11 @@ import { ForwardRefEditor } from "./ForwardedRefEditor";
 const CoverLetter = ({
   coverLetter,
   preview,
+  value,
 }: {
   coverLetter: string;
   preview: boolean;
+  value: string;
 }) => {
   const [updateCoverLetter, setUpdateCoverLetter] =
     useState<string>(coverLetter);
