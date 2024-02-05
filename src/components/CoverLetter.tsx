@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import "@mdxeditor/editor/style.css";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 import { MDXEditorMethods } from "@mdxeditor/editor";
+import { Button } from "./ui/button";
 
 const CoverLetter = ({
   coverLetter,
@@ -20,20 +21,24 @@ const CoverLetter = ({
 
   const handleChange = (value: string) => {
     if (ref.current) {
-      ref.current.setMarkdown(value);
+      ref.current.insertMarkdown(value);
     }
   };
 
   return (
     <>
+      <Button onClick={() => ref.current?.insertMarkdown(coverLetter)}>
+        Insert new markdown
+      </Button>
       <div className="px-4 prose border border-dashed bg-white/90">
         <div className="mt-2">
-          <ForwardRefEditor
-            markdown={updateCoverLetter}
-            readOnly={preview}
-            ref={ref}
-            onChange={() => console.log("west")}
-          />
+          <Suspense fallback={"..........."}>
+            <ForwardRefEditor
+              markdown={updateCoverLetter}
+              ref={ref}
+              onChange={(e) => console.log(e)}
+            />
+          </Suspense>
         </div>
       </div>
     </>

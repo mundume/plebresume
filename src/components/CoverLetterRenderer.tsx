@@ -14,18 +14,9 @@ const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
 
-  // useEffect(() => {
-  //   setIsRendered(true);
-
-  //   return () => {
-  //     setIsRendered(false);
-  //   };
-  // }, []);
-
   const { height, ref } = useResizeDetector();
 
   const { fileId } = useContext(ResumeContext);
-  console.log(fileId);
 
   const { data: coverLetter, isLoading } = trpc.getCoverLetter.useQuery(
     {

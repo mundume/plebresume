@@ -3,7 +3,7 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { Document, Page, pdfjs } from "react-pdf";
-import { useContext, useState } from "react";
+import { use, useContext, useState } from "react";
 import { Button } from "./ui/button";
 import { Bot, ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
@@ -26,8 +26,7 @@ type Props = {
 const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { generateCoverLetter, fileId, isLoading } = useContext(ResumeContext);
-  console.log(fileId);
+  const { generateCoverLetter, isLoading } = use(ResumeContext);
   const { ref, width } = useResizeDetector();
 
   return (
