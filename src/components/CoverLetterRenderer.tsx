@@ -2,10 +2,9 @@
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import CoverLetter from "./CoverLetter";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
-import { useContext, useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Eye, Loader, View } from "lucide-react";
 import { Button } from "./ui/button";
 import { InputProps } from "./ui/input";
@@ -16,7 +15,7 @@ const CoverLetterRenderer = () => {
 
   const { height, ref } = useResizeDetector();
 
-  const { fileId } = useContext(ResumeContext);
+  const { fileId } = use(ResumeContext);
 
   const { data: coverLetter, isLoading } = trpc.getCoverLetter.useQuery(
     {

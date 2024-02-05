@@ -3,15 +3,14 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { Document, Page, pdfjs } from "react-pdf";
-import { use, useContext, useState } from "react";
+import { use, useState } from "react";
 import { Button } from "./ui/button";
 import { Bot, ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
-import GenerateCoverLetter from "./GenerateCoverLetter";
+
 import { ResumeContext } from "./Provider";
-import { trpc } from "@/app/_trpc/client";
 
 //pdfjs add globalworker options
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
