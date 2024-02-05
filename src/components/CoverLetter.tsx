@@ -9,14 +9,11 @@ import { Button } from "./ui/button";
 const CoverLetter = ({
   coverLetter,
   preview,
-  value,
 }: {
   coverLetter: string;
   preview: boolean;
-  value: string;
 }) => {
-  const [updateCoverLetter, setUpdateCoverLetter] =
-    useState<string>(coverLetter);
+  const [value, setValue] = useState<string>("");
   const ref = React.useRef<MDXEditorMethods>(null);
 
   const handleChange = (value: string) => {
@@ -24,17 +21,25 @@ const CoverLetter = ({
       ref.current.insertMarkdown(value);
     }
   };
+  useEffect(() => {
+    ref.current?.setMarkdown(value);
+  });
 
   return (
     <>
-      <Button onClick={() => ref.current?.insertMarkdown(coverLetter)}>
+      {/* <Button onClick={() => ref.current?.insertMarkdown(value)}>
         Insert new markdown
-      </Button>
+      </Button> */}
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="w-full p-2 border border-dashed"
+      />
       <div className="px-4 prose border border-dashed bg-white/90">
         <div className="mt-2">
           <Suspense fallback={"..........."}>
             <ForwardRefEditor
-              markdown={updateCoverLetter}
+              markdown={coverLetter}
               ref={ref}
               onChange={(e) => console.log(e)}
             />

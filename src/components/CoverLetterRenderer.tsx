@@ -52,11 +52,7 @@ const CoverLetterRenderer = () => {
         className="max-h-[calc(100vh-4rem)] border-none focus-visible:border-none"
       >
         <div ref={ref}>
-          <CoverLetter
-            coverLetter={coverLetter?.text}
-            preview={preview}
-            value={value}
-          />
+          <CoverLetter coverLetter={coverLetter?.text} preview={preview} />
         </div>
       </SimpleBar>
     </div>
