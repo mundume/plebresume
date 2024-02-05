@@ -73,6 +73,10 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
     onSettled: () => {
       utils.getCoverLetter.invalidate();
     },
+    onError: () => {
+      setIsLoading(false);
+      toast.error("There was an error generating your cover letter");
+    },
   });
   const generateCoverLetter = () => pleb();
   return (

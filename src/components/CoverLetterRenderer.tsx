@@ -18,7 +18,17 @@ const CoverLetterRenderer = () => {
   return (
     <div className="w-full min-h-screen my-4 overflow-hidden">
       {isLoading ? (
-        <div>loading...</div>
+        <div className="flex flex-col items-center justify-center gap-1 mx-auto my-auto mt-44">
+          <Loader className="w-6 h-6 text-slate-600 animate-spin" />{" "}
+          <p className="text-sm prose ">
+            Your cover letter is generating you{" "}
+            <span className="text-lg font-bold text-yellow-400">
+              useless degen
+            </span>{" "}
+            who cant even write thier own cover letter and youre hopping to get
+            a job
+          </p>
+        </div>
       ) : (
         <>
           {" "}
