@@ -7,9 +7,8 @@ import { ResumeContext } from "./Provider";
 import { trpc } from "@/app/_trpc/client";
 import { useContext, useEffect, useState } from "react";
 import { Eye, Loader, View } from "lucide-react";
-import { PlateEditor } from "./editor/plateEditor";
 import { Button } from "./ui/button";
-import { inputVariants } from "./plate-ui/input";
+import { InputProps } from "./ui/input";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(false);
@@ -51,10 +50,7 @@ const CoverLetterRenderer = () => {
   const html = coverLetter?.text;
   return (
     <div className="w-full min-h-screen my-4 overflow-hidden">
-      <input
-        onChange={(e) => setValue(e.target.value)}
-        className={inputVariants()}
-      />
+      <input onChange={(e) => setValue(e.target.value)} />
       <div className="flex items-center justify-start gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
         <Button onClick={onChange} size={"icon"}>
           <Eye className="w-4 h-4 text-slate-600" />
