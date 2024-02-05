@@ -25,8 +25,11 @@ const CoverLetterRenderer = () => {
             <span className="text-lg font-bold text-yellow-400">
               useless degen
             </span>{" "}
-            who cant even write thier own cover letter and youre hopping to get
-            a job
+            who cant even write thier own cover letter and you&apos;re there
+            full of hope for a job{" "}
+            <span className="w-4 h-10 font-mono text-3xl text-slate-500">
+              💀💀
+            </span>
           </p>
         </div>
       ) : (
@@ -34,7 +37,7 @@ const CoverLetterRenderer = () => {
           {" "}
           <div className="flex items-center justify-start gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
             <Button onClick={onChange} size={"icon"}>
-              <Eye className="w-4 h-4 text-slate-600" />
+              Edit <Eye className="w-4 h-4 text-slate-600" />
             </Button>
           </div>
           <SimpleBar

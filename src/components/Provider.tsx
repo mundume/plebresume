@@ -72,6 +72,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
     },
     onSettled: () => {
       utils.getCoverLetter.invalidate();
+      setIsLoading(false);
     },
     onError: () => {
       setIsLoading(false);
