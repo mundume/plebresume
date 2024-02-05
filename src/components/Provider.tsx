@@ -9,12 +9,14 @@ type ResumeResponse = {
   generateCoverLetter: () => void;
   fileId: string;
   isLoading: boolean;
+  response: string;
 };
 
 export const ResumeContext = createContext<ResumeResponse>({
   generateCoverLetter: () => {},
   fileId: "",
   isLoading: false,
+  response: "",
 });
 
 type ContextProps = {
@@ -24,6 +26,7 @@ type ContextProps = {
 
 export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [response, setResponse] = useState<string>("");
   const utils = trpc.useUtils();
   const {
     mutate: pleb,
@@ -53,27 +56,15 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
 
       let accumulatedResponse = "";
       while (!done) {
+        setIsLoading(true);
         const { done: doneReading, value } = await reader.read();
         done = doneReading;
         const chunkValue = decoder.decode(value);
         accumulatedResponse += chunkValue;
+        //append the chunk to value
         console.log(accumulatedResponse);
-        utils.getCoverLetter.setInfiniteData(
-          {
-            fileId,
-          },
-          (oldData) => {
-            if (!oldData)
-              return {
-                pages: [],
-                pageParams: [],
-              };
-            let aiResponse = oldData.pages.some(
-              (page) => page.id === "ai-response"
-            );
-          }
-        );
-        //append the chunk to the message
+        setResponse(accumulatedResponse);
+        setIsLoading(false);
       }
     },
     onSettled: () => {
@@ -87,6 +78,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         generateCoverLetter,
         fileId,
         isLoading,
+        response,
       }}
     >
       {children}

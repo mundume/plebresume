@@ -7,39 +7,27 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 import { Button } from "./ui/button";
 
 const CoverLetter = ({
-  coverLetter,
   preview,
+  response,
 }: {
-  coverLetter: string;
   preview: boolean;
+  response: string;
 }) => {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>(response);
   const ref = React.useRef<MDXEditorMethods>(null);
 
-  const handleChange = (value: string) => {
-    if (ref.current) {
-      ref.current.insertMarkdown(value);
-    }
-  };
   useEffect(() => {
+    setValue(response);
     ref.current?.setMarkdown(value);
-  });
+  }, [value, response]);
 
   return (
     <>
-      {/* <Button onClick={() => ref.current?.insertMarkdown(value)}>
-        Insert new markdown
-      </Button> */}
-      <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className="w-full p-2 border border-dashed"
-      />
       <div className="px-4 prose border border-dashed bg-white/90">
         <div className="mt-2">
           <Suspense fallback={"..........."}>
             <ForwardRefEditor
-              markdown={coverLetter}
+              markdown={""}
               ref={ref}
               onChange={(e) => console.log(e)}
             />
