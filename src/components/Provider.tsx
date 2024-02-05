@@ -28,11 +28,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<string>("");
   const utils = trpc.useUtils();
-  const {
-    mutate: pleb,
-    data,
-    isLoading: loading,
-  } = useMutation({
+  const { mutate: pleb } = useMutation({
     mutationFn: async () => {
       const response = await fetch("/api/coverletter", {
         method: "POST",
@@ -45,10 +41,17 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       }
       return response.body;
     },
+    onMutate: () => {
+      setIsLoading(true);
+      setResponse("");
+    },
     onSuccess: async (stream) => {
+      setIsLoading(true);
       if (!stream) {
+        setIsLoading(false);
         return toast.error("There was an error generating your cover letter");
       }
+
       const reader = stream.getReader();
       const decoder = new TextDecoder();
 
@@ -56,13 +59,13 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
 
       let accumulatedResponse = "";
       while (!done) {
-        setIsLoading(true);
         const { done: doneReading, value } = await reader.read();
         done = doneReading;
         const chunkValue = decoder.decode(value);
         accumulatedResponse += chunkValue;
         //append the chunk to value
         console.log(accumulatedResponse);
+
         setResponse(accumulatedResponse);
         setIsLoading(false);
       }

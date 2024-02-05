@@ -30,6 +30,7 @@ const CoverLetter = ({
               markdown={""}
               ref={ref}
               onChange={(e) => console.log(e)}
+              readOnly={preview}
             />
           </Suspense>
         </div>
