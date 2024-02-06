@@ -11,6 +11,7 @@ import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
 
 import { ResumeContext } from "./Provider";
+import AddCoverLetterInfo from "./AddCoverLetterInfo";
 
 //pdfjs add globalworker options
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -50,7 +51,7 @@ const PdfRenderer = ({ url, id }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        <Button
+        {/* <Button
           disabled={isLoading}
           className="mx-4"
           onClick={async () => {
@@ -59,7 +60,8 @@ const PdfRenderer = ({ url, id }: Props) => {
         >
           <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
           Generate Cover letter
-        </Button>
+        </Button> */}
+        <AddCoverLetterInfo />
       </div>
       <div className="w-full min-h-screen">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
