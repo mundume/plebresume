@@ -1,9 +1,7 @@
 "use client";
-import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import CoverLetter from "./CoverLetter";
 import { ResumeContext } from "./Provider";
-import { trpc } from "@/app/_trpc/client";
 import { use, useState } from "react";
 import { Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
