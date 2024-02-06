@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useContext, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -24,9 +24,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
+import { ResumeContext } from "./Provider";
 
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { generateCoverLetter } = use(ResumeContext);
 
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),
@@ -52,7 +54,7 @@ const CoverLetterForm = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="rounded-md">
         <Form {...form} control={form.control}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField

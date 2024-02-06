@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest) => {
   const id = user?.id;
 
   const body = await req.json();
-  const { fileId } = coverLetterSchema.parse(body);
+  const { fileId, jobTitle, jobDescription } = coverLetterSchema.parse(body);
 
   if (!user || !user?.id)
     return new Response("Unauthorized", {
@@ -65,6 +65,12 @@ export const POST = async (req: NextRequest) => {
 
   CONTEXT:
   ${results.map((result) => result.pageContent).join("\n\n")}
+   JOB TITLE: ${jobTitle}
+  JOB DESCRIPTION: ${jobDescription}
+
+   \n----------------\n
+
+
 
  \n----------------\n
  COVER LETTER SAMPLE:
@@ -74,7 +80,7 @@ title: Application for [job] Position at [Company Name]
 ---
 
 ## Applicants Name
-
+### Profession
 Applicants Address  
 Phone: Applicants Phone
 Email: Applicants Email
