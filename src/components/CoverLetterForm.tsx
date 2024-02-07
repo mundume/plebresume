@@ -28,7 +28,14 @@ import { ResumeContext } from "./Provider";
 
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { generateCoverLetter } = use(ResumeContext);
+
+  const {
+    generateCoverLetter,
+    jobDescription,
+    setJobTitle,
+    jobTitle,
+    setJobDescription,
+  } = use(ResumeContext);
 
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),
@@ -65,17 +72,25 @@ const CoverLetterForm = () => {
                   <FormItem>
                     <FormLabel>Job Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...form.register("jobTitle")} />
+                      <Input
+                        placeholder=""
+                        {...form.register("jobTitle")}
+                        onChange={(e) => setJobTitle(e.target.value)}
+                        value={jobTitle}
+                      />
                     </FormControl>
                     <FormDescription>Enter your job title</FormDescription>
                     <FormMessage />
                   </FormItem>
                   <FormItem>
-                    <FormLabel>Job Description</FormLabel>
+                    <FormLabel className="">Job Description</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder=""
+                        value={jobDescription}
+                        rows={10}
                         {...form.register("jobDescription")}
+                        onChange={(e) => setJobDescription(e.target.value)}
                       />
                     </FormControl>
                     <FormDescription>

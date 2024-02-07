@@ -1,22 +1,32 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/client";
+import { CoverLetterFormSchema } from "@/lib/validators/coverlettervalidator";
 import { useMutation } from "@tanstack/react-query";
 import { ReactNode, createContext, useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 
 type ResumeResponse = {
-  generateCoverLetter: () => void;
+  generateCoverLetter: (jobTitle: string, jobDescription: string) => void;
   fileId: string;
   isLoading: boolean;
   response: string;
+  jobTitle: string;
+  jobDescription: string;
+  setJobTitle: (jobTitle: string) => void;
+  setJobDescription: (jobDescription: string) => void;
 };
 
 export const ResumeContext = createContext<ResumeResponse>({
-  generateCoverLetter: () => {},
+  generateCoverLetter: (jobTitle: string, jobDescription: string) => {},
   fileId: "",
   isLoading: false,
   response: "",
+  jobTitle: "",
+  jobDescription: "",
+  setJobTitle: (jobTitle: string) => {},
+  setJobDescription: (jobDescription: string) => {},
 });
 
 type ContextProps = {
@@ -27,13 +37,19 @@ type ContextProps = {
 export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<string>("");
+  const [jobTitle, setJobTitle] = useState<string>("");
+  const [jobDescription, setJobDescription] = useState<string>("");
+
   const utils = trpc.useUtils();
+
   const { mutate: pleb } = useMutation({
     mutationFn: async () => {
       const response = await fetch("/api/coverletter", {
         method: "POST",
         body: JSON.stringify({
           fileId,
+          jobTitle,
+          jobDescription,
         }),
       });
       if (!response.ok) {
@@ -87,6 +103,10 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         fileId,
         isLoading,
         response,
+        jobTitle,
+        jobDescription,
+        setJobTitle,
+        setJobDescription,
       }}
     >
       {children}
