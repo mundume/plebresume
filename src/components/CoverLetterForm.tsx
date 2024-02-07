@@ -44,8 +44,8 @@ const CoverLetterForm = () => {
       jobDescription: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof CoverLetterFormSchema>) => {
-    console.log(values);
+  const onSubmit = () => {
+    generateCoverLetter();
   };
   return (
     <Dialog
@@ -61,7 +61,7 @@ const CoverLetterForm = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="rounded-md">
+      <DialogContent className="rounded-md max-h-[90vh]">
         <Form {...form} control={form.control}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -101,7 +101,9 @@ const CoverLetterForm = () => {
                 </>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onSubmit={() => setIsOpen(false)}>
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>

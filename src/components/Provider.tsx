@@ -1,14 +1,12 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/client";
-import { CoverLetterFormSchema } from "@/lib/validators/coverlettervalidator";
 import { useMutation } from "@tanstack/react-query";
 import { ReactNode, createContext, useState } from "react";
 import { toast } from "sonner";
-import { z } from "zod";
 
 type ResumeResponse = {
-  generateCoverLetter: (jobTitle: string, jobDescription: string) => void;
+  generateCoverLetter: () => void;
   fileId: string;
   isLoading: boolean;
   response: string;
@@ -17,9 +15,9 @@ type ResumeResponse = {
   setJobTitle: (jobTitle: string) => void;
   setJobDescription: (jobDescription: string) => void;
 };
-
+//this will be moved from usestate to useReducer soon
 export const ResumeContext = createContext<ResumeResponse>({
-  generateCoverLetter: (jobTitle: string, jobDescription: string) => {},
+  generateCoverLetter: () => {},
   fileId: "",
   isLoading: false,
   response: "",
