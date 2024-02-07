@@ -10,10 +10,8 @@ type ResumeResponse = {
   fileId: string;
   isLoading: boolean;
   response: string;
-  jobTitle: string;
-  jobDescription: string;
-  setJobTitle: (jobTitle: string) => void;
-  setJobDescription: (jobDescription: string) => void;
+  formValues: FormValues;
+  setFormValues: (formValues: FormValues) => void;
 };
 //this will be moved from usestate to useReducer soon
 export const ResumeContext = createContext<ResumeResponse>({
@@ -21,10 +19,11 @@ export const ResumeContext = createContext<ResumeResponse>({
   fileId: "",
   isLoading: false,
   response: "",
-  jobTitle: "",
-  jobDescription: "",
-  setJobTitle: (jobTitle: string) => {},
-  setJobDescription: (jobDescription: string) => {},
+  formValues: {
+    jobTitle: "",
+    jobDescription: "",
+  },
+  setFormValues: (formValues: FormValues) => {},
 });
 
 type ContextProps = {
@@ -32,12 +31,18 @@ type ContextProps = {
   children: ReactNode;
 };
 
+type FormValues = {
+  jobTitle: string;
+  jobDescription: string;
+};
+
 export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<string>("");
-  const [jobTitle, setJobTitle] = useState<string>("");
-  const [jobDescription, setJobDescription] = useState<string>("");
-
+  const [formValues, setFormValues] = useState<FormValues>({
+    jobTitle: "",
+    jobDescription: "",
+  });
   const utils = trpc.useUtils();
 
   const { mutate: pleb } = useMutation({
@@ -46,8 +51,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         method: "POST",
         body: JSON.stringify({
           fileId,
-          jobTitle,
-          jobDescription,
+          ...formValues,
         }),
       });
       if (!response.ok) {
@@ -101,10 +105,8 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         fileId,
         isLoading,
         response,
-        jobTitle,
-        jobDescription,
-        setJobTitle,
-        setJobDescription,
+        formValues,
+        setFormValues,
       }}
     >
       {children}

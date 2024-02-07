@@ -29,13 +29,7 @@ import { ResumeContext } from "./Provider";
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const {
-    generateCoverLetter,
-    jobDescription,
-    setJobTitle,
-    jobTitle,
-    setJobDescription,
-  } = use(ResumeContext);
+  const { generateCoverLetter, formValues, setFormValues } = use(ResumeContext);
 
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),
@@ -67,7 +61,7 @@ const CoverLetterForm = () => {
             <FormField
               control={form.control}
               name="jobTitle"
-              render={({ field }) => (
+              render={({}) => (
                 <>
                   <FormItem>
                     <FormLabel>Job Title</FormLabel>
@@ -75,22 +69,33 @@ const CoverLetterForm = () => {
                       <Input
                         placeholder=""
                         {...form.register("jobTitle")}
-                        onChange={(e) => setJobTitle(e.target.value)}
-                        value={jobTitle}
+                        onChange={(e) =>
+                          setFormValues({
+                            ...formValues,
+                            jobTitle: e.target.value,
+                          })
+                        }
+                        value={formValues.jobTitle}
                       />
                     </FormControl>
                     <FormDescription>Enter your job title</FormDescription>
                     <FormMessage />
                   </FormItem>
+
                   <FormItem>
                     <FormLabel className="">Job Description</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder=""
-                        value={jobDescription}
+                        value={formValues.jobDescription}
                         rows={10}
                         {...form.register("jobDescription")}
-                        onChange={(e) => setJobDescription(e.target.value)}
+                        onChange={(e) =>
+                          setFormValues({
+                            ...formValues,
+                            jobDescription: e.target.value,
+                          })
+                        }
                       />
                     </FormControl>
                     <FormDescription>
