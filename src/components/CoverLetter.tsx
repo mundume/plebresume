@@ -23,7 +23,7 @@ const CoverLetter = ({
 
   return (
     <>
-      <div className="px-4 prose border border-dashed bg-white/90">
+      <div className="h-full px-4 prose border border-dashed bg-white/90 no-break-inside">
         <div className="mt-2">
           <Suspense fallback={"..........."}>
             <ForwardRefEditor
