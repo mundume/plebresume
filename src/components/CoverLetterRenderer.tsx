@@ -15,6 +15,8 @@ const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
   const ref = useRef();
 
+  const { signal } = new AbortController();
+
   const { response, isLoading } = use(ResumeContext);
 
   const onChange = () => setPreview((prev) => !prev);
@@ -23,16 +25,25 @@ const CoverLetterRenderer = () => {
     try {
       const response = await fetch("/api/pdf", {
         method: "POST",
-        headers: {},
+        headers: {
+          Accept: "application/pdf",
+        },
         cache: "no-cache",
+        signal,
       });
 
       if (!response.ok) {
         throw new Error("Failed to generate PDF");
       }
 
-      const blob = await response.json();
-      console.log(blob);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "generated_pdf.pdf");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error("Error generating PDF:", error);
     }
