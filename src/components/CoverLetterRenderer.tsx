@@ -21,25 +21,18 @@ const CoverLetterRenderer = () => {
 
   const generatePDF = async () => {
     try {
-      const response = await fetch("http://localhost:3001/pdf", {
-        method: "GET",
-        headers: {
-          Accept: "application/pdf",
-        },
+      const response = await fetch("/api/pdf", {
+        method: "POST",
+        headers: {},
+        cache: "no-cache",
       });
 
       if (!response.ok) {
         throw new Error("Failed to generate PDF");
       }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "generated_pdf.pdf");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const blob = await response.json();
+      console.log(blob);
     } catch (error) {
       console.error("Error generating PDF:", error);
     }
