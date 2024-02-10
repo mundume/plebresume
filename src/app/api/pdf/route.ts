@@ -17,14 +17,12 @@ export const genPdf = async (req: Request, res: Response) => {
     },
     body: `markdown=${encodeURIComponent(content)}&css=${encodeURIComponent(
       `
-body {
-  background-color: white;
-}
-      h1, h2, {
+      h1, h2, h3, h4 {
+         font-family: "Helvetica", sans-serif;
+         font-size:"1rem"
   font-weight:800px;
-  font-family: ${font};
+  color:#18181B;
        }
-
 
        p {
     font-family: ${font};

@@ -12,6 +12,7 @@ type ResumeResponse = {
   response: string;
   formValues: FormValues;
   setFormValues: (formValues: FormValues) => void;
+  setResponse: (response: string) => void;
 };
 //this will be moved from usestate to useReducer soon
 export const ResumeContext = createContext<ResumeResponse>({
@@ -24,6 +25,7 @@ export const ResumeContext = createContext<ResumeResponse>({
     jobDescription: "",
   },
   setFormValues: (formValues: FormValues) => {},
+  setResponse: (response: string) => {},
 });
 
 type ContextProps = {
@@ -107,6 +109,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         response,
         formValues,
         setFormValues,
+        setResponse,
       }}
     >
       {children}

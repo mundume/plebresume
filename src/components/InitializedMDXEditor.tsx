@@ -7,6 +7,8 @@ import {
   quotePlugin,
   thematicBreakPlugin,
   markdownShortcutPlugin,
+  linkDialogPlugin,
+  linkPlugin,
   MDXEditor,
   type MDXEditorMethods,
   type MDXEditorProps,
@@ -26,6 +28,8 @@ export default function InitializedMDXEditor({
         quotePlugin(),
         thematicBreakPlugin(),
         markdownShortcutPlugin(),
+        linkPlugin(),
+        linkDialogPlugin(),
       ]}
       {...props}
       ref={editorRef}
