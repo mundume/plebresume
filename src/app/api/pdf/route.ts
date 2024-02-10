@@ -23,6 +23,10 @@ export const genPdf = async (req: Request, res: Response) => {
   font-weight:800px;
   color:#18181B;
        }
+       a {
+         color:#3B82F6;
+          font-size:"4rem"
+       }
 
        p {
     font-family: ${font};

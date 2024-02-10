@@ -7,10 +7,6 @@ import { Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
 import dynamic from "next/dynamic";
 
-const GeneratePDF = dynamic(() => import("./GeneratePdf"), {
-  ssr: false,
-});
-
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
   const ref = useRef();
@@ -25,34 +21,6 @@ const CoverLetterRenderer = () => {
     color: MidnightBlue;
   font-weight:800px;
 }`;
-  // const generatePDF = async () => {
-  //   try {
-  //     const response = await fetch("/api/pdf", {
-  //       method: "POST",
-  //       body: JSON.stringify({ html: <h1>Hello</h1> }),
-  //       headers: {
-  //         Accept: "application/pdf",
-  //       },
-  //       cache: "no-cache",
-  //       signal,
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to generate PDF");
-  //     }
-
-  //     const blob = await response.blob();
-  //     const url = window.URL.createObjectURL(blob);
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.setAttribute("download", "generated_pdf.pdf");
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     document.body.removeChild(link);
-  //   } catch (error) {
-  //     console.error("Error generating PDF:", error);
-  //   }
-  // };
 
   return (
     <div className="">
