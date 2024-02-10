@@ -82,8 +82,8 @@ title: Application for [job] Position at [Company Name]
 ## Applicants Name
 ### Profession
 Applicants Address  
-Phone: Applicants Phone
-Email: Applicants Email
+Phone: Applicants Phone  
+Email: [Applicants Email](mailto:[Applicants Email])
 
 [Date]
 [Name of employer]
@@ -98,6 +98,7 @@ Dear Hiring manager,
 Sincerely,
 [Your name]
 [Your signature]
+
 
   `,
       },

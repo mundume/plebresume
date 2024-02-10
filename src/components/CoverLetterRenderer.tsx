@@ -33,10 +33,6 @@ const CoverLetterRenderer = () => {
               method: "POST",
               body: JSON.stringify({
                 content: response,
-                css: `h1, h2 {
-    color: MidnightBlue;
-  font-weight:800px;
-}`,
               }),
               headers: {
                 Accept: "application/pdf",
@@ -53,7 +49,7 @@ const CoverLetterRenderer = () => {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
-            link.setAttribute("download", "generated_pdf.pdf");
+            link.setAttribute("download", "cover-letter.pdf");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
