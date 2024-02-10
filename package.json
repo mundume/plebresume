@@ -52,6 +52,7 @@
     "jspdf": "^2.5.1",
     "langchain": "^0.1.2",
     "lucide-react": "^0.304.0",
+    "md-to-pdf": "^5.2.4",
     "next": "14.0.4",
     "next-remove-imports": "^1.0.12",
     "next-themes": "^0.2.1",

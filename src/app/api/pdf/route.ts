@@ -1,58 +1,40 @@
-import { NextRequest, NextResponse } from "next/server";
-import chromium from "@sparticuz/chromium-min";
-import puppeteer from "puppeteer-core";
-import { ReadableOptions } from "stream";
+import { NextResponse } from "next/server";
+import { POST } from "./../coverletter/route";
 import * as fs from "fs";
 
-// Host the tar-file yourself
-// Or use https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar
-const chromiumPack =
-  "https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar";
+export const genPdf = async (req: Request, res: Response) => {
+  const body = await req.json();
+  const { content, css } = body;
 
-// function streamFile(
-//   path: string,
-//   options?: ReadableOptions
-// ): ReadableStream<Uint8Array> {
-//   const downloadStream = fs.createReadStream(path, options);
+  const font =
+    "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
-//   return new ReadableStream({
-//     start(controller) {
-//       downloadStream.on("data", (chunk: Buffer) =>
-//         controller.enqueue(new Uint8Array(chunk))
-//       );
-//       downloadStream.on("end", () => controller.close());
-//       downloadStream.on("error", (error: NodeJS.ErrnoException) =>
-//         controller.error(error)
-//       );
-//     },
-//     cancel() {
-//       downloadStream.destroy();
-//     },
-//   });
-// }
+  const pdf = await fetch("https://md-to-pdf.fly.dev", {
+    method: "POST",
 
-const handler = async (req: NextRequest, res: NextResponse) => {
-  const browser = await puppeteer.launch({
-    args: chromium.args,
-    // See https://www.npmjs.com/package/@sparticuz/chromium#running-locally--headlessheadful-mode for local executable path
-    executablePath: await chromium.executablePath(chromiumPack),
-    headless: true,
-  });
-
-  const page = await browser.newPage();
-
-  await page.goto("https://github.com/mundume");
-  const pdf = await page.pdf({ format: "A4" });
-  const headers = {
     headers: {
-      "Content-Type": "application/pdf",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-  };
+    body: `markdown=${encodeURIComponent(content)}&css=${encodeURIComponent(
+      `
+body {
+  background-color: white;
+}
+      h1, h2, {
+  font-weight:800px;
+  font-family: ${font};
+       }
 
-  return new Response(pdf, headers);
+
+       p {
+    font-family: ${font};
+  }`
+    )}`,
+    cache: "no-store",
+  });
+  const response = await pdf.arrayBuffer();
+  fs.writeFileSync("./_weduh", Buffer.from(response));
+  return new NextResponse(response);
 };
 
-// Uncomment if needed, only applicable if your plan allows it
-// export const maxDuration = 300; // Seconds
-
-export { handler as POST };
+export { genPdf as POST };

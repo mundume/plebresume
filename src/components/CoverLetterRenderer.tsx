@@ -21,39 +21,81 @@ const CoverLetterRenderer = () => {
 
   const onChange = () => setPreview((prev) => !prev);
 
-  const generatePDF = async () => {
-    try {
-      const response = await fetch("/api/pdf", {
-        method: "POST",
-        headers: {
-          Accept: "application/pdf",
-        },
-        cache: "no-cache",
-        signal,
-      });
+  `h1, h2 {
+    color: MidnightBlue;
+  font-weight:800px;
+}`;
+  // const generatePDF = async () => {
+  //   try {
+  //     const response = await fetch("/api/pdf", {
+  //       method: "POST",
+  //       body: JSON.stringify({ html: <h1>Hello</h1> }),
+  //       headers: {
+  //         Accept: "application/pdf",
+  //       },
+  //       cache: "no-cache",
+  //       signal,
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Failed to generate PDF");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Failed to generate PDF");
+  //     }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "generated_pdf.pdf");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    }
-  };
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(blob);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "generated_pdf.pdf");
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   } catch (error) {
+  //     console.error("Error generating PDF:", error);
+  //   }
+  // };
 
   return (
     <div className="">
       {/* @ts-ignore */}
       {/* <GeneratePDF html={ref} /> */}
-      <Button onClick={generatePDF}>Generate PDF</Button>
+      <Button
+        onClick={async () => {
+          try {
+            const res = await fetch("/api/pdf", {
+              method: "POST",
+              body: JSON.stringify({
+                content: response,
+                css: `h1, h2 {
+    color: MidnightBlue;
+  font-weight:800px;
+}`,
+              }),
+              headers: {
+                Accept: "application/pdf",
+              },
+              cache: "no-cache",
+              signal,
+            });
+
+            if (!res.ok) {
+              throw new Error("Failed to generate PDF");
+            }
+
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "generated_pdf.pdf");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } catch (error) {
+            console.error("Error generating PDF:", error);
+          }
+        }}
+      >
+        Generate PDF
+      </Button>
 
       <div className="w-full min-h-screen my-4 overflow-hidden">
         {isLoading ? (

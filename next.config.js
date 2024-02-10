@@ -21,7 +21,7 @@ const nextConfig = {
     return config;
   },
   experimental: {
-    serverComponentsExternalPackages: ["puppeteer-core"],
+     serverComponentsExternalPackages: ["md-to-pdf"],
   },
 };
 
