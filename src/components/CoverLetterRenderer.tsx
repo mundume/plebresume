@@ -6,15 +6,14 @@ import { use, useRef, useState } from "react";
 import { Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
 import dynamic from "next/dynamic";
+import { trpc } from "@/app/_trpc/client";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
+  const { response, isLoading } = use(ResumeContext);
   const ref = useRef();
 
   const { signal } = new AbortController();
-
-  const { response, isLoading } = use(ResumeContext);
-
   const onChange = () => setPreview((prev) => !prev);
 
   `h1, h2 {
@@ -37,8 +36,6 @@ const CoverLetterRenderer = () => {
               headers: {
                 Accept: "application/pdf",
               },
-              cache: "no-cache",
-              signal,
             });
 
             if (!res.ok) {

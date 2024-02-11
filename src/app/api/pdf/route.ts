@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import * as fs from "fs";
 
-export const genPdf = async (req: Request, res: Response) => {
+export const POST = async (req: Request, res: Response) => {
   const body = await req.json();
   const { content, css } = body;
   const { signal } = new AbortController();
@@ -51,12 +51,10 @@ p {
     },
     body: `markdown=${encodeURIComponent(content)}&css=${encodeURIComponent(
       styles
-    )}`,
+    )}&engine=${encodeURIComponent("weasyprint")}`,
     cache: "no-store",
     signal,
   });
   const response = await pdf.arrayBuffer();
   return new NextResponse(response);
 };
-
-export { genPdf as POST };
