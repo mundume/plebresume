@@ -25,6 +25,7 @@ const CoverLetterRenderer = () => {
     <div className="">
       {/* @ts-ignore */}
       {/* <GeneratePDF html={ref} /> */}
+      <Button onClick={() => {}}>Generate</Button>
       <Button
         onClick={async () => {
           try {

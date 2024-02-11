@@ -19,9 +19,10 @@ h2 {
 }
 
  h3, h4 {
-    font-family: "Courier New", Courier, monospace;
+ color:#111827;
     font-size: 1.25em;
     font-weight: 600;
+     font-family:"Arial", sans-serif;
     display:block;
     background-color: #fff;
 
@@ -34,8 +35,8 @@ a {
 }
 
 p {
-    color: #18181B;
-    font-family: "Arial", sans-serif;
+    color:1C2024;
+    font-family: ${font};
     display:block;
      box-sizing: border-box;
      background-color: #fff;
@@ -53,7 +54,6 @@ p {
       styles
     )}&engine=${encodeURIComponent("weasyprint")}`,
     cache: "no-store",
-    signal,
   });
   const response = await pdf.arrayBuffer();
   return new NextResponse(response);

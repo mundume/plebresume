@@ -1,3 +1,3 @@
 "use server";
 
-import mdToPdf from "md-to-pdf";
+export async function generatePDF(content: string) {}
