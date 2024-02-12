@@ -7,30 +7,54 @@ import { Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
 import dynamic from "next/dynamic";
 import { trpc } from "@/app/_trpc/client";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
   const { response, isLoading } = use(ResumeContext);
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`/api/pdf`, {
+        method: "POST",
+        body: JSON.stringify({
+          content: response,
+        }),
+        headers: {
+          Accept: "application/pdf",
+        },
+      });
+      return res.blob();
+    },
+    retryDelay: 200,
+  });
   const ref = useRef();
 
   const { signal } = new AbortController();
   const onChange = () => setPreview((prev) => !prev);
 
-  `h1, h2 {
-    color: MidnightBlue;
-  font-weight:800px;
-}`;
-
   return (
     <div className="">
       {/* @ts-ignore */}
       {/* <GeneratePDF html={ref} /> */}
-      <Button onClick={() => {}}>Generate</Button>
+      <Button
+        onClick={async () => {
+          await mutation.mutate();
+          const url = window.URL.createObjectURL(mutation.data!);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "cover-letter.pdf");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }}
+      >
+        {mutation.isLoading ? "Loading..." : "Generate"}
+      </Button>
       <Button
         onClick={async () => {
           try {
             const res = await fetch("/api/pdf", {
-              method: "POST",
+              method: "GET",
               body: JSON.stringify({
                 content: response,
               }),
