@@ -51,16 +51,6 @@ const PdfRenderer = ({ url, id }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        {/* <Button
-          disabled={isLoading}
-          className="mx-4"
-          onClick={async () => {
-            generateCoverLetter();
-          }}
-        >
-          <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
-          Generate Cover letter
-        </Button> */}
         <CoverLetterForm />
       </div>
       <div className="w-full min-h-screen">

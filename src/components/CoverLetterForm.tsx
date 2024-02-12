@@ -29,8 +29,13 @@ import { ResumeContext } from "./Provider";
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { generateCoverLetter, formValues, setFormValues, isLoading } =
-    use(ResumeContext);
+  const {
+    generateCoverLetter,
+    formValues,
+    setFormValues,
+    isLoading,
+    response,
+  } = use(ResumeContext);
 
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),
@@ -69,7 +74,7 @@ const CoverLetterForm = () => {
                     <FormControl>
                       <Input
                         placeholder=""
-                        {...form.register("jobTitle")}
+                        {...(form.register("jobTitle"), { required: true })}
                         onChange={(e) =>
                           setFormValues({
                             ...formValues,
@@ -107,7 +112,10 @@ const CoverLetterForm = () => {
                 </>
               )}
             />
-            <Button type="submit" onSubmit={() => setIsOpen(!isOpen)}>
+            <Button
+              type="submit"
+              onClick={() => response !== "" && setIsOpen(!isOpen)}
+            >
               Submit
             </Button>
           </form>

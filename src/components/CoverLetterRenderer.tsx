@@ -10,6 +10,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { error } from "console";
 import { toast } from "sonner";
+import { calcLength } from "framer-motion";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
@@ -25,10 +26,15 @@ const CoverLetterRenderer = () => {
           Accept: "application/pdf",
         },
       });
+      if (!res.ok) return;
       return res.blob();
     },
+
     retry: true,
     retryDelay: 1000,
+    onError: (err) => {
+      console.log(err);
+    },
   });
   const ref = useRef();
 
@@ -41,14 +47,26 @@ const CoverLetterRenderer = () => {
       {/* <GeneratePDF html={ref} /> */}
       <Button
         onClick={async () => {
-          const blob = await mutation.mutateAsync();
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", "cover-letter.pdf");
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          try {
+            const blob = await mutation.mutateAsync();
+
+            // Check if the blob contains data
+            if (blob) {
+              console.log(blob);
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.setAttribute("download", "cover-letter.pdf");
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            } else {
+              // Handle the case where the server returned an empty blob
+              console.error("Received an empty PDF from the server.");
+            }
+          } catch (error) {
+            console.error("Error generating PDF:", error);
+          }
         }}
       >
         {mutation.isLoading ? "Loading..." : "Generate"}
