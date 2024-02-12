@@ -23,8 +23,8 @@ export const appRouter = router({
         data: {
           id: user.id,
           email: user.email,
-          firstName: user.family_name,
-          lastName: user.given_name,
+          firstName: user.family_name!,
+          lastName: user.given_name!,
         },
       });
     }
