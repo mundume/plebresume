@@ -8,6 +8,8 @@ import { Button } from "./ui/button";
 import dynamic from "next/dynamic";
 import { trpc } from "@/app/_trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { error } from "console";
+import { toast } from "sonner";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
@@ -25,6 +27,7 @@ const CoverLetterRenderer = () => {
       });
       return res.blob();
     },
+    retry: true,
     retryDelay: 200,
   });
   const ref = useRef();
@@ -38,8 +41,8 @@ const CoverLetterRenderer = () => {
       {/* <GeneratePDF html={ref} /> */}
       <Button
         onClick={async () => {
-          await mutation.mutate();
-          const url = window.URL.createObjectURL(mutation.data!);
+          const blob = await mutation.mutateAsync();
+          const url = window.URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url;
           link.setAttribute("download", "cover-letter.pdf");

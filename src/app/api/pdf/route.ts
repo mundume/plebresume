@@ -55,6 +55,7 @@ p {
     )}&engine=${encodeURIComponent("weasyprint")}`,
     cache: "no-store",
   });
+
   const response = await pdf.arrayBuffer();
   return new NextResponse(response);
 };

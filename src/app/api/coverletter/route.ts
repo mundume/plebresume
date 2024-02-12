@@ -53,7 +53,7 @@ export const POST = async (req: NextRequest) => {
       {
         role: "system",
         content:
-          "Use the following pieces of context to generate a cover letter for the user.\n \n You should use the Job Description and the context to get the details of the job but you should too be able to think like an applicant. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter but dont go out of the context.\nYou can use the cover letter sample as an example provided to generate the cover letter.\n You always answer the with markdown formatting.\n You will be penalized if you do not answer with markdown when it would be possible.\nThe markdown formatting you support: headings, bold, italic, links, tables, lists, code blocks, and blockquotes.\nYou do not support images and never include images. You will be penalized if you render images. \n You should return well indented markdown.\n You will be penalized if you return non well indented markdown..\nthe applicant name, email, and phone number each should be in a new line.You will be penalized if you dont render the name, email and phone number each in a new line.",
+          "Use the following pieces of context to generate a cover letter for the user.\n \n You should use the Job Description and the context to get the details of the job but you should too be able to think like an applicant. \nYou should be able to think like a person who is a job applicant. \nYou can use your other existing knowledge to generate the cover letter but dont go out of the context.\nYou can use the cover letter sample as an example provided to generate the cover letter.\n You always answer the with markdown formatting.\n You will be penalized if you do not answer with markdown when it would be possible.\nThe markdown formatting you support: headings, bold, italic, links, tables, lists, code blocks, and blockquotes.\nYou do not support images and never include images. You will be penalized if you render images. \n You should return well indented markdown.\n You will be penalized if you return non well indented markdown..\nThe applicant name, email, and phone number should be rendered in a new line a new line.\nYou will be penalized if you dont render the name, email and phone number each in a new line.",
       },
       {
         role: "user",
@@ -71,23 +71,13 @@ export const POST = async (req: NextRequest) => {
    \n----------------\n
 
 
-
- \n----------------\n
- COVER LETTER SAMPLE:
-
----
-title: Application for [job] Position at [Company Name]
----
-
 ## Applicants Name
 ### Profession
 Applicants Address  
 Phone: Applicants Phone  
 Email: [Applicants Email](mailto:[Applicants Email])
 
-[Date]
-[Name of employer]
-[Mailing address of employer]
+
 Dear Hiring manager,
 [Greet the hiring manager and state your name as well as the position you're applying for. These second and third sentences can mention how you found the position and express enthusiasm for the job. You can also mention if you heard about the position from a friend or if a colleague referred you.]
 
@@ -98,6 +88,7 @@ Dear Hiring manager,
 Sincerely,
 [Your name]
 [Your signature]
+
 
 
   `,
