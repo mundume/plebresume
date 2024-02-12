@@ -49,6 +49,8 @@ p {
 
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": "*",
+      Accept: "application/pdf",
     },
     body: `markdown=${encodeURIComponent(content)}&css=${encodeURIComponent(
       styles

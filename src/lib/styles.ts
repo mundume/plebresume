@@ -1,7 +1,7 @@
-const font =
+export const font =
   "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
-const styles = `
+export const styles = `
 h2 {
   color:#111827;
     font-weight: 700;

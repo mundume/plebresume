@@ -27,8 +27,6 @@ const CoverLetterRenderer = () => {
       });
       return res.blob();
     },
-    retry: true,
-    retryDelay: 200,
   });
   const ref = useRef();
 
