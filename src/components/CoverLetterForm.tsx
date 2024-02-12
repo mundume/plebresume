@@ -29,7 +29,8 @@ import { ResumeContext } from "./Provider";
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { generateCoverLetter, formValues, setFormValues } = use(ResumeContext);
+  const { generateCoverLetter, formValues, setFormValues, isLoading } =
+    use(ResumeContext);
 
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),
@@ -106,7 +107,7 @@ const CoverLetterForm = () => {
                 </>
               )}
             />
-            <Button type="submit" onSubmit={() => setIsOpen(false)}>
+            <Button type="submit" onSubmit={() => setIsOpen(!isOpen)}>
               Submit
             </Button>
           </form>
