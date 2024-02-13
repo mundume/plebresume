@@ -28,13 +28,12 @@ const CoverLetterRenderer = () => {
       return res.blob();
     },
 
-    retry: 5,
+    retry: true,
     retryDelay: 500,
 
     onError: (err) => {
       console.log(err);
       toast.error("Error Downloading PDF");
-      mutation.reset();
     },
   });
   const ref = useRef();
@@ -79,22 +78,18 @@ const CoverLetterRenderer = () => {
                 <Button
                   onClick={async () => {
                     try {
-                      await mutation.mutate();
+                      await mutation.mutateAsync();
 
                       // Check if the blob contains data
-                      if (mutation.data) {
-                        console.log(mutation.data);
-                        const url = window.URL.createObjectURL(mutation.data);
-                        const link = document.createElement("a");
-                        link.href = url;
-                        link.setAttribute("download", "cover-letter.pdf");
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                      } else {
-                        // Handle the case where the server returned an empty blob
-                        console.error("Received an empty PDF from the server.");
-                      }
+                      const data = await mutation?.data!;
+
+                      const url = window.URL.createObjectURL(data);
+                      const link = document.createElement("a");
+                      link.href = url;
+                      link.setAttribute("download", "cover-letter.pdf");
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
                     } catch (error) {
                       console.error("Error generating PDF:", error);
                     }
