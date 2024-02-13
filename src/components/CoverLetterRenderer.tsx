@@ -3,7 +3,14 @@ import SimpleBar from "simplebar-react";
 import CoverLetter from "./CoverLetter";
 import { ResumeContext, useResumeContext } from "./Provider";
 import { use, useRef, useState } from "react";
-import { Eye, Loader, Pencil } from "lucide-react";
+import {
+  Check,
+  CheckCircle2,
+  DownloadCloud,
+  Eye,
+  Loader,
+  Pencil,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -25,7 +32,15 @@ const CoverLetterRenderer = () => {
       if (!res.ok) {
         throw new Error("Failed to generate PDF");
       }
-      return res.blob();
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "cover-letter.pdf");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     },
 
     retry: true,
@@ -38,7 +53,6 @@ const CoverLetterRenderer = () => {
   });
   const ref = useRef();
 
-  const { signal } = new AbortController();
   const onChange = () => setPreview((prev) => !prev);
 
   return (
@@ -49,7 +63,7 @@ const CoverLetterRenderer = () => {
             <Loader className="w-6 h-6 text-slate-600 animate-spin" />{" "}
             <p className="text-sm prose ">
               Your cover letter is generating you{" "}
-              <span className="text-lg font-bold text-yellow-400">
+              <span className="text-lg font-bold text-purple-500">
                 useless degen
               </span>{" "}
               who cant even write thier own cover letter and you&apos;re there
@@ -63,7 +77,7 @@ const CoverLetterRenderer = () => {
           <>
             {" "}
             {response && (
-              <div className="flex items-center justify-start gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
+              <div className="flex items-center justify-between gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
                 <Button
                   onClick={onChange}
                   size={"icon"}
@@ -75,27 +89,23 @@ const CoverLetterRenderer = () => {
                     <Eye className="w-4 h-4 text-slate-600" />
                   )}
                 </Button>
-                <Button
-                  onClick={async () => {
-                    try {
-                      await mutation.mutateAsync();
-
-                      // Check if the blob contains data
-                      const data = await mutation?.data!;
-
-                      const url = window.URL.createObjectURL(data);
-                      const link = document.createElement("a");
-                      link.href = url;
-                      link.setAttribute("download", "cover-letter.pdf");
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
-                    } catch (error) {
-                      console.error("Error generating PDF:", error);
-                    }
-                  }}
-                >
-                  {mutation.isLoading ? "Loading..." : "Generate"}
+                <Button onClick={() => mutation.mutate()}>
+                  {mutation.isLoading ? (
+                    <>
+                      Downloading...
+                      <Loader className="w-4 h-4 ml-1.5 animate-spin text-slate-600" />{" "}
+                    </>
+                  ) : mutation.isSuccess ? (
+                    <>
+                      Downloaded
+                      <CheckCircle2 className="w-4 h-4 ml-1.5 text-green-400" />
+                    </>
+                  ) : (
+                    <>
+                      Download as PDF
+                      <DownloadCloud className="w-4 h-4 ml-1.5 text-slate-600" />
+                    </>
+                  )}
                 </Button>
               </div>
             )}

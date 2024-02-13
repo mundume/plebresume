@@ -106,7 +106,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       toast.error("There was an error generating your cover letter");
     },
   });
-  const generateCoverLetter = useCallback(() => pleb(), [pleb]);
+  const generateCoverLetter = useCallback(() => pleb(), []);
   const contextValue = useMemo(
     () => ({
       generateCoverLetter,

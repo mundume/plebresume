@@ -1,12 +1,5 @@
-import React, { use, useContext, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import React, { useState } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { Bot, Loader, Pencil, Repeat } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { ResumeContext, useResumeContext } from "./Provider";
+import { useResumeContext } from "./Provider";
 
 type Props = {
   response: string;
@@ -69,11 +62,16 @@ const CoverLetterForm = () => {
           ) : (
             <>
               {isLoading ? (
-                <Loader className="w-4 h-4 mr-1.5 animate-spin" />
+                <>
+                  generating your cover letter
+                  <Loader className="w-4 h-4 ml-1.5 animate-spin" />
+                </>
               ) : (
-                <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+                <>
+                  get your cover letter
+                  <Bot className="w-4 h-4 ml-1.5 hover:shadow-2xl text-purple-500" />
+                </>
               )}
-              get your cover letter
             </>
           )}
         </Button>

@@ -55,8 +55,8 @@ const PdfRenderer = ({ url, id }: Props) => {
           <CoverLetterForm />
           {response ? (
             <Button onClick={() => generateCoverLetter()}>
-              <Repeat className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
               Regenerate
+              <Repeat className="w-4 h-4 ml-1.5 hover:shadow-2xl text-purple-500" />
             </Button>
           ) : null}
         </div>
