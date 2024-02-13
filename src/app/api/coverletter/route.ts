@@ -72,9 +72,9 @@ export const POST = async (req: NextRequest) => {
 
 
 ## Applicants Name  \n
-### Profession (go to the next line)
-Applicants Address (go to the next line)
-Phone: Applicants Phone  (go to the next line)
+### Profession (go to the next line please)
+Applicants Address (go to the next line please)
+Phone: Applicants Phone  (go to the next line please)  
 Email: [Applicants Email](mailto:[Applicants Email])
 
 
