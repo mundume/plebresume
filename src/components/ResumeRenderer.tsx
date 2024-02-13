@@ -10,7 +10,7 @@ import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
 
-import { ResumeContext } from "./Provider";
+import { ResumeContext, useResumeContext } from "./Provider";
 import CoverLetterForm from "./CoverLetterForm";
 
 //pdfjs add globalworker options
@@ -26,7 +26,7 @@ type Props = {
 const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { generateCoverLetter, isLoading, response } = use(ResumeContext);
+  const { generateCoverLetter, isLoading, response } = useResumeContext();
   const { ref, width } = useResizeDetector();
 
   return (
@@ -51,16 +51,12 @@ const PdfRenderer = ({ url, id }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        <div>
+        <div className="flex items-center justify-end gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
           <CoverLetterForm />
           {response ? (
             <Button onClick={() => generateCoverLetter()}>
-              <Repeat
-                className={` w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400 ${
-                  isLoading ? "  animate-pulse" : ""
-                }`}
-              />
-              regenerate
+              <Repeat className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+              Regenerate
             </Button>
           ) : null}
         </div>

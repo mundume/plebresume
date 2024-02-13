@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { ResumeContext } from "./Provider";
+import { ResumeContext, useResumeContext } from "./Provider";
 
 type Props = {
   response: string;
@@ -38,7 +38,7 @@ const CoverLetterForm = () => {
     setFormValues,
     isLoading,
     response,
-  } = use(ResumeContext);
+  } = useResumeContext();
 
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),

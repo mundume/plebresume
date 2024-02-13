@@ -2,7 +2,14 @@
 
 import { trpc } from "@/app/_trpc/client";
 import { useMutation } from "@tanstack/react-query";
-import { ReactNode, createContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  use,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { toast } from "sonner";
 
 type ResumeResponse = {
@@ -14,6 +21,7 @@ type ResumeResponse = {
   setFormValues: (formValues: FormValues) => void;
   setResponse: (response: string) => void;
 };
+
 //this will be moved from usestate to useReducer soon
 export const ResumeContext = createContext<ResumeResponse>({
   generateCoverLetter: () => {},
@@ -98,20 +106,45 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       toast.error("There was an error generating your cover letter");
     },
   });
-  const generateCoverLetter = () => pleb();
+  const generateCoverLetter = useCallback(() => pleb(), [pleb]);
+  const contextValue = useMemo(
+    () => ({
+      generateCoverLetter,
+      fileId,
+      isLoading,
+      response,
+      formValues,
+      setFormValues,
+      setResponse,
+    }),
+    [
+      generateCoverLetter,
+      fileId,
+      isLoading,
+      response,
+      formValues,
+      setFormValues,
+      setResponse,
+    ]
+  );
+
   return (
     <ResumeContext.Provider
       value={{
-        generateCoverLetter,
-        fileId,
-        isLoading,
-        response,
-        formValues,
-        setFormValues,
-        setResponse,
+        ...contextValue,
       }}
     >
       {children}
     </ResumeContext.Provider>
   );
+};
+
+export const useResumeContext = () => {
+  const context = use(ResumeContext);
+  if (!context) {
+    throw new Error(
+      "useResumeContext must be used within a ResumeContextProvider"
+    );
+  }
+  return context;
 };

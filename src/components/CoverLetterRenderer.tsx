@@ -1,7 +1,7 @@
 "use client";
 import SimpleBar from "simplebar-react";
 import CoverLetter from "./CoverLetter";
-import { ResumeContext } from "./Provider";
+import { ResumeContext, useResumeContext } from "./Provider";
 import { use, useRef, useState } from "react";
 import { Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
-  const { response, isLoading } = use(ResumeContext);
+  const { response, isLoading } = useResumeContext();
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await fetch(`/api/pdf`, {
@@ -22,14 +22,19 @@ const CoverLetterRenderer = () => {
           Accept: "application/pdf",
         },
       });
-      if (!res.ok) return;
+      if (!res.ok) {
+        throw new Error("Failed to generate PDF");
+      }
       return res.blob();
     },
 
-    retry: 10,
+    retry: 5,
+    retryDelay: 500,
+
     onError: (err) => {
       console.log(err);
       toast.error("Error Downloading PDF");
+      mutation.reset();
     },
   });
   const ref = useRef();
@@ -74,12 +79,12 @@ const CoverLetterRenderer = () => {
                 <Button
                   onClick={async () => {
                     try {
-                      const blob = await mutation.mutateAsync();
+                      await mutation.mutate();
 
                       // Check if the blob contains data
-                      if (blob) {
-                        console.log(blob);
-                        const url = window.URL.createObjectURL(blob);
+                      if (mutation.data) {
+                        console.log(mutation.data);
+                        const url = window.URL.createObjectURL(mutation.data);
                         const link = document.createElement("a");
                         link.href = url;
                         link.setAttribute("download", "cover-letter.pdf");
