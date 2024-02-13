@@ -52,6 +52,7 @@ const PdfRenderer = ({ url, id }: Props) => {
           </Button>
         </div>
         <CoverLetterForm />
+        <Button onClick={() => generateCoverLetter()}>pleb</Button>
       </div>
       <div className="w-full min-h-screen">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">

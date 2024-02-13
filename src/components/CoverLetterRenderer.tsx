@@ -39,9 +39,6 @@ const CoverLetterRenderer = () => {
 
   return (
     <div className="">
-      {/* @ts-ignore */}
-      {/* <GeneratePDF html={ref} /> */}
-
       <div className="w-full min-h-screen my-4 overflow-hidden">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center gap-1 mx-auto my-auto mt-44">
