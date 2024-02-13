@@ -83,8 +83,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
         done = doneReading;
         const chunkValue = decoder.decode(value);
         accumulatedResponse += chunkValue;
-        //append the chunk to value
-        console.log(accumulatedResponse);
+        //append the chunk to response
 
         setResponse(accumulatedResponse);
         setIsLoading(false);

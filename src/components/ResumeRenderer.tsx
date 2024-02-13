@@ -5,7 +5,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 import { Document, Page, pdfjs } from "react-pdf";
 import { use, useState } from "react";
 import { Button } from "./ui/button";
-import { Bot, ChevronLeft, ChevronRight, Loader } from "lucide-react";
+import { Bot, ChevronLeft, ChevronRight, Loader, Repeat } from "lucide-react";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
@@ -26,7 +26,7 @@ type Props = {
 const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { generateCoverLetter, isLoading } = use(ResumeContext);
+  const { generateCoverLetter, isLoading, response } = use(ResumeContext);
   const { ref, width } = useResizeDetector();
 
   return (
@@ -51,8 +51,19 @@ const PdfRenderer = ({ url, id }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        <CoverLetterForm />
-        <Button onClick={() => generateCoverLetter()}>pleb</Button>
+        <div>
+          <CoverLetterForm />
+          {response ? (
+            <Button onClick={() => generateCoverLetter()}>
+              <Repeat
+                className={` w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400 ${
+                  isLoading ? "  animate-pulse" : ""
+                }`}
+              />
+              regenerate
+            </Button>
+          ) : null}
+        </div>
       </div>
       <div className="w-full min-h-screen">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">

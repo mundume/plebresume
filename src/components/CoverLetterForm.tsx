@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
-import { Bot, Repeat } from "lucide-react";
+import { Bot, Loader, Pencil, Repeat } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -58,13 +58,24 @@ const CoverLetterForm = () => {
       }}
     >
       <DialogTrigger asChild>
-        <Button onClick={() => setIsOpen(true)}>
+        <Button
+          onClick={() => setIsOpen(true)}
+          size={response ? "icon" : "default"}
+        >
           {response ? (
-            <Repeat className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+            <>
+              <Pencil className="w-4 h-4 mr-1.5 hover:shadow-2xl text-slate-600" />{" "}
+            </>
           ) : (
-            <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+            <>
+              {isLoading ? (
+                <Loader className="w-4 h-4 mr-1.5 animate-spin" />
+              ) : (
+                <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+              )}
+              get your cover letter
+            </>
           )}
-          {response ? "Regenerate" : "get your cover letter"}
         </Button>
       </DialogTrigger>
 
