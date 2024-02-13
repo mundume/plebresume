@@ -5,12 +5,8 @@ import { ResumeContext } from "./Provider";
 import { use, useRef, useState } from "react";
 import { Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
-import dynamic from "next/dynamic";
-import { trpc } from "@/app/_trpc/client";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { error } from "console";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { calcLength } from "framer-motion";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
@@ -30,10 +26,10 @@ const CoverLetterRenderer = () => {
       return res.blob();
     },
 
-    retry: true,
-    retryDelay: 1000,
+    retry: 10,
     onError: (err) => {
       console.log(err);
+      toast.error("Error Downloading PDF");
     },
   });
   const ref = useRef();
@@ -45,64 +41,6 @@ const CoverLetterRenderer = () => {
     <div className="">
       {/* @ts-ignore */}
       {/* <GeneratePDF html={ref} /> */}
-      <Button
-        onClick={async () => {
-          try {
-            const blob = await mutation.mutateAsync();
-
-            // Check if the blob contains data
-            if (blob) {
-              console.log(blob);
-              const url = window.URL.createObjectURL(blob);
-              const link = document.createElement("a");
-              link.href = url;
-              link.setAttribute("download", "cover-letter.pdf");
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            } else {
-              // Handle the case where the server returned an empty blob
-              console.error("Received an empty PDF from the server.");
-            }
-          } catch (error) {
-            console.error("Error generating PDF:", error);
-          }
-        }}
-      >
-        {mutation.isLoading ? "Loading..." : "Generate"}
-      </Button>
-      <Button
-        onClick={async () => {
-          try {
-            const res = await fetch("/api/pdf", {
-              method: "GET",
-              body: JSON.stringify({
-                content: response,
-              }),
-              headers: {
-                Accept: "application/pdf",
-              },
-            });
-
-            if (!res.ok) {
-              throw new Error("Failed to generate PDF");
-            }
-
-            const blob = await res.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", "cover-letter.pdf");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          } catch (error) {
-            console.error("Error generating PDF:", error);
-          }
-        }}
-      >
-        Generate PDF
-      </Button>
 
       <div className="w-full min-h-screen my-4 overflow-hidden">
         {isLoading ? (
@@ -136,9 +74,35 @@ const CoverLetterRenderer = () => {
                     <Eye className="w-4 h-4 text-slate-600" />
                   )}
                 </Button>
+                <Button
+                  onClick={async () => {
+                    try {
+                      const blob = await mutation.mutateAsync();
+
+                      // Check if the blob contains data
+                      if (blob) {
+                        console.log(blob);
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement("a");
+                        link.href = url;
+                        link.setAttribute("download", "cover-letter.pdf");
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      } else {
+                        // Handle the case where the server returned an empty blob
+                        console.error("Received an empty PDF from the server.");
+                      }
+                    } catch (error) {
+                      console.error("Error generating PDF:", error);
+                    }
+                  }}
+                >
+                  {mutation.isLoading ? "Loading..." : "Generate"}
+                </Button>
               </div>
             )}
-            <SimpleBar autoHide={false} className="">
+            <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
               {/* @ts-ignore */}
               <div ref={ref}>
                 <CoverLetter preview={preview} response={response} />

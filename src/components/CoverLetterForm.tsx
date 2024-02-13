@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
-import { Bot } from "lucide-react";
+import { Bot, Repeat } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,6 +26,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
 import { ResumeContext } from "./Provider";
 
+type Props = {
+  response: string;
+};
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,8 +59,12 @@ const CoverLetterForm = () => {
     >
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>
-          <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
-          Generate Cover letter
+          {response ? (
+            <Repeat className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+          ) : (
+            <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-yellow-400" />
+          )}
+          {response ? "Regenerate" : "get your cover letter"}
         </Button>
       </DialogTrigger>
 
@@ -114,7 +121,7 @@ const CoverLetterForm = () => {
             />
             <Button
               type="submit"
-              onClick={() => response !== "" && setIsOpen(!isOpen)}
+              onClick={() => !isLoading && setIsOpen(!isOpen)}
             >
               Submit
             </Button>
