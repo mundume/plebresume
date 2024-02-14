@@ -1,26 +1,29 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import "@mdxeditor/editor/style.css";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import { Button } from "./ui/button";
+import { on } from "events";
 
 const CoverLetter = ({
   preview,
   response,
+  updatedValue,
 }: {
   preview: boolean;
   response: string;
+  updatedValue: (value: string) => void;
 }) => {
+  const ref = useRef<MDXEditorMethods>(null);
   const [value, setValue] = useState<string>(response);
-  const ref = React.useRef<MDXEditorMethods>(null);
 
   useEffect(() => {
-    setValue(response);
-    ref.current?.setMarkdown(value);
-  }, [value, response]);
+    ref.current?.setMarkdown(response);
+  }, [response]);
 
+  const updateMd = () => ref.current?.getMarkdown();
   return (
     <>
       <div className="h-full px-4 prose border border-dashed bg-white/90 no-break-inside">
@@ -29,7 +32,12 @@ const CoverLetter = ({
             <ForwardRefEditor
               markdown={""}
               ref={ref}
-              onChange={(e) => console.log(e)}
+              onChange={(e) => {
+                console.log(e);
+
+                setValue(e);
+                updatedValue(e);
+              }}
               readOnly={preview}
             />
           </Suspense>
