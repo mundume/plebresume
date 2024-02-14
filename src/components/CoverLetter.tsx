@@ -6,24 +6,23 @@ import { ForwardRefEditor } from "./ForwardedRefEditor";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import { Button } from "./ui/button";
 import { on } from "events";
+import { useResumeContext } from "./Provider";
 
 const CoverLetter = ({
   preview,
   response,
-  updatedValue,
 }: {
   preview: boolean;
   response: string;
-  updatedValue: (value: string) => void;
 }) => {
+  const { updateResponse } = useResumeContext();
+
   const ref = useRef<MDXEditorMethods>(null);
-  const [value, setValue] = useState<string>(response);
 
   useEffect(() => {
     ref.current?.setMarkdown(response);
   }, [response]);
 
-  const updateMd = () => ref.current?.getMarkdown();
   return (
     <>
       <div className="h-full px-4 prose border border-dashed bg-white/90 no-break-inside">
@@ -35,8 +34,7 @@ const CoverLetter = ({
               onChange={(e) => {
                 console.log(e);
 
-                setValue(e);
-                updatedValue(e);
+                updateResponse(e);
               }}
               readOnly={preview}
             />

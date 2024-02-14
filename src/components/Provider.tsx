@@ -20,6 +20,7 @@ type ResumeResponse = {
   formValues: FormValues;
   setFormValues: (formValues: FormValues) => void;
   setResponse: (response: string) => void;
+  updateResponse: (response: string) => void;
 };
 
 //this will be moved from usestate to useReducer soon
@@ -34,6 +35,7 @@ export const ResumeContext = createContext<ResumeResponse>({
   },
   setFormValues: (formValues: FormValues) => {},
   setResponse: (response: string) => {},
+  updateResponse: (response: string) => {},
 });
 
 type ContextProps = {
@@ -106,6 +108,9 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       toast.error("There was an error generating your cover letter");
     },
   });
+  const updateResponse = useCallback((response: string) => {
+    setResponse(response);
+  }, []);
   const generateCoverLetter = useCallback(() => pleb(), []);
   const contextValue = useMemo(
     () => ({
@@ -116,6 +121,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       formValues,
       setFormValues,
       setResponse,
+      updateResponse,
     }),
     [
       generateCoverLetter,
@@ -125,6 +131,7 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
       formValues,
       setFormValues,
       setResponse,
+      updateResponse,
     ]
   );
 

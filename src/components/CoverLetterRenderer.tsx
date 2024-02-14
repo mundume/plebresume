@@ -19,18 +19,7 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
   const { response, isLoading } = useResumeContext();
-  const [value, setValue] = useState<string>("");
-  const updatedValue = (value: string) => {
-    setValue(value);
-  };
-  const editorRef = useRef<MDXEditorMethods>(null);
 
-  useEffect(() => {
-    editorRef.current?.setMarkdown(value);
-    setValue(response);
-
-    console.log(value);
-  }, [response, value]);
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await fetch(`/api/pdf`, {
@@ -65,9 +54,6 @@ const CoverLetterRenderer = () => {
     },
   });
   const ref = useRef();
-  const updateValue = (value: string) => {
-    setValue(value);
-  };
 
   const onChange = () => setPreview((prev) => !prev);
 
@@ -128,11 +114,7 @@ const CoverLetterRenderer = () => {
             <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
               {/* @ts-ignore */}
               <div ref={ref}>
-                <CoverLetter
-                  preview={preview}
-                  response={value}
-                  updatedValue={updatedValue}
-                />
+                <CoverLetter preview={preview} response={response} />
               </div>
             </SimpleBar>
           </>
