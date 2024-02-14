@@ -30,14 +30,16 @@ export const ourFileRouter = {
           key: file.key,
           name: file.name,
           userId: metadata.userId,
-          url: `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`,
+          url: file.url,
           uploadStatus: "PROCESSING",
         },
       });
       try {
-        const response = await fetch(
-          `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
-        );
+        const response = await fetch(`${file.url}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
         const blob = await response.blob();
         const loader = new PDFLoader(blob);
         const pageLevelDocs = (await loader.load()).map((doc) => {

@@ -63,13 +63,12 @@ const CoverLetterForm = () => {
             <>
               {isLoading ? (
                 <>
-                  generating your cover letter
-                  <Loader className="w-4 h-4 ml-1.5 animate-spin" />
+                  <Loader className="w-4 h-4 text-purple-500 animate-spin" />
                 </>
               ) : (
                 <>
-                  get your cover letter
-                  <Bot className="w-4 h-4 ml-1.5 hover:shadow-2xl text-purple-500" />
+                  <Bot className="w-4 h-4 mr-1.5 hover:shadow-2xl text-purple-500" />
+                  play
                 </>
               )}
             </>

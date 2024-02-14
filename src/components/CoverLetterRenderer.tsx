@@ -6,6 +6,7 @@ import { use, useEffect, useRef, useState } from "react";
 import {
   Check,
   CheckCircle2,
+  Download,
   DownloadCloud,
   Eye,
   Loader,
@@ -19,6 +20,7 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
   const { response, isLoading } = useResumeContext();
+  const [done, setDone] = useState(false);
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -48,6 +50,13 @@ const CoverLetterRenderer = () => {
     retry: true,
     retryDelay: 500,
 
+    onSuccess: () => {
+      setDone(true);
+      setTimeout(() => {
+        mutation.reset();
+        setDone(false);
+      }, 2000);
+    },
     onError: (err) => {
       console.log(err);
       toast.error("Error Downloading PDF");
@@ -91,21 +100,24 @@ const CoverLetterRenderer = () => {
                     <Eye className="w-4 h-4 text-slate-600" />
                   )}
                 </Button>
-                <Button onClick={() => mutation.mutate()}>
+                <Button
+                  onClick={() => mutation.mutate()}
+                  className="flex items-center justify-center"
+                >
                   {mutation.isLoading ? (
                     <>
-                      Downloading...
-                      <Loader className="w-4 h-4 ml-1.5 animate-spin text-slate-600" />{" "}
+                      <Loader className="w-4 h-4 mr-1.5 animate-spin text-purple-500" />{" "}
+                      wait..
                     </>
-                  ) : mutation.isSuccess ? (
+                  ) : mutation.isSuccess && done ? (
                     <>
-                      Downloaded
-                      <CheckCircle2 className="w-4 h-4 ml-1.5 text-green-400" />
+                      <CheckCircle2 className="w-4 h-4 mr-1.5 text-green-400" />
+                      Done{" "}
                     </>
                   ) : (
                     <>
-                      Download as PDF
-                      <DownloadCloud className="w-4 h-4 ml-1.5 text-slate-600" />
+                      <Download className="w-4 h-4 mr-1.5 text-purple-500" />
+                      download
                     </>
                   )}
                 </Button>

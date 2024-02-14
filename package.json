@@ -38,7 +38,8 @@
     "@trpc/react-query": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "@types/jspdf": "^2.0.0",
-    "@uploadthing/react": "6.0.1",
+    "@uploadthing/react": "^6.2.2",
+    "@uploadthing/shared": "6.2.1",
     "ai": "^2.2.31",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -75,7 +76,7 @@
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "unified": "^11.0.4",
-    "uploadthing": "6.0.3",
+    "uploadthing": "6.3.3",
     "vaul": "^0.8.0",
     "ws": "^8.16.0",
     "zod": "^3.22.4"

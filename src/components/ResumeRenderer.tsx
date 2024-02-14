@@ -54,9 +54,12 @@ const PdfRenderer = ({ url, id }: Props) => {
         <div className="flex items-center justify-end gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
           <CoverLetterForm />
           {response ? (
-            <Button onClick={() => generateCoverLetter()}>
-              Regenerate
-              <Repeat className="w-4 h-4 ml-1.5 hover:shadow-2xl text-purple-500" />
+            <Button
+              onClick={() => generateCoverLetter()}
+              size={"icon"}
+              aria-label="Regenerate your cover letter if youre not happy with it"
+            >
+              <Repeat className="w-4 h-4 text-purple-500 hover:shadow-2xl" />
             </Button>
           ) : null}
         </div>
