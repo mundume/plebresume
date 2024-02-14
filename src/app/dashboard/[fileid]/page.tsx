@@ -5,7 +5,6 @@ import { db } from "@/config/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
-import { Provider } from "jotai";
 import { ResumeContextProvider } from "@/components/Provider";
 
 type Params = {
