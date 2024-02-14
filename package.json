@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -60,7 +61,6 @@
     "openai": "^4.24.3",
     "pdf-parse": "^1.1.1",
     "prisma": "^5.7.1",
-    "puppeteer-core": "^22.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
