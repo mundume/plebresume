@@ -15,6 +15,7 @@ import NotificationsPopover from "./NotificationsPopover";
 export const NavBar = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+
   return (
     <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 h-14 bg-white/75 backdrop-blur-lg">
       <MaxWidthWrapper>
@@ -22,7 +23,7 @@ export const NavBar = async () => {
           <Link href="/" className="z-40 flex font-semibold">
             <span>plebresume.</span>
           </Link>
-          <MobileNav user={user} />
+          <MobileNav user={user!} />
           <div className="items-center hidden space-x-4 sm:flex">
             {!user ? (
               <>
