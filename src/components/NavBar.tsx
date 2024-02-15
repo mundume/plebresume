@@ -27,15 +27,6 @@ export const NavBar = async () => {
           <div className="items-center hidden space-x-4 sm:flex">
             {!user ? (
               <>
-                <Link
-                  href="/pricing"
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "sm",
-                  })}
-                >
-                  Pricing
-                </Link>
                 <LoginLink
                   className={buttonVariants({
                     variant: "ghost",
@@ -49,7 +40,8 @@ export const NavBar = async () => {
                     size: "sm",
                   })}
                 >
-                  Get Started <ArrowRightIcon className="ml-1.5 h-5 w-5" />
+                  login
+                  <ArrowRightIcon className="ml-1.5 h-4 w-4 text-purple-500" />
                 </RegisterLink>
               </>
             ) : (
