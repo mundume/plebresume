@@ -1,25 +1,13 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 
 const UserCard = ({ user }: { user: KindeUser }) => {
   return (
-    <Card className="rounded">
-      <CardHeader>
-        <CardTitle className="text-lg font-medium">
-          Welcome Back, Nzai
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p> {user.email}</p>
-      </CardContent>
-    </Card>
+    <div className="mt-6">
+      <h2 className="pb-2 text-3xl font-semibold tracking-tight scroll-m-20 first:mt-0">
+        Hello, {user.given_name}
+      </h2>
+      <p className="text-slate-600">What do you want to create?</p>
+    </div>
   );
 };
 

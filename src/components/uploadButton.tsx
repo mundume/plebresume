@@ -7,6 +7,7 @@ import {
   FileText,
   Loader,
   Trash,
+  Upload,
   UploadCloud,
   XCircle,
 } from "lucide-react";
@@ -171,7 +172,7 @@ const UploadButton = () => {
     >
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>
-          <UploadCloud className="w-4 h-4 mr-2" /> Upload
+          <Upload className="w-4 h-4 mr-1.5 text-purple-500" /> upload
         </Button>
       </DialogTrigger>
       <DialogContent>
