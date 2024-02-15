@@ -4,6 +4,8 @@ import {
   ColumnDef,
   flexRender,
   SortingState,
+  ColumnFiltersState,
+  getFilteredRowModel,
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
@@ -20,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { Input } from "./ui/input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,21 +34,38 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
     columns,
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+
     state: {
       sorting,
+      columnFilters,
     },
   });
 
   return (
     <>
       <div className="">
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter emails..."
+            value={
+              (table.getColumn("status")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("status")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
         <Table className="">
           <TableHeader className="">
             {table.getHeaderGroups().map((headerGroup) => (
