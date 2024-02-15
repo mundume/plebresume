@@ -35,7 +35,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
 
   return (
     <div className="relative sm:hidden text-slate-900">
-      <NotificationsDrawerMobile />
+      {user && <NotificationsDrawerMobile />}
       <Button
         size={"icon"}
         onClick={toggleOpen}
@@ -50,14 +50,14 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
 
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
-          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)] ">
+          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]  ">
             {!user ? (
               <>
-                <li>
+                <li className="border">
                   <Link
                     onClick={() => closeOnCurrent("/sign-up")}
                     href={"/sign-up"}
-                    className="flex items-center w-full font-semibold text-purple-400"
+                    className="flex items-center w-full font-semibold text-purple-400 border border-red-500"
                   >
                     Get started <ArrowRightIcon className="w-5 h-5 ml-2" />
                   </Link>
