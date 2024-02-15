@@ -8,6 +8,8 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { format } from "date-fns";
+
+export const runtime = "edge";
 export const POST = async (req: NextRequest) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -72,9 +74,9 @@ export const POST = async (req: NextRequest) => {
 
 
 ## Applicants Name  \n
-### Profession (go to the next line please)
-Applicants Address (go to the next line please)
-Phone: Applicants Phone  (go to the next line please)  
+### Profession <br />
+Applicants Address<br />
+Phone: Applicants Phone  <br />
 Email: [Applicants Email](mailto:[Applicants Email])
 
 
