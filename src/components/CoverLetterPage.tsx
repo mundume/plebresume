@@ -47,8 +47,7 @@ const CoverLetterPage = ({ user }: { user: User }) => {
           {isLoading ? (
             <SkeletonLoading />
           ) : (
-            <div>
-              <p>Recent files</p>
+            <div className="flex gap-2 ">
               {getUserFiles?.map((file) => (
                 <Card
                   key={file.id}
