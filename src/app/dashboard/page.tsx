@@ -26,13 +26,13 @@ const Page = async () => {
         <div className="w-full">
           <UserCard user={user!} />
         </div>
-        <div className="flex flex-col items-center gap-2 py-6 md:flex-row md:py-0">
+        <div className="flex flex-col items-center gap-4 py-6 sm:gap-2 md:flex-row md:py-0">
           <Link
             className="flex items-center justify-center w-full gap-3 py-1 border rounded md:w-52 bg-zinc-50"
             href="/"
           >
             <FileText className="w-5 h-5 text-green-500" />
-            <div className="t">
+            <div className="">
               <h5 className="text-base font-semibold">Resume</h5>
               <p className="text-sm text-slate-500">coming real soon</p>
             </div>
@@ -42,7 +42,7 @@ const Page = async () => {
             href="/coverletter"
           >
             <FileText className="w-5 h-5 text-purple-500 " />
-            <div className="t">
+            <div className="">
               <h5 className="text-base font-semibold ">Coverletter</h5>
               <p className="text-sm text-slate-500 ">create from scratch.</p>
             </div>
