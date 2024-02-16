@@ -52,14 +52,37 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
         <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
           <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]  ">
             {!user ? (
-              <>
-                <li className="border">
+              // <div>
+              //   <li className="">
+              //     <Link
+              //       onClick={() => closeOnCurrent("/sign-up")}
+              //       href={"/sign-up"}
+              //       className="flex items-center w-full font-semibold text-purple-400"
+              //     >
+              //       register <ArrowRightIcon className="w-5 h-5 ml-2" />
+              //     </Link>
+              //   </li>
+              //   <li className="h-px my-3 bg-gray-300" />
+              //   <li>
+              //     <Link
+              //       onClick={() => closeOnCurrent("/sign-in")}
+              //       href={"/sign-in"}
+              //       className="flex items-center w-full font-semibold"
+              //     >
+              //       login
+              //     </Link>
+              //   </li>
+              //   <li className="h-px my-3 bg-gray-300" />
+              // </div>
+              <div className="">
+                <li className="">
                   <Link
                     onClick={() => closeOnCurrent("/sign-up")}
                     href={"/sign-up"}
-                    className="flex items-center w-full font-semibold text-purple-400 border border-red-500"
+                    className="flex items-center w-full font-semibold "
                   >
-                    Get started <ArrowRightIcon className="w-5 h-5 ml-2" />
+                    register{" "}
+                    <ArrowRightIcon className="w-5 h-5 ml-2 text-purple-400" />
                   </Link>
                 </li>
                 <li className="h-px my-3 bg-gray-300" />
@@ -69,11 +92,10 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                     href={"/sign-in"}
                     className="flex items-center w-full font-semibold"
                   >
-                    Sign in
+                    login
                   </Link>
                 </li>
-                <li className="h-px my-3 bg-gray-300" />
-              </>
+              </div>
             ) : (
               <div className="">
                 <div className="flex items-center justify-between">

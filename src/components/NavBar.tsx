@@ -33,14 +33,14 @@ export const NavBar = async () => {
                     size: "sm",
                   })}
                 >
-                  Sign In
+                  login
                 </LoginLink>
                 <RegisterLink
                   className={buttonVariants({
                     size: "sm",
                   })}
                 >
-                  login
+                  register
                   <ArrowRightIcon className="ml-1.5 h-4 w-4 text-purple-500" />
                 </RegisterLink>
               </>
