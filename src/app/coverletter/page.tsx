@@ -13,7 +13,7 @@ const Page = async () => {
       id: user.id,
     },
   });
-  if (!dbUser) redirect("/auth-callback?origin=dashboard");
+  if (!dbUser) redirect("/auth-callback?origin=coverletter");
   return (
     <MaxWidthWrapper className="px-2 pt-3 my-auto">
       <CoverLetterPage user={user} />
