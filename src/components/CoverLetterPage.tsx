@@ -51,7 +51,7 @@ const CoverLetterPage = ({ user }: { user: User }) => {
             <SkeletonLoading />
           ) : (
             <div className="w-full">
-              <p>Recent files</p>
+              {/* <p>Recent files</p> */}
               {/* <div className="w-full">
                 <DataTable columns={columns} data={payments} />
               </div> */}
