@@ -28,12 +28,12 @@ const Page = async () => {
         </div>
         <Link
           className="flex items-center justify-center gap-3 py-1 border rounded w-52 bg-zinc-50"
-          href="/coverletter"
+          href="/"
         >
           <FileText className="w-5 h-5 text-green-500" />
           <div className="t">
             <h5 className="text-base font-semibold">Resume</h5>
-            <p className="text-sm text-slate-500">create from scratch.</p>
+            <p className="text-sm text-slate-500">coming real soon</p>
           </div>
         </Link>
         <Link

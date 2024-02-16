@@ -55,7 +55,7 @@ const UploadDropzone = () => {
         onDrop={async (acceptedFile) => {
           setIsUploading(true);
           const progressInterval = startSimulatedProgress();
-          console.log(acceptedFile);
+
           //handle file upload
 
           const res = await startUpload(acceptedFile);

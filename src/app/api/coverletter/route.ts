@@ -17,8 +17,7 @@ export const POST = async (req: NextRequest) => {
   const id = user?.id;
 
   const body = await req.json();
-  const { fileId, jobTitle, jobDescription } = coverLetterSchema.parse(body);
-  console.log(fileId, jobTitle, jobDescription);
+  const { fileId, jobTitle, jobDescription } = coverLetterSchema.parse(body)
   if (!user || !user?.id)
     return new Response("Unauthorized", {
       status: 401,
