@@ -18,6 +18,9 @@ import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import DeleteFileButton from "./DeleteFileButton";
 import SkeletonLoading from "./SkeletonLoading";
+import { DataTable } from "./DataTable";
+import { columns } from "./Columns";
+import { payments } from "./Pleb";
 
 type User = KindeUser;
 const CoverLetterPage = ({ user }: { user: User }) => {
@@ -47,7 +50,11 @@ const CoverLetterPage = ({ user }: { user: User }) => {
           {isLoading ? (
             <SkeletonLoading />
           ) : (
-            <div className="flex gap-2 ">
+            <div className="w-full">
+              <p>Recent files</p>
+              {/* <div className="w-full">
+                <DataTable columns={columns} data={payments} />
+              </div> */}
               {getUserFiles?.map((file) => (
                 <Card
                   key={file.id}

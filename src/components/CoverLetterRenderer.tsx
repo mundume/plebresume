@@ -1,21 +1,12 @@
 "use client";
 import SimpleBar from "simplebar-react";
 import CoverLetter from "./CoverLetter";
-import { ResumeContext, useResumeContext } from "./Provider";
-import { use, useEffect, useRef, useState } from "react";
-import {
-  Check,
-  CheckCircle2,
-  Download,
-  DownloadCloud,
-  Eye,
-  Loader,
-  Pencil,
-} from "lucide-react";
+import { useResumeContext } from "./Provider";
+import { useRef, useState } from "react";
+import { CheckCircle2, Download, Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { MDXEditorMethods } from "@mdxeditor/editor";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
