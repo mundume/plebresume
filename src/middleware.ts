@@ -3,5 +3,5 @@ export default function middleware(req: any) {
   return withAuth(req);
 }
 export const config = {
-  matcher: ["/dashboard/:path*", "/coverletter/:path*"],
+  matcher: ["/dashboard", "/coverletter/:path*"],
 };
