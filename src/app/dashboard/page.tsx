@@ -3,12 +3,22 @@ import UserCard from "@/components/UserCard";
 import { Card } from "@/components/ui/card";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { FileText } from "lucide-react";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import React from "react";
+import { db } from "@/config/prisma";
 
 const Page = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+
+  if (!user || !user.id) redirect("/auth-callback?origin=dashboard");
+  const dbUser = await db.user.findFirst({
+    where: {
+      id: user.id,
+    },
+  });
+  if (!dbUser) redirect("/auth-callback?origin=dashboard");
 
   return (
     <MaxWidthWrapper className="mt-10 text-slate-900">
