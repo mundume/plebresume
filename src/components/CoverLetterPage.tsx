@@ -52,9 +52,9 @@ const CoverLetterPage = ({ user }: { user: User }) => {
           ) : (
             <div className="w-full">
               <p>Recent files</p>
-              <div className="w-full">
+              {/* <div className="w-full">
                 <DataTable columns={columns} data={payments} />
-              </div>
+              </div> */}
               {getUserFiles?.map((file) => (
                 <Card
                   key={file.id}
