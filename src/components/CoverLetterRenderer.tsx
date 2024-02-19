@@ -80,11 +80,7 @@ const CoverLetterRenderer = () => {
             {" "}
             {response && (
               <div className="flex items-center justify-between gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
-                <Button
-                  onClick={onChange}
-                  size={"icon"}
-                  className="transition-all hover:brightness-125 hover:shadow-2xl"
-                >
+                <Button onClick={onChange} size={"icon"} className="">
                   {preview ? (
                     <Pencil className="w-4 h-4 text-slate-600" />
                   ) : (

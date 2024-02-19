@@ -30,6 +30,7 @@ const CoverLetterPage = ({ user }: { user: User }) => {
     isError,
     error,
   } = trpc.getUserFiles.useQuery();
+  console.log(getUserFiles);
   if (isError) {
     return <p className="text-6xl text-red-600">{error.message}</p>;
   }
@@ -51,10 +52,10 @@ const CoverLetterPage = ({ user }: { user: User }) => {
             <SkeletonLoading />
           ) : (
             <div className="w-full">
-              {/* <p>Recent files</p> */}
-              {/* <div className="w-full">
+              <p>Recent files</p>
+              <div className="w-full">
                 <DataTable columns={columns} data={payments} />
-              </div> */}
+              </div>
               {getUserFiles?.map((file) => (
                 <Card
                   key={file.id}
