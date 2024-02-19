@@ -20,7 +20,6 @@ import DeleteFileButton from "./DeleteFileButton";
 import SkeletonLoading from "./SkeletonLoading";
 import { DataTable } from "./DataTable";
 import { columns } from "./Columns";
-import { payments } from "./Pleb";
 
 type User = KindeUser;
 const CoverLetterPage = ({ user }: { user: User }) => {

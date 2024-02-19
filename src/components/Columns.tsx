@@ -3,7 +3,7 @@
 import { AppRouter } from "@/trpc";
 import { ColumnDef } from "@tanstack/react-table";
 import { inferRouterOutputs } from "@trpc/server";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -39,7 +39,17 @@ export const columns: ColumnDef<TFileData>[] = [
   },
   {
     accessorKey: "size",
-    header: "Size",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Size
+          <ArrowUpDown className="w-4 h-4 ml-2" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const size = row.original.size!;
       return <p className="">{(size / 1024).toFixed(2)}kb</p>;
