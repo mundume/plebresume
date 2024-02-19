@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { format } from "date-fns/format";
 
 type TRPCRouterOutput = inferRouterOutputs<AppRouter>;
 
@@ -31,13 +32,6 @@ export const columns: ColumnDef<TFileData>[] = [
   },
 
   {
-    accessorKey: "updated",
-    header: "Last Updated",
-    cell: ({ row }) => {
-      return <p className="">{row.original.updatedAt}</p>;
-    },
-  },
-  {
     accessorKey: "size",
     header: ({ column }) => {
       return (
@@ -53,6 +47,26 @@ export const columns: ColumnDef<TFileData>[] = [
     cell: ({ row }) => {
       const size = row.original.size!;
       return <p className="">{(size / 1024).toFixed(2)}kb</p>;
+    },
+  },
+  {
+    accessorKey: "updated",
+    header: ({ column }) => {
+      return (
+        <Button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last updated
+          <ArrowUpDown className="w-4 h-4 ml-2" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <p className="">
+          {format(row.original.updatedAt, "MMM d, yyyy, h:mm a")}
+        </p>
+      );
     },
   },
   {
