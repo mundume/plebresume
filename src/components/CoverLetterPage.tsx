@@ -51,42 +51,12 @@ const CoverLetterPage = ({ user }: { user: User }) => {
             <SkeletonLoading />
           ) : (
             <div className="w-full">
-              <p>Recent files</p>
-              <div className="w-full">
+              <div className="w-full pt-10">
+                <p className="pb-2 text-3xl font-semibold tracking-tight scroll-m-20 first:mt-0">
+                  Recent files
+                </p>
                 <DataTable columns={columns} data={getUserFiles} />
               </div>
-              {getUserFiles?.map((file) => (
-                <Card
-                  key={file.id}
-                  className="relative w-full p-0 rounded sm:w-56 h-28 "
-                >
-                  <CardContent className="p-4 ">
-                    <div className="flex flex-wrap items-center flex-1 gap-2">
-                      <FileText className="w-4 h-4 text-slate-500 shrink-0" />
-                      <h1 className="text-sm truncate ">
-                        {file.name.length > 10
-                          ? `${file.name.slice(0, 10)}...`
-                          : file.name}
-                      </h1>
-
-                      <div className="absolute flex items-center top-1 right-1 ">
-                        <DeleteFileButton fileId={file.id} />
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex items-center justify-center mt-4">
-                    <Link
-                      href={`/coverletter/${file.id}`}
-                      className={buttonVariants({
-                        variant: "default",
-                      })}
-                    >
-                      View
-                      <ChevronRight className="w-4 h-4 text-slate-500 ml-1.5" />
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))}
             </div>
           )}
         </div>
