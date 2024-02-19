@@ -31,16 +31,20 @@ import {
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { TFileData } from "./Columns";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
+// interface DataTableProps<TData, TValue> {
+//   columns:
+//   data: TFileData;
+// }
 
-export function DataTable<TData, TValue>({
+export function DataTable({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: {
+  columns: any;
+  data: TFileData;
+}) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -69,6 +73,9 @@ export function DataTable<TData, TValue>({
     <>
       <div className="">
         <div className="flex items-center py-4">
+          {data.map((item) => (
+            <p key={item.id}>{item.name}</p>
+          ))}
           <Input
             placeholder="Filter emails..."
             value={
