@@ -4,6 +4,7 @@ import { AppRouter } from "@/trpc";
 import { ColumnDef } from "@tanstack/react-table";
 import { inferRouterOutputs } from "@trpc/server";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,12 +16,36 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns/format";
+import DeleteFileButton from "./DeleteFileButton";
 
 type TRPCRouterOutput = inferRouterOutputs<AppRouter>;
 
 export type TFileData = TRPCRouterOutput["getUserFiles"][0];
 
 export const columns: ColumnDef<TFileData>[] = [
+  {
+    id: "select",
+    header: ({ table, column }) => {
+      return (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      );
+    },
+
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+  },
   {
     accessorKey: "name",
     header: () => <p className="text-left">Name</p>,
@@ -44,6 +69,7 @@ export const columns: ColumnDef<TFileData>[] = [
         </Button>
       );
     },
+
     cell: ({ row }) => {
       const size = row.original.size!;
       return (
@@ -51,6 +77,7 @@ export const columns: ColumnDef<TFileData>[] = [
       );
     },
   },
+
   {
     accessorKey: "updated",
     header: ({ column }) => {
@@ -82,8 +109,10 @@ export const columns: ColumnDef<TFileData>[] = [
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <DeleteFileButton fileId={payment.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

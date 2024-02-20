@@ -3,20 +3,7 @@
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import UserCard from "./UserCard";
 import UploadButton from "./uploadButton";
-import { Progress } from "./ui/progress";
 import { trpc } from "@/app/_trpc/client";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import { ChevronRight, FileText, Loader, Trash } from "lucide-react";
-import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
-import DeleteFileButton from "./DeleteFileButton";
 import SkeletonLoading from "./SkeletonLoading";
 import { DataTable } from "./DataTable";
 import { columns } from "./Columns";
@@ -32,6 +19,8 @@ const CoverLetterPage = ({ user }: { user: User }) => {
   if (isError) {
     return <p className="text-6xl text-red-600">{error.message}</p>;
   }
+
+  async function handleDeleteFile(id: string) {}
 
   return (
     <>

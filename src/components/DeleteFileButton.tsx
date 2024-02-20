@@ -2,7 +2,8 @@
 import { trpc } from "@/app/_trpc/client";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { Loader, Trash } from "lucide-react";
+import { Command, Delete, Loader, Trash } from "lucide-react";
+import { toast } from "sonner";
 type Props = {
   fileId: string;
 };
@@ -17,22 +18,28 @@ const DeleteFileButton = ({ fileId }: Props) => {
   } = trpc.deleteFile.useMutation({
     onSuccess: () => {
       utils.getUserFiles.invalidate();
+      toast.success("File deleted");
     },
     onMutate: ({ id }) => {
       setisCurrentDeleting(id);
     },
     onSettled: () => {
       setisCurrentDeleting(null);
+      toast.dismiss();
     },
   });
+  if (isLoading) toast.loading("Deleting file");
   return (
-    <Button size={"icon"} onClick={() => deleteFile({ id: fileId })}>
-      {isCurrentDeleting === fileId ? (
-        <Loader className="w-4 h-4 animate-spin" />
-      ) : (
-        <Trash className="w-4 h-4 text-red-500" />
-      )}
-    </Button>
+    <p
+      onClick={() => deleteFile({ id: fileId })}
+      className="flex items-center justify-between w-full"
+    >
+      Delete{" "}
+      <span className="flex ">
+        <Command className="w-4 h-4 text-slate-600 " />
+        <Delete className="w-4 h-4 text-slate-600 " />
+      </span>
+    </p>
   );
 };
 
