@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns/format";
 import DeleteFileButton from "./DeleteFileButton";
+import Link from "next/link";
 
 type TRPCRouterOutput = inferRouterOutputs<AppRouter>;
 
@@ -52,7 +53,7 @@ export const columns: ColumnDef<TFileData>[] = [
     cell: ({ row }) => {
       const k = row.original.name;
 
-      return <p>{k}</p>;
+      return <Link href={`/coverletter/${row.original.id}`}>{k}</Link>;
     },
   },
 
