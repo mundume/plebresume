@@ -46,27 +46,19 @@ export const columns: ColumnDef<TFileData>[] = [
     },
     cell: ({ row }) => {
       const size = row.original.size!;
-      return <p className="">{(size / 1024).toFixed(2)}kb</p>;
+      return (
+        <p className="text-sm text-slate-500">{(size / 1024).toFixed(2)}kb</p>
+      );
     },
   },
   {
     accessorKey: "updated",
     header: ({ column }) => {
-      return (
-        <Button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Last updated
-          <ArrowUpDown className="w-4 h-4 ml-2" />
-        </Button>
-      );
+      return <p> Last updated</p>;
     },
     cell: ({ row }) => {
-      return (
-        <p className="">
-          {format(row.original.updatedAt, "MMM d, yyyy, h:mm a")}
-        </p>
-      );
+      const updatedAt = row.original.updatedAt;
+      return <p className=""> {format(updatedAt, "MMM d, yyyy, h:mm a")}</p>;
     },
   },
   {
