@@ -11,6 +11,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import UserAccountNav from "./UserDropdown";
 import MobileNav from "./MobileNav";
 import NotificationsPopover from "./NotificationsPopover";
+import { ModeToggle } from "./theme-toggle";
 
 export const NavBar = async () => {
   const { getUser } = getKindeServerSession();
@@ -24,6 +25,7 @@ export const NavBar = async () => {
             <span>plebresume.</span>
           </Link>
           <MobileNav user={user!} />
+          <ModeToggle />
           <div className="items-center hidden space-x-4 sm:flex">
             {!user ? (
               <>
