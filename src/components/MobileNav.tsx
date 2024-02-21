@@ -40,6 +40,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
       {user && <NotificationsDrawerMobile />}
       <Button
         size={"icon"}
+        variant={"pleb"}
         onClick={toggleOpen}
         className="relative z-50 ml-1 rounded-full"
       >
@@ -52,7 +53,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
 
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
-          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)] text-slate-500 ">
+          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]  text-popover-foreground ">
             {!user ? (
               <div className="">
                 <li className="">
@@ -80,7 +81,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
               <div className="">
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-slate-500 ">{user.email}</p>
-                  <Avatar className="flex items-center justify-center dark:text-slate-500 dark:bg-accent">
+                  <Avatar className="flex items-center justify-center dark:text-slate-600 dark:bg-accent">
                     {getInitials(user?.given_name!, user?.family_name!)}
                   </Avatar>
                 </div>
