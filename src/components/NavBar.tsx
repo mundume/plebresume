@@ -64,12 +64,10 @@ export const NavBar = async () => {
                 </div>
               </>
             )}
+            <ModeToggle />
           </div>
         </div>
       </MaxWidthWrapper>
-      <div className="hidden px-6 sm:block">
-        <ModeToggle />
-      </div>
     </nav>
   );
 };

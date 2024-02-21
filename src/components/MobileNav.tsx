@@ -44,38 +44,16 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
         className="relative z-50 ml-1 rounded-full"
       >
         {isOpen ? (
-          <X className="w-5 h-5 text-slate-600" />
+          <X className="w-5 h-5 text-slate-600 dark:text-slate-50" />
         ) : (
-          <Menu className="w-5 h-5 text-slate-600" />
+          <Menu className="w-5 h-5 text-slate-600 " />
         )}
       </Button>
 
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
-          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]  ">
+          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)] text-slate-500 ">
             {!user ? (
-              // <div>
-              //   <li className="">
-              //     <Link
-              //       onClick={() => closeOnCurrent("/sign-up")}
-              //       href={"/sign-up"}
-              //       className="flex items-center w-full font-semibold text-purple-400"
-              //     >
-              //       register <ArrowRightIcon className="w-5 h-5 ml-2" />
-              //     </Link>
-              //   </li>
-              //   <li className="h-px my-3 bg-gray-300" />
-              //   <li>
-              //     <Link
-              //       onClick={() => closeOnCurrent("/sign-in")}
-              //       href={"/sign-in"}
-              //       className="flex items-center w-full font-semibold"
-              //     >
-              //       login
-              //     </Link>
-              //   </li>
-              //   <li className="h-px my-3 bg-gray-300" />
-              // </div>
               <div className="">
                 <li className="">
                   <Link
@@ -101,12 +79,9 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
             ) : (
               <div className="">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-slate-500">{user.email}</p>
-                  <Avatar>
-                    <AvatarImage src={user?.picture!} />
-                    <AvatarFallback className="border text-zinc-800">
-                      {getInitials(user?.given_name!, user?.family_name!)}
-                    </AvatarFallback>
+                  <p className="text-sm text-slate-500 ">{user.email}</p>
+                  <Avatar className="flex items-center justify-center dark:text-slate-500 dark:bg-accent">
+                    {getInitials(user?.given_name!, user?.family_name!)}
                   </Avatar>
                 </div>
                 <li className="h-px my-3 bg-gray-300" />
@@ -114,7 +89,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                   <Link
                     onClick={() => closeOnCurrent("/dashboard")}
                     href={"/dashboard"}
-                    className="flex items-center w-full text-purple-400"
+                    className="flex items-center w-full"
                   >
                     Dashboard
                   </Link>
@@ -140,7 +115,8 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                   </Link>
                 </li>
                 <li className="h-px my-3 bg-gray-300" />
-                <li>
+                <li className="flex items-center justify-between w-full">
+                  Theme
                   <MobileThemeToggle />
                 </li>
               </div>

@@ -21,24 +21,24 @@ const Page = async () => {
   if (!dbUser) redirect("/auth-callback?origin=dashboard");
 
   return (
-    <MaxWidthWrapper className="mt-10 text-slate-900">
+    <MaxWidthWrapper className="mt-10">
       <div className="flex flex-col justify-between w-full md:flex-row">
-        <div className="w-full">
+        <div className="w-full ">
           <UserCard user={user!} />
         </div>
         <div className="flex flex-col items-center gap-4 py-6 sm:gap-2 md:flex-row md:py-0">
           <Link
-            className="flex items-center justify-center w-full gap-3 py-1 border rounded md:w-52 bg-zinc-50"
+            className="flex items-center justify-center w-full gap-3 py-1 border rounded shadow md:w-52 bg-zinc-50 dark:bg-background"
             href="/"
           >
             <FileText className="w-5 h-5 text-green-500" />
             <div className="">
-              <h5 className="text-base font-semibold">Resume</h5>
+              <h5 className="text-base font-semibold ">Resume</h5>
               <p className="text-sm text-slate-500">coming real soon</p>
             </div>
           </Link>
           <Link
-            className="flex items-center justify-center w-full gap-3 py-1 border rounded md:w-52 bg-zinc-50"
+            className="flex items-center justify-center w-full gap-3 py-1 border rounded shadow md:w-52 bg-zinc-50 dark:bg-background"
             href="/coverletter"
           >
             <FileText className="w-5 h-5 text-purple-500 " />

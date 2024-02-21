@@ -23,7 +23,7 @@ const CoverLetterPage = ({ user }: { user: User }) => {
   async function handleDeleteFile(id: string) {}
 
   return (
-    <>
+    <div className="">
       <div className="flex justify-between flex-1 mt-10 text-zinc-800">
         <div className="">
           <h2 className="pb-2 text-3xl font-semibold tracking-tight scroll-m-20 first:mt-0">
@@ -49,7 +49,7 @@ const CoverLetterPage = ({ user }: { user: User }) => {
           )}
         </div>
       </>
-    </>
+    </div>
   );
 };
 
