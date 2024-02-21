@@ -9,6 +9,8 @@ import { Button } from "./ui/button";
 import NotificationsDrawerMobile from "./NotificationsDrawerMobile";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { ModeToggle } from "./theme-toggle";
+import MobileThemeToggle from "./mobile-theme-toggle";
 
 const MobileNav = ({ user }: { user: KindeUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -138,6 +140,9 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                   </Link>
                 </li>
                 <li className="h-px my-3 bg-gray-300" />
+                <li>
+                  <MobileThemeToggle />
+                </li>
               </div>
             )}
           </ul>

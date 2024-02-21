@@ -18,7 +18,7 @@ export const NavBar = async () => {
   const user = await getUser();
 
   return (
-    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 dark:border-none h-14 backdrop-blur-lg ">
+    <nav className="sticky inset-x-0 top-0 z-30 flex items-center w-full transition-all border-b border-gray-200 dark:border-none h-14 backdrop-blur-lg">
       <MaxWidthWrapper>
         <div className="flex items-center justify-between border-b h-14 border-zinc-200 dark:border-none">
           <Link href="/" className="z-40 flex font-semibold">
@@ -61,13 +61,15 @@ export const NavBar = async () => {
                 <div className="flex items-center justify-center gap-2">
                   <NotificationsPopover />
                   <UserAccountNav />
-                  <ModeToggle />
                 </div>
               </>
             )}
           </div>
         </div>
       </MaxWidthWrapper>
+      <div className="hidden px-6 sm:block">
+        <ModeToggle />
+      </div>
     </nav>
   );
 };
