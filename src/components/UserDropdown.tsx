@@ -43,7 +43,7 @@ const UserAccountNav = async ({}) => {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="bg-white" align="end">
+        <DropdownMenuContent align="end">
           <div className="flex items-center justify-start gap-2 p-2">
             <div className="flex flex-col space-y-0.5 leading-none">
               {user?.family_name && (

@@ -32,7 +32,7 @@ const PdfRenderer = ({ url, id }: Props) => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <div className="flex items-center justify-start gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
+        <div className="flex items-center justify-start gap-4 px-4 py-4 backdrop-blur-lg">
           <ResumeFullscreen url={url} />
           <Button
             onClick={() => setPageNumber((prev) => prev - 1)}
@@ -51,7 +51,7 @@ const PdfRenderer = ({ url, id }: Props) => {
             <ChevronRight className="w-4 h-4 text-slate-600" />
           </Button>
         </div>
-        <div className="flex items-center justify-end gap-4 px-4 py-4 bg-white/50 backdrop-blur-lg">
+        <div className="flex items-center justify-end gap-4 px-4 py-4 backdrop-blur-lg">
           <CoverLetterForm />
           {response ? (
             <Button

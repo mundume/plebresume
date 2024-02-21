@@ -18,7 +18,7 @@ export const NavBar = async () => {
   const user = await getUser();
 
   return (
-    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 h-14 bg-white/75 backdrop-blur-lg">
+    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 h-14 backdrop-blur-lg ">
       <MaxWidthWrapper>
         <div className="flex items-center justify-between border-b h-14 border-zinc-200">
           <Link href="/" className="z-40 flex font-semibold">
