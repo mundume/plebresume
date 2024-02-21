@@ -171,7 +171,11 @@ const UploadButton = () => {
       }}
     >
       <DialogTrigger asChild>
-        <Button onClick={() => setIsOpen(true)}>
+        <Button
+          onClick={() => setIsOpen(true)}
+          className="dark:border dark:border-slate-800"
+          variant={"pleb"}
+        >
           <Upload className="w-4 h-4 mr-1.5 text-purple-500" /> upload
         </Button>
       </DialogTrigger>

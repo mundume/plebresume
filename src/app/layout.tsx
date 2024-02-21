@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <body className={`${GeistSans.className} bg-background`}>
+        <body className={`${GeistSans.className} bg-background `}>
           <ThemeProvider attribute="class" defaultTheme="system">
             <NavBar />
             <Toaster />

@@ -26,7 +26,7 @@ const Page = async ({ params }: Params) => {
   });
   return (
     <ResumeContextProvider fileId={file?.id!}>
-      <div className="flex flex-col gap-2 md:flex-row break-inside-avoid-column">
+      <div className="flex flex-col gap-2 overflow-x-hidden overflow-y-hidden md:flex-row break-inside-avoid-column">
         <div className="w-full md:w-1/2">
           <ResumeRenderer url={file?.url!} id={file?.id!} />
         </div>
