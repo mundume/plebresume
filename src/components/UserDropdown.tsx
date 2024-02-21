@@ -31,7 +31,10 @@ const UserAccountNav = async ({}) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="overflow-visible">
-          <Button className="flex items-center gap-2 rounded-full w-14 ">
+          <Button
+            className="flex items-center gap-2 rounded-full w-14 "
+            variant={"pleb"}
+          >
             <Avatar className="flex items-center ">
               {user?.picture ? (
                 <Image src={user?.picture} alt="profile" />

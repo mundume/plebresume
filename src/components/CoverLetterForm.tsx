@@ -53,11 +53,12 @@ const CoverLetterForm = () => {
       <DialogTrigger asChild>
         <Button
           onClick={() => setIsOpen(true)}
+          variant={response ? "outline" : "default"}
           size={response ? "icon" : "default"}
         >
           {response ? (
             <>
-              <Pencil className="w-4 h-4 mr-1.5 hover:shadow-2xl text-slate-600" />{" "}
+              <Pencil className="w-4 h-4 hover:shadow-2xl text-slate-600" />{" "}
             </>
           ) : (
             <>

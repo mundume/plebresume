@@ -25,8 +25,8 @@ const CoverLetter = ({
 
   return (
     <>
-      <div className="h-full px-4 prose bg-white/90 no-break-inside">
-        <div className="mt-2">
+      <div className="h-full px-4 prose bg-white no-break-inside">
+        <div className="">
           <Suspense fallback={"..........."}>
             <ForwardRefEditor
               markdown={""}

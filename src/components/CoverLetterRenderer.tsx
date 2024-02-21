@@ -79,17 +79,22 @@ const CoverLetterRenderer = () => {
           <>
             {" "}
             {response && (
-              <div className="flex items-center justify-between gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
-                <Button onClick={onChange} size={"icon"} className="">
+              <div className="flex items-center justify-between gap-4 px-4 pb-4 backdrop-blur-lg">
+                <Button
+                  onClick={onChange}
+                  size={"icon"}
+                  className=""
+                  variant={"outline"}
+                >
                   {preview ? (
-                    <Pencil className="w-4 h-4 text-slate-600" />
+                    <Pencil className="w-4 h-4 transition duration-200 text-slate-600 hover:opacity-1 " />
                   ) : (
-                    <Eye className="w-4 h-4 text-slate-600" />
+                    <Eye className="w-4 h-4 transition duration-200 text-slate-600 hover:opacity-1" />
                   )}
                 </Button>
                 <Button
                   onClick={() => mutation.mutate()}
-                  className="flex items-center justify-center"
+                  className="flex items-center justify-center dark:bg-accent dark:shadow-sm dark:hover:bg-accent dark:hover:text-accent-foreground"
                 >
                   {mutation.isLoading ? (
                     <>
@@ -110,7 +115,7 @@ const CoverLetterRenderer = () => {
                 </Button>
               </div>
             )}
-            <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
+            <SimpleBar autoHide={false} className="max-h-[calc(100vh)]">
               {/* @ts-ignore */}
               <div ref={ref}>
                 <CoverLetter preview={preview} response={response} />

@@ -38,6 +38,7 @@ const PdfRenderer = ({ url, id }: Props) => {
             onClick={() => setPageNumber((prev) => prev - 1)}
             disabled={pageNumber <= 1}
             size={"icon"}
+            variant={"outline"}
             aria-label="Previous page"
           >
             <ChevronLeft className="w-4 h-4 text-slate-600" />
@@ -46,9 +47,11 @@ const PdfRenderer = ({ url, id }: Props) => {
             onClick={() => setPageNumber((prev) => prev + 1)}
             disabled={pageNumber === numPages || numPages === undefined}
             size={"icon"}
+            variant={"outline"}
             aria-label="Next page"
           >
             <ChevronRight className="w-4 h-4 text-slate-600" />
+            <span className="sr-only">Toggle theme</span>
           </Button>
         </div>
         <div className="flex items-center justify-end gap-4 px-4 py-4 backdrop-blur-lg">
@@ -57,6 +60,7 @@ const PdfRenderer = ({ url, id }: Props) => {
             <Button
               onClick={() => generateCoverLetter()}
               size={"icon"}
+              variant={"outline"}
               aria-label="Regenerate your cover letter if youre not happy with it"
             >
               <Repeat className="w-4 h-4 text-purple-500 hover:shadow-2xl" />
@@ -65,7 +69,7 @@ const PdfRenderer = ({ url, id }: Props) => {
         </div>
       </div>
       <div className="w-full min-h-screen">
-        <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
+        <SimpleBar autoHide={false} className="max-h-[calc(100vh)]">
           <div ref={ref}>
             <Document
               file={url}

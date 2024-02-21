@@ -18,14 +18,14 @@ export const NavBar = async () => {
   const user = await getUser();
 
   return (
-    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 h-14 backdrop-blur-lg ">
+    <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 dark:border-none h-14 backdrop-blur-lg ">
       <MaxWidthWrapper>
-        <div className="flex items-center justify-between border-b h-14 border-zinc-200">
+        <div className="flex items-center justify-between border-b h-14 border-zinc-200 dark:border-none">
           <Link href="/" className="z-40 flex font-semibold">
             <span>plebresume.</span>
           </Link>
           <MobileNav user={user!} />
-          <ModeToggle />
+
           <div className="items-center hidden space-x-4 sm:flex">
             {!user ? (
               <>
@@ -45,6 +45,7 @@ export const NavBar = async () => {
                   register
                   <ArrowRightIcon className="ml-1.5 h-4 w-4 text-purple-500" />
                 </RegisterLink>
+                <ModeToggle />
               </>
             ) : (
               <>
@@ -60,6 +61,7 @@ export const NavBar = async () => {
                 <div className="flex items-center justify-center gap-2">
                   <NotificationsPopover />
                   <UserAccountNav />
+                  <ModeToggle />
                 </div>
               </>
             )}
