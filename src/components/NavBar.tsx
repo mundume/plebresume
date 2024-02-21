@@ -12,6 +12,7 @@ import UserAccountNav from "./UserDropdown";
 import MobileNav from "./MobileNav";
 import NotificationsPopover from "./NotificationsPopover";
 import { ModeToggle } from "./theme-toggle";
+import { cn } from "@/lib/utils";
 
 export const NavBar = async () => {
   const { getUser } = getKindeServerSession();
@@ -19,7 +20,7 @@ export const NavBar = async () => {
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 flex items-center w-full transition-all border-b border-gray-200 dark:border-none h-14 backdrop-blur-lg ">
-      <MaxWidthWrapper className="max-w-full px-0 m-0 ">
+      <MaxWidthWrapper className="max-w-full ">
         <div className="flex items-center justify-between border-b h-14 border-zinc-200 dark:border-none ">
           <Link href="/" className="z-40 flex font-semibold">
             <span>plebresume.</span>
@@ -38,9 +39,11 @@ export const NavBar = async () => {
                   login
                 </LoginLink>
                 <RegisterLink
-                  className={buttonVariants({
-                    size: "sm",
-                  })}
+                  className={cn(
+                    buttonVariants({
+                      size: "sm",
+                    })
+                  )}
                 >
                   register
                   <ArrowRightIcon className="ml-1.5 h-4 w-4 text-purple-500" />

@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import NotificationIcon from "./Bellicon";
-import { Menu, Minus, X } from "lucide-react";
-import { Button } from "./ui/button";
+import { Menu, Minus, Twitter, X } from "lucide-react";
+import { Button, buttonVariants } from "./ui/button";
 import NotificationsDrawerMobile from "./NotificationsDrawerMobile";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { ModeToggle } from "./theme-toggle";
 import MobileThemeToggle from "./mobile-theme-toggle";
+import { cn } from "@/lib/utils";
 
 const MobileNav = ({ user }: { user: KindeUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -52,10 +53,10 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
       </Button>
 
       {isOpen ? (
-        <div className="fixed inset-0 z-0 w-full duration-200 animate-in slide-in-from-left-40 fade-in-100">
-          <ul className="absolute grid w-full gap-3 px-10 pt-32   bg-white  border-b shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]  text-popover-foreground ">
+        <div className="fixed inset-0 z-0 w-full duration-200 h-100vh animate-in slide-in-from-left-40 fade-in-100">
+          <ul className="absolute grid w-full gap-3 px-10    bg-white  shadow-xl dark:bg-background  min-h-[calc(100vh-1rem)]  text-popover-foreground ">
             {!user ? (
-              <div className="">
+              <div className="pt-32">
                 <li className="">
                   <Link
                     onClick={() => closeOnCurrent("/sign-up")}
@@ -78,8 +79,23 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                 </li>
               </div>
             ) : (
-              <div className="">
-                <div className="flex items-center justify-between">
+              <div className="pt-16">
+                <div className="min-w-full">
+                  <Link
+                    className={cn(
+                      buttonVariants({
+                        size: "lg",
+                        variant: "outline",
+                      }),
+                      "w-full"
+                    )}
+                    href="https://twitter.com/nzai__"
+                  >
+                    <Twitter className="w-5 h-5 mr-2 text-slate-600" />
+                    say hi
+                  </Link>
+                </div>
+                <div className="flex items-center justify-between pt-8 ">
                   <p className="text-sm text-slate-500 ">{user.email}</p>
                   <Avatar className="flex items-center justify-center dark:text-slate-600 dark:bg-accent">
                     {getInitials(user?.given_name!, user?.family_name!)}
@@ -120,6 +136,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                   Theme
                   <MobileThemeToggle />
                 </li>
+                <li className="h-px my-3 bg-gray-300" />
               </div>
             )}
           </ul>
