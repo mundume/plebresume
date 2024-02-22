@@ -18,12 +18,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
 import { useResumeContext } from "./Provider";
+import ApplicationForm from "./application-form";
 
 type Props = {
   response: string;
 };
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const handleSubmit = () => setIsOpen((open) => !open);
 
   const {
     generateCoverLetter,
@@ -78,64 +80,7 @@ const CoverLetterForm = () => {
       </DialogTrigger>
 
       <DialogContent className="rounded-md max-h-[90vh]">
-        <Form {...form} control={form.control}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="jobTitle"
-              render={({}) => (
-                <>
-                  <FormItem>
-                    <FormLabel>Job Title</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder=""
-                        {...(form.register("jobTitle"), { required: true })}
-                        onChange={(e) =>
-                          setFormValues({
-                            ...formValues,
-                            jobTitle: e.target.value,
-                          })
-                        }
-                        value={formValues.jobTitle}
-                      />
-                    </FormControl>
-                    <FormDescription>Enter your job title</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-
-                  <FormItem>
-                    <FormLabel className="">Job Description</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder=""
-                        value={formValues.jobDescription}
-                        rows={10}
-                        {...form.register("jobDescription")}
-                        onChange={(e) =>
-                          setFormValues({
-                            ...formValues,
-                            jobDescription: e.target.value,
-                          })
-                        }
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Paste the job description here
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                </>
-              )}
-            />
-            <Button
-              type="submit"
-              onClick={() => !isLoading && setIsOpen(!isOpen)}
-            >
-              Submit
-            </Button>
-          </form>
-        </Form>
+        <ApplicationForm handleSubmit={handleSubmit} />
       </DialogContent>
     </Dialog>
   );

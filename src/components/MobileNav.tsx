@@ -97,7 +97,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                 </div>
                 <div className="flex items-center justify-between pt-8 ">
                   <p className="text-sm text-slate-500 ">{user.email}</p>
-                  <Avatar className="flex items-center justify-center dark:text-slate-600 dark:bg-accent">
+                  <Avatar className="flex items-center justify-center border dark:text-slate-600 dark:border-slate-800">
                     {getInitials(user?.given_name!, user?.family_name!)}
                   </Avatar>
                 </div>

@@ -12,6 +12,7 @@ import ResumeFullscreen from "./ResumeFullscreen";
 
 import { ResumeContext, useResumeContext } from "./Provider";
 import CoverLetterForm from "./CoverLetterForm";
+import FormDrawerMobile from "./form-drawer-mobile";
 
 //pdfjs add globalworker options
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -34,6 +35,7 @@ const PdfRenderer = ({ url, id }: Props) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-start gap-4 px-4 py-4 backdrop-blur-lg">
           <ResumeFullscreen url={url} />
+          <FormDrawerMobile />
           <Button
             onClick={() => setPageNumber((prev) => prev - 1)}
             disabled={pageNumber <= 1}
@@ -56,6 +58,7 @@ const PdfRenderer = ({ url, id }: Props) => {
         </div>
         <div className="flex items-center justify-end gap-4 px-4 py-4 backdrop-blur-lg">
           <CoverLetterForm />
+
           {response ? (
             <Button
               onClick={() => generateCoverLetter()}
