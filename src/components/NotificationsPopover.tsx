@@ -5,8 +5,6 @@ import {
 } from "@/components/ui/popover";
 import NotificationIcon from "./Bellicon";
 import NotificationTabs from "./NotificationTabs";
-import { Settings } from "lucide-react";
-import { Button } from "./ui/button";
 
 const NotificationsPopover = () => {
   return (

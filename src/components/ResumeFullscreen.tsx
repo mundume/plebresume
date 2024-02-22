@@ -27,6 +27,7 @@ const ResumeFullscreen = ({ url }: PdfFullscreenProps) => {
         <Button
           aria-label="fullscreen"
           size={"icon"}
+          variant={"outline"}
           onClick={() => setIsOpen(true)}
           className="gap-1.5"
         >

@@ -20,11 +20,9 @@ const CoverLetterPage = ({ user }: { user: User }) => {
     return <p className="text-6xl text-red-600">{error.message}</p>;
   }
 
-  async function handleDeleteFile(id: string) {}
-
   return (
-    <>
-      <div className="flex justify-between flex-1 mt-10 text-zinc-800">
+    <div className="">
+      <div className="flex justify-between flex-1 mt-10">
         <div className="">
           <h2 className="pb-2 text-3xl font-semibold tracking-tight scroll-m-20 first:mt-0">
             Get your cover Letter
@@ -49,7 +47,7 @@ const CoverLetterPage = ({ user }: { user: User }) => {
           )}
         </div>
       </>
-    </>
+    </div>
   );
 };
 

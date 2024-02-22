@@ -58,7 +58,7 @@ const CoverLetterRenderer = () => {
   const onChange = () => setPreview((prev) => !prev);
 
   return (
-    <div className="">
+    <div className="py-4">
       <div className="w-full min-h-screen my-4 overflow-hidden">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center gap-1 mx-auto my-auto mt-44">
@@ -75,47 +75,64 @@ const CoverLetterRenderer = () => {
               </span>
             </p>
           </div>
+        ) : !isLoading && !response ? (
+          <>
+            <div className="flex flex-col items-center justify-center gap-1 mx-auto my-auto mt-44">
+              <p className="text-sm prose text-slate-600 dark:text-popover-foreground ">
+                Nothing to see here. click the{" "}
+                <span className="font-bold text-purple-500 ">play</span> button
+                and have fun
+              </p>
+            </div>
+          </>
         ) : (
           <>
             {" "}
             {response && (
-              <div className="flex items-center justify-between gap-4 px-4 pb-4 bg-white/50 backdrop-blur-lg">
-                <Button onClick={onChange} size={"icon"} className="">
-                  {preview ? (
-                    <Pencil className="w-4 h-4 text-slate-600" />
-                  ) : (
-                    <Eye className="w-4 h-4 text-slate-600" />
-                  )}
-                </Button>
-                <Button
-                  onClick={() => mutation.mutate()}
-                  className="flex items-center justify-center"
-                >
-                  {mutation.isLoading ? (
-                    <>
-                      <Loader className="w-4 h-4 mr-1.5 animate-spin text-purple-500" />{" "}
-                      wait..
-                    </>
-                  ) : mutation.isSuccess && done ? (
-                    <>
-                      <CheckCircle2 className="w-4 h-4 mr-1.5 text-green-400" />
-                      Done{" "}
-                    </>
-                  ) : (
-                    <>
-                      <Download className="w-4 h-4 mr-1.5 text-purple-500" />
-                      download
-                    </>
-                  )}
-                </Button>
+              <div>
+                <div className="flex items-center justify-between gap-4 px-4 pb-4 backdrop-blur-lg ">
+                  <Button
+                    onClick={onChange}
+                    size={"icon"}
+                    className=""
+                    variant={"outline"}
+                  >
+                    {preview ? (
+                      <Pencil className="w-4 h-4 transition duration-200 text-slate-600 hover:opacity-1 " />
+                    ) : (
+                      <Eye className="w-4 h-4 transition duration-200 text-slate-600 hover:opacity-1" />
+                    )}
+                  </Button>
+                  <Button
+                    onClick={() => mutation.mutate()}
+                    className="flex items-center justify-center dark:bg-accent dark:shadow-sm dark:hover:bg-accent dark:hover:text-accent-foreground"
+                  >
+                    {mutation.isLoading ? (
+                      <>
+                        <Loader className="w-4 h-4 mr-1.5 animate-spin text-purple-500" />{" "}
+                        wait..
+                      </>
+                    ) : mutation.isSuccess && done ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4 mr-1.5 text-green-400" />
+                        Done{" "}
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4 mr-1.5 text-purple-500" />
+                        download
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
+                  {/* @ts-ignore */}
+                  <div ref={ref}>
+                    <CoverLetter preview={preview} response={response} />
+                  </div>
+                </SimpleBar>
               </div>
             )}
-            <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
-              {/* @ts-ignore */}
-              <div ref={ref}>
-                <CoverLetter preview={preview} response={response} />
-              </div>
-            </SimpleBar>
           </>
         )}
       </div>

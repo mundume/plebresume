@@ -83,7 +83,7 @@ const NotificationTabs = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        <Button size={"icon"} className="">
+        <Button size={"icon"} className="" variant={"pleb"}>
           <Settings className="w-4 h-4 text-slate-600" />
         </Button>
       </div>

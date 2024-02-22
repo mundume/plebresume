@@ -1,19 +1,18 @@
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
 import { BellIcon } from "lucide-react";
 import NotificationTabs from "./NotificationTabs";
+import { useState } from "react";
 const NotificationsDrawerMobile = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Drawer>
+    <Drawer
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) setIsOpen(open);
+      }}
+    >
       <DrawerTrigger asChild>
         <Button size="icon" className="relative z-50 rounded-full ">
           <BellIcon className="relative w-4 h-4 text-slate-600" />

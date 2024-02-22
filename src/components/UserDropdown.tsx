@@ -23,6 +23,7 @@ import {
 } from "@radix-ui/react-icons";
 
 import { ChevronRightSquare, Lightbulb, Power, Settings } from "lucide-react";
+import { getInitials } from "@/lib/utils";
 
 const UserAccountNav = async ({}) => {
   const { getUser } = getKindeServerSession();
@@ -31,23 +32,16 @@ const UserAccountNav = async ({}) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="overflow-visible">
-          <Button className="flex items-center gap-2 rounded-full w-14 ">
-            <Avatar className="flex items-center ">
-              {user?.picture ? (
-                <Image src={user?.picture} alt="profile" />
-              ) : (
-                <PersonIcon className="w-4 h-4 text-slate-600" />
-              )}
-              <CaretDownIcon className="w-4 h-4 text-slate-400" />
-            </Avatar>
-          </Button>
+          <Avatar className="flex items-center justify-center border cursor-pointer dark:text-slate-600 dark:border-slate-800">
+            {getInitials(user?.given_name!, user?.family_name!)}
+          </Avatar>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="bg-white" align="end">
+        <DropdownMenuContent align="end">
           <div className="flex items-center justify-start gap-2 p-2">
             <div className="flex flex-col space-y-0.5 leading-none">
               {user?.family_name && (
-                <p className="text-sm font-medium text-slate-900">
+                <p className="text-sm font-medium text-slate-900 dark:text-white">
                   {user.given_name}
                 </p>
               )}
