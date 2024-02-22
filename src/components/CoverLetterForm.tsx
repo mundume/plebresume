@@ -27,13 +27,7 @@ const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleSubmit = () => setIsOpen((open) => !open);
 
-  const {
-    generateCoverLetter,
-    formValues,
-    setFormValues,
-    isLoading,
-    response,
-  } = useResumeContext();
+  const { generateCoverLetter, isLoading, response } = useResumeContext();
 
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),

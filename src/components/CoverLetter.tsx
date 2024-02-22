@@ -25,18 +25,16 @@ const CoverLetter = ({
 
   return (
     <>
-      <div className="h-full px-4 prose dark:bg-white dark:text-white dark:bg-background no-break-inside">
+      <div className="h-full px-4 prose bg-white no-break-inside bg">
         <div className="">
-          <Suspense fallback={"..........."}>
-            <ForwardRefEditor
-              markdown={""}
-              ref={ref}
-              onChange={(e) => {
-                updateResponse(e);
-              }}
-              readOnly={preview}
-            />
-          </Suspense>
+          <ForwardRefEditor
+            markdown={""}
+            ref={ref}
+            onChange={(e) => {
+              updateResponse(e);
+            }}
+            readOnly={preview}
+          />
         </div>
       </div>
     </>

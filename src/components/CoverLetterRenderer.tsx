@@ -58,7 +58,7 @@ const CoverLetterRenderer = () => {
   const onChange = () => setPreview((prev) => !prev);
 
   return (
-    <div className="">
+    <div className="py-4">
       <div className="w-full min-h-screen my-4 overflow-hidden">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center gap-1 mx-auto my-auto mt-44">
@@ -75,6 +75,16 @@ const CoverLetterRenderer = () => {
               </span>
             </p>
           </div>
+        ) : !isLoading && !response ? (
+          <>
+            <div className="flex flex-col items-center justify-center gap-1 mx-auto my-auto mt-44">
+              <p className="text-sm prose text-slate-600 dark:text-popover-foreground ">
+                Nothing to see here. click the{" "}
+                <span className="font-bold text-purple-500 ">play</span> button
+                and have fun
+              </p>
+            </div>
+          </>
         ) : (
           <>
             {" "}
@@ -115,7 +125,7 @@ const CoverLetterRenderer = () => {
                     )}
                   </Button>
                 </div>
-                <SimpleBar autoHide={false} className="max-h-[calc(100vh)]">
+                <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
                   {/* @ts-ignore */}
                   <div ref={ref}>
                     <CoverLetter preview={preview} response={response} />
