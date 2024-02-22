@@ -73,7 +73,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                 </li>
               </div>
             ) : (
-              <div className="pt-16">
+              <div className="pt-20">
                 <div className="min-w-full">
                   <Link
                     className={cn(
