@@ -29,7 +29,7 @@ const Page = async () => {
         <div className="flex flex-col items-center gap-4 py-6 sm:gap-2 md:flex-row md:py-0">
           <Link
             className="flex items-center justify-center w-full gap-3 py-1 border rounded shadow md:w-52 bg-zinc-50 dark:bg-background"
-            href="/"
+            href="/resume"
           >
             <FileText className="w-5 h-5 text-green-500" />
             <div className="">

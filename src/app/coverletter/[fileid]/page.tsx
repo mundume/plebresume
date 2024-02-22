@@ -1,5 +1,4 @@
 import CoverLetterRenderer from "@/components/CoverLetterRenderer";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ResumeRenderer from "@/components/ResumeRenderer";
 import { db } from "@/config/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
