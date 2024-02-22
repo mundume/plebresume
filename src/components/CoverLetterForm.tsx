@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { Bot, Loader, Pencil } from "lucide-react";
-import { useResumeContext } from "./Provider";
+import { useCoverLetterContext } from "./Provider";
 import ApplicationForm from "./application-form";
 
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleSubmit = () => setIsOpen((open) => !open);
 
-  const { isLoading, response } = useResumeContext();
+  const { isLoading, response } = useCoverLetterContext();
 
   return (
     <Dialog

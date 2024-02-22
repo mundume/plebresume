@@ -13,14 +13,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "./ui/textarea";
-import { useResumeContext } from "./Provider";
+import { useCoverLetterContext } from "./Provider";
 import { CoverLetterFormSchema } from "@/lib/validators/coverlettervalidator";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
 const ApplicationForm = ({ handleSubmit }: { handleSubmit: () => void }) => {
   const { generateCoverLetter, formValues, setFormValues, isLoading } =
-    useResumeContext();
+    useCoverLetterContext();
   const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
     resolver: zodResolver(CoverLetterFormSchema),
     defaultValues: {

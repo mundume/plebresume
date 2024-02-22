@@ -6,7 +6,7 @@ import { ForwardRefEditor } from "./ForwardedRefEditor";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import { Button } from "./ui/button";
 import { on } from "events";
-import { useResumeContext } from "./Provider";
+import { useCoverLetterContext } from "./Provider";
 
 const CoverLetter = ({
   preview,
@@ -15,7 +15,7 @@ const CoverLetter = ({
   preview: boolean;
   response: string;
 }) => {
-  const { updateResponse } = useResumeContext();
+  const { updateResponse } = useCoverLetterContext();
 
   const ref = useRef<MDXEditorMethods>(null);
 

@@ -1,7 +1,7 @@
 "use client";
 import SimpleBar from "simplebar-react";
 import CoverLetter from "./CoverLetter";
-import { useResumeContext } from "./Provider";
+import { useCoverLetterContext } from "./Provider";
 import { useRef, useState } from "react";
 import { CheckCircle2, Download, Eye, Loader, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
-  const { response, isLoading } = useResumeContext();
+  const { response, isLoading } = useCoverLetterContext();
   const [done, setDone] = useState(false);
 
   const mutation = useMutation({
@@ -125,7 +125,10 @@ const CoverLetterRenderer = () => {
                     )}
                   </Button>
                 </div>
-                <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
+                <SimpleBar
+                  autoHide={false}
+                  className="max-h-[calc(100vh-2rem)]"
+                >
                   {/* @ts-ignore */}
                   <div ref={ref}>
                     <CoverLetter preview={preview} response={response} />

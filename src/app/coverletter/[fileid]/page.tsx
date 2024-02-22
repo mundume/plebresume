@@ -4,7 +4,7 @@ import { db } from "@/config/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
-import { ResumeContextProvider } from "@/components/Provider";
+import { CoverLetterContextProvider } from "@/components/Provider";
 
 type Params = {
   params: {
@@ -24,7 +24,8 @@ const Page = async ({ params }: Params) => {
     },
   });
   return (
-    <ResumeContextProvider fileId={file?.id!}>
+
+    <CoverLetterContextProvider fileId={file?.id!}>
       <div className="flex flex-col gap-2 overflow-x-hidden overflow-y-hidden md:flex-row break-inside-avoid-column">
         <div className="w-full md:w-1/2">
           <ResumeRenderer url={file?.url!} id={file?.id!} />
@@ -33,7 +34,7 @@ const Page = async ({ params }: Params) => {
           <CoverLetterRenderer />
         </div>
       </div>
-    </ResumeContextProvider>
+    </CoverLetterContextProvider>
   );
 };
 
