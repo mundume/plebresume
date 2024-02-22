@@ -5,9 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
 import { Avatar } from "./ui/avatar";
-import Image from "next/image";
 
 import Link from "next/link";
 import {
@@ -15,12 +13,6 @@ import {
   LogoutLink,
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
-import {
-  CaretDownIcon,
-  FaceIcon,
-  MixerVerticalIcon,
-  PersonIcon,
-} from "@radix-ui/react-icons";
 
 import { ChevronRightSquare, Lightbulb, Power, Settings } from "lucide-react";
 import { getInitials } from "@/lib/utils";

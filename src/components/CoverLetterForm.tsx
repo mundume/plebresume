@@ -1,44 +1,16 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
-import { Bot, Loader, Pencil, Repeat } from "lucide-react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { CoverLetterFormSchema } from "@/lib/validators/coverlettervalidator";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "./ui/textarea";
+import { Bot, Loader, Pencil } from "lucide-react";
 import { useResumeContext } from "./Provider";
 import ApplicationForm from "./application-form";
 
-type Props = {
-  response: string;
-};
 const CoverLetterForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleSubmit = () => setIsOpen((open) => !open);
 
-  const { generateCoverLetter, isLoading, response } = useResumeContext();
+  const { isLoading, response } = useResumeContext();
 
-  const form = useForm<z.infer<typeof CoverLetterFormSchema>>({
-    resolver: zodResolver(CoverLetterFormSchema),
-    defaultValues: {
-      jobTitle: "",
-      jobDescription: "",
-    },
-  });
-  const onSubmit = () => {
-    generateCoverLetter();
-  };
   return (
     <Dialog
       open={isOpen}
