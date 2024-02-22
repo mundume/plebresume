@@ -113,7 +113,7 @@ const UploadDropzone = () => {
                           </p>
                         ) : (
                           <p className="flex items-center gap-1 text-xs text-slate-500">
-                            {acceptedFiles[0].size}{" "}
+                            {acceptedFiles[0].size / 1000}kb
                             <span className="flex gap-1 text-green-500">
                               <CheckCircle2 className="w-4 h-4 " /> Completed
                             </span>
@@ -137,9 +137,9 @@ const UploadDropzone = () => {
                     <FileText className="w-4 h-4 text-slate-700" />
 
                     <div className="w-full text-sm ">
-                      <p className=" text-prowse">FileName.PDF</p>
+                      <p className=" text-prowse">{acceptedFiles[0].name}</p>
                       <p className="flex items-center gap-1 text-xs text-slate-500">
-                        434KB{" "}
+                        {acceptedFiles[0].size / 1000}kb
                         <span className="flex gap-1 text-red-500">
                           <XCircle className="w-4 h-4 text-slate-500 " /> Error
                           when uploading

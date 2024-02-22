@@ -11,7 +11,7 @@ import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { ModeToggle } from "./theme-toggle";
 import MobileThemeToggle from "./mobile-theme-toggle";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 
 const MobileNav = ({ user }: { user: KindeUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -29,12 +29,6 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
       toggleOpen();
     }
   };
-
-  function getInitials(firstName: string, lastName: string) {
-    const firstInitial = firstName.charAt(0);
-    const lastInitial = lastName.charAt(0);
-    return [firstInitial, lastInitial];
-  }
 
   return (
     <div className="relative sm:hidden text-slate-900">

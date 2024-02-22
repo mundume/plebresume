@@ -81,7 +81,7 @@ const PdfRenderer = ({ url, id }: Props) => {
           </div>
         </div>
 
-        <SimpleBar autoHide={false} className="max-h-[calc(100vh)]">
+        <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
           <div ref={ref}>
             <Document
               file={url}

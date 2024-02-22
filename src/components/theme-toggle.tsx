@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { Moon, Sun } from "lucide-react";
+
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -23,9 +24,8 @@ export function ModeToggle() {
           size="icon"
           className="rounded-full text-slate-600 dark:border dark:border-slate-800 "
         >
-          <SunIcon className="w-4 h-4 transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0 text-slate-600" />
-          <MoonIcon className="absolute w-4 h-4 transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100 text-slate-500" />
-          <span className="sr-only">Toggle theme</span>
+          <Sun className="w-4 h-4 transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0 text-slate-600" />
+          <Moon className="absolute w-4 h-4 transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100 text-slate-500" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
