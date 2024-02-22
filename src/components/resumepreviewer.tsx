@@ -3,6 +3,8 @@ import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
+import { useCoverLetterContext } from "./Provider";
+import { useResumeBuilderContext } from "./resume-builder-context";
 
 const tw = createTw({
   theme: {
@@ -17,6 +19,7 @@ const tw = createTw({
   },
 });
 const ResumePreviewer = () => {
+  const { values, dispatch } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
   return (
     <div className="w-full min-h-screen">
@@ -25,7 +28,7 @@ const ResumePreviewer = () => {
           <Document>
             <Page size="A4" style={tw("p-12 flex flex-col")}>
               <View style={tw("p-20 bg-gray-100")}>
-                <Text style={tw("text-custom text-3xl")}>Section #1</Text>
+                <Text style={tw("text-custom text-3xl")}>{values.name}</Text>
               </View>
               <View style={tw("mt-12 px-8 rotate-2")}>
                 <Text style={tw("text-amber-600 text-2xl")}>Section #2</Text>
