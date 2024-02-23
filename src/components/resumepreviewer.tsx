@@ -22,12 +22,15 @@ const ResumePreviewer = () => {
   const { values, dispatch } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
   return (
-    <div className="w-full min-h-screen">
+    <div className="block w-full min-h-screen">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
         <div ref={ref}>
           <Document>
-            <Page size="A4" style={tw("p-12 flex flex-col")}>
+            <Page size="A4" style={tw("flex flex-col ")}>
               <View style={tw("p-20 bg-gray-100")}>
+                <Text style={tw("text-custom text-3xl block")}>
+                  {values.email}
+                </Text>
                 <Text style={tw("text-custom text-3xl")}>{values.name}</Text>
               </View>
               <View style={tw("mt-12 px-8 rotate-2")}>

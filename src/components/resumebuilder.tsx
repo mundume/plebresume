@@ -9,9 +9,21 @@ const ResumeBuilder = () => {
   return (
     <div>
       <Input
+        value={values.email}
+        onChange={(e) => {
+          dispatch({
+            type: "ADD_EMAIL",
+            payload: { email: e.target.value },
+          });
+        }}
+      />
+      <Input
         value={values.name}
         onChange={(e) =>
-          dispatch({ type: "SET_NAME", payload: e.target.value })
+          dispatch({
+            type: "ADD_NAME",
+            payload: { name: e.target.value },
+          })
         }
       />
     </div>

@@ -2,31 +2,48 @@
 
 import React, { createContext, use, useReducer } from "react";
 type ResumeBuilderContextProps = {
-  values: Record<string, string>;
+  values: initialState;
   dispatch: React.Dispatch<Action>;
 };
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
-  values: {},
+  values: {
+    name: "",
+    email: "",
+  },
   dispatch: () => {},
 });
 
 type initialState = {
   name: string;
+  email: string;
 };
 
 const initialArg: initialState = {
   name: "",
+  email: "",
 };
 
-type Action = {
-  type: "SET_NAME";
-  payload: string;
+type AddEmail = {
+  type: "ADD_EMAIL";
+  payload: {
+    email: string;
+  };
 };
+type AddName = {
+  type: "ADD_NAME";
+  payload: {
+    name: string;
+  };
+};
+
+type Action = AddEmail | AddName;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
-    case "SET_NAME":
-      return { ...state, name: action.payload };
+    case "ADD_EMAIL":
+      return { ...state, email: action.payload.email };
+    case "ADD_NAME":
+      return { ...state, name: action.payload.name };
     default:
       return state;
   }
