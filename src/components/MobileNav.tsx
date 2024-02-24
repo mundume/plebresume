@@ -38,13 +38,14 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
         variant={"pleb"}
         onClick={toggleOpen}
         className="relative z-50 ml-1 rounded-full"
-      >
-        {isOpen ? (
-          <X className="w-5 h-5 text-slate-600 dark:text-slate-50" />
-        ) : (
-          <Menu className="w-5 h-5 text-slate-600 " />
-        )}
-      </Button>
+        icon={
+          isOpen ? (
+            <X className="w-5 h-5 text-slate-600 dark:text-slate-50" />
+          ) : (
+            <Menu className="w-5 h-5 text-slate-600 " />
+          )
+        }
+      />
 
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full duration-200 h-100vh animate-in slide-in-from-left-40 fade-in-100">
@@ -61,6 +62,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                     <ArrowRightIcon className="w-5 h-5 ml-2 text-purple-400" />
                   </Link>
                 </li>
+                <Button icon={<HamburgerMenuIcon className="mr-2" />}>k</Button>
                 <li className="h-px my-3 bg-gray-300" />
                 <li>
                   <Link

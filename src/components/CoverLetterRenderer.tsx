@@ -106,23 +106,21 @@ const CoverLetterRenderer = () => {
                   <Button
                     onClick={() => mutation.mutate()}
                     className="flex items-center justify-center dark:bg-accent dark:shadow-sm dark:hover:bg-accent dark:hover:text-accent-foreground"
-                  >
-                    {mutation.isLoading ? (
-                      <>
-                        <Loader className="w-4 h-4 mr-1.5 animate-spin text-purple-500" />{" "}
-                        wait..
-                      </>
-                    ) : mutation.isSuccess && done ? (
-                      <>
+                    icon={
+                      mutation.isLoading ? (
+                        <Loader className="w-4 h-4 mr-1.5 animate-spin text-purple-500" />
+                      ) : mutation.isSuccess && done ? (
                         <CheckCircle2 className="w-4 h-4 mr-1.5 text-green-400" />
-                        Done{" "}
-                      </>
-                    ) : (
-                      <>
+                      ) : (
                         <Download className="w-4 h-4 mr-1.5 text-purple-500" />
-                        download
-                      </>
-                    )}
+                      )
+                    }
+                  >
+                    {mutation.isLoading
+                      ? " wait.."
+                      : mutation.isSuccess && done
+                      ? "done"
+                      : "download"}
                   </Button>
                 </div>
                 <SimpleBar
