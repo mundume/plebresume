@@ -2,7 +2,8 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { z } from "zod";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
-import { db } from "@/config/prisma";
+import { db } from "@/config/db";
+import { user as dbUser, file as dbFile } from "@/config/schema";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -13,38 +14,35 @@ export const appRouter = router({
         code: "UNAUTHORIZED",
       });
 
-    const dbUser = await db.user.findFirst({
-      where: {
-        id: user.id,
-      },
+    const userFromDb = await db.query.user.findFirst({
+      where: (data, { eq }) => eq(data.id, user.id),
     });
-    if (!dbUser) {
-      await db.user.create({
-        data: {
+
+    if (!userFromDb) {
+      await db.insert(dbUser).values([
+        {
           id: user.id,
-          email: user.email,
           firstName: user.family_name!,
           lastName: user.given_name!,
+          email: user.email,
         },
-      });
+      ]);
     }
     return { sucess: true };
   }),
   getUserFiles: privateProcedure.query(async ({ ctx }) => {
     const user = ctx.user;
     if (!user) throw new TRPCError({ code: "UNAUTHORIZED" });
-    return await db.file.findMany({
-      where: {
-        userId: user.id,
-      },
+    return await db.query.file.findMany({
+      where: (user, { eq }) => eq(user.userId, user.id),
     });
   }),
   getFile: privateProcedure
     .input(z.object({ key: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
-      const file = await db.file.findFirst({
-        where: {
+      const file = await db.query.file.findFirst({
+        with: {
           key: input.key,
           userId,
         },
@@ -57,14 +55,14 @@ export const appRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
 
-      const file = await db.file.findFirst({
-        where: {
+      const file = await db.query.file.findFirst({
+        with: {
           id: input.id,
           userId,
         },
       });
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
-      await db.file.delete({
+      await db.delete(file)({
         where: {
           id: input.id,
         },
