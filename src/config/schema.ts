@@ -6,6 +6,7 @@ import {
   foreignKey,
   timestamp,
   integer,
+  uuid,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
@@ -19,7 +20,7 @@ export const uploadStatus = pgEnum("UploadStatus", [
 export const user = pgTable(
   "User",
   {
-    id: text("id").primaryKey().notNull(),
+    id: text("id").primaryKey().notNull(), //auth id
     email: text("email").notNull(),
     firstName: text("firstName").notNull(),
     lastName: text("lastName").notNull(),
@@ -33,7 +34,7 @@ export const user = pgTable(
 );
 
 export const file = pgTable("File", {
-  id: text("id").primaryKey().notNull(),
+  id: uuid("id").defaultRandom().primaryKey().notNull(),
   name: text("name").notNull(),
   uploadStatus: uploadStatus("uploadStatus").default("PENDING").notNull(),
   url: text("url"),
@@ -41,7 +42,9 @@ export const file = pgTable("File", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
+  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" })
+    .notNull()
+    .defaultNow(),
   userId: text("userId").references(() => user.id, {
     onDelete: "set null",
     onUpdate: "cascade",
@@ -50,7 +53,7 @@ export const file = pgTable("File", {
 });
 
 export const coverLetter = pgTable("CoverLetter", {
-  id: text("id").primaryKey().notNull(),
+  id: uuid("id").defaultRandom().primaryKey().notNull(),
   text: text("text"),
   name: text("name").notNull(),
   url: text("url"),
@@ -74,7 +77,7 @@ export const coverLetter = pgTable("CoverLetter", {
 });
 
 export const resume = pgTable("Resume", {
-  id: text("id").primaryKey().notNull(),
+  id: uuid("id").defaultRandom().primaryKey().notNull(),
   text: text("text"),
   name: text("name").notNull(),
   url: text("url"),

@@ -1,4 +1,5 @@
-import { db } from "@/config/prisma";
+import { db } from "@/config/db";
+import { file as dbFile } from "@/config/schema";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
@@ -25,16 +26,27 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      const createdFile = await db.file.create({
-        data: {
-          key: file.key,
+      // const createdFile = await db.insert(dbFile).values([
+      //   {
+      //     key: "",
+      //     name: "",
+      //     userId: "",
+      //     url: "",
+      //     uploadStatus: "IN_PROGRESS",
+
+      //   },
+
+      // ]);
+      const createdFile = await db.insert(dbFile).values([
+        {
+          id: metadata.userId,
           name: file.name,
-          userId: metadata.userId,
-          url: file.url,
-          uploadStatus: "PROCESSING",
           size: file.size,
+          userId: metadata.userId,
+          key: file.key,
+          url: file.url,
         },
-      });
+      ]);
       try {
         const response = await fetch(`${file.url}`, {
           headers: {
@@ -48,7 +60,7 @@ export const ourFileRouter = {
             ...doc,
             metadata: {
               ...doc.metadata,
-              fileId: createdFile.id,
+              fileId: metadata.userId,
             },
           };
         });

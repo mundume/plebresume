@@ -41,7 +41,9 @@ export const file = pgTable("File", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
+  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" })
+    .notNull()
+    .defaultNow(),
   userId: text("userId").references(() => user.id, {
     onDelete: "set null",
     onUpdate: "cascade",

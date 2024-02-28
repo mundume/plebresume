@@ -3,7 +3,13 @@ import { z } from "zod";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/config/db";
-import { user as dbUser, file as dbFile } from "@/config/schema";
+import {
+  user as dbUser,
+  file as dbFile,
+  coverLetter as dbCoverLetter,
+  resume as dbResume,
+} from "@/config/schema";
+import { eq } from "drizzle-orm";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -22,8 +28,8 @@ export const appRouter = router({
       await db.insert(dbUser).values([
         {
           id: user.id,
-          firstName: user.family_name!,
-          lastName: user.given_name!,
+          firstName: user.family_name as string,
+          lastName: user.given_name as string,
           email: user.email,
         },
       ]);
@@ -42,10 +48,12 @@ export const appRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
       const file = await db.query.file.findFirst({
-        with: {
-          key: input.key,
-          userId,
-        },
+        where: (file, { eq }) =>
+          eq(file.key, input.key) && eq(file.userId, userId),
+        // {
+        //   key: input.key,
+        //   userId,
+        // },
       });
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
       return file;
@@ -56,25 +64,14 @@ export const appRouter = router({
       const { userId } = ctx;
 
       const file = await db.query.file.findFirst({
-        with: {
-          id: input.id,
-          userId,
-        },
+        where: (file, { eq }) =>
+          eq(file.id, input.id) && eq(file.userId, userId),
       });
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
-      await db.delete(file)({
-        where: {
-          id: input.id,
-        },
-        include: {
-          coverLetters: {
-            where: {
-              id: input.id,
-              userId,
-            },
-          },
-        },
-      });
+      await db
+        .delete(dbFile && dbCoverLetter)
+        .where(eq(dbFile.id, input.id) && eq(dbCoverLetter.userId, userId));
+
       return file;
     }),
   getCoverLetter: privateProcedure
