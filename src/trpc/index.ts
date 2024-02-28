@@ -37,10 +37,10 @@ export const appRouter = router({
     return { sucess: true };
   }),
   getUserFiles: privateProcedure.query(async ({ ctx }) => {
-    const user = ctx.user;
-    if (!user) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const kindeUser = ctx.user;
+    if (!kindeUser) throw new TRPCError({ code: "UNAUTHORIZED" });
     return await db.query.file.findMany({
-      where: (user, { eq }) => eq(user.userId, user.id),
+      where: (user, { eq }) => eq(user.userId, kindeUser.id),
     });
   }),
   getFile: privateProcedure
@@ -79,11 +79,15 @@ export const appRouter = router({
     .query(async ({ ctx, input }) => {
       const { userId } = ctx;
       const { fileId } = input;
-      const coverLetter = await db.coverLetter.findFirst({
-        where: {
-          id: fileId,
-          userId,
-        },
+      // const coverLetter = await db.query.coverLetter.findFirst({
+      //   where: {
+      //     id: fileId,
+      //     userId,
+      //   },
+      // });
+      const coverLetter = await db.query.coverLetter.findFirst({
+        where: (coverLetter, { eq }) =>
+          eq(coverLetter.fileId, fileId) && eq(coverLetter.userId, userId),
       });
       if (!coverLetter) throw new TRPCError({ code: "NOT_FOUND" });
       return coverLetter;

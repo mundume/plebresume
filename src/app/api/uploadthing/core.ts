@@ -6,6 +6,7 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { pinecone } from "@/lib/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { eq } from "drizzle-orm";
 
 const f = createUploadthing();
 
@@ -37,9 +38,8 @@ export const ourFileRouter = {
       //   },
 
       // ]);
-      const createdFile = await db.insert(dbFile).values([
+      await db.insert(dbFile).values([
         {
-          id: metadata.userId,
           name: file.name,
           size: file.size,
           userId: metadata.userId,
@@ -47,6 +47,9 @@ export const ourFileRouter = {
           url: file.url,
         },
       ]);
+      const createdFile = await db.query.file.findFirst({
+        where: (file, { eq }) => eq(file.userId, metadata.userId),
+      });
       try {
         const response = await fetch(`${file.url}`, {
           headers: {
@@ -60,7 +63,7 @@ export const ourFileRouter = {
             ...doc,
             metadata: {
               ...doc.metadata,
-              fileId: metadata.userId,
+              fileId: createdFile?.id,
             },
           };
         });
@@ -76,12 +79,16 @@ export const ourFileRouter = {
           pineconeIndex,
         });
 
-        await db.file.update({
-          where: { id: createdFile.id },
-          data: {
-            uploadStatus: "SUCCESS",
-          },
-        });
+        // await db.file.update({
+        //   where: { id: createdFile.id },
+        //   data: {
+        //     uploadStatus: "SUCCESS",
+        //   },
+        // });
+        await db
+          .update(dbFile)
+          .set({ uploadStatus: "SUCCESS" })
+          .where(eq(dbFile.id, createdFile?.id!));
       } catch (err) {
         console.log(err);
       }

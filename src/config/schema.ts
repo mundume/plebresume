@@ -10,6 +10,17 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
+const generateRandomId = (length: number): string => {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+
+  return result;
+};
 export const uploadStatus = pgEnum("UploadStatus", [
   "SUCCESS",
   "FAILED",
@@ -34,7 +45,10 @@ export const user = pgTable(
 );
 
 export const file = pgTable("File", {
-  id: uuid("id").defaultRandom().primaryKey().notNull(),
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => generateRandomId(20)),
   name: text("name").notNull(),
   uploadStatus: uploadStatus("uploadStatus").default("PENDING").notNull(),
   url: text("url"),
@@ -53,7 +67,10 @@ export const file = pgTable("File", {
 });
 
 export const coverLetter = pgTable("CoverLetter", {
-  id: uuid("id").defaultRandom().primaryKey().notNull(),
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => generateRandomId(20)),
   text: text("text"),
   name: text("name").notNull(),
   url: text("url"),
@@ -61,7 +78,9 @@ export const coverLetter = pgTable("CoverLetter", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
+  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" })
+    .defaultNow()
+    .notNull(),
   fileId: text("fileId").references(() => file.id, {
     onDelete: "set null",
     onUpdate: "cascade",
@@ -77,7 +96,10 @@ export const coverLetter = pgTable("CoverLetter", {
 });
 
 export const resume = pgTable("Resume", {
-  id: uuid("id").defaultRandom().primaryKey().notNull(),
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => generateRandomId(20)),
   text: text("text"),
   name: text("name").notNull(),
   url: text("url"),
@@ -85,7 +107,9 @@ export const resume = pgTable("Resume", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
+  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" })
+    .defaultNow()
+    .notNull(),
   fileId: text("fileId").references(() => file.id, {
     onDelete: "set null",
     onUpdate: "cascade",

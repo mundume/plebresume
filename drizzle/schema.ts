@@ -33,7 +33,10 @@ export const user = pgTable(
 );
 
 export const file = pgTable("File", {
-  id: text("id").primaryKey().notNull(),
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .default(sql`(uuid())`),
   name: text("name").notNull(),
   uploadStatus: uploadStatus("uploadStatus").default("PENDING").notNull(),
   url: text("url"),
@@ -52,7 +55,10 @@ export const file = pgTable("File", {
 });
 
 export const coverLetter = pgTable("CoverLetter", {
-  id: text("id").primaryKey().notNull(),
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .default(sql`(uuid())`),
   text: text("text"),
   name: text("name").notNull(),
   url: text("url"),
@@ -76,7 +82,10 @@ export const coverLetter = pgTable("CoverLetter", {
 });
 
 export const resume = pgTable("Resume", {
-  id: text("id").primaryKey().notNull(),
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .default(sql`(uuid())`),
   text: text("text"),
   name: text("name").notNull(),
   url: text("url"),
@@ -84,7 +93,9 @@ export const resume = pgTable("Resume", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
+  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" })
+    .notNull()
+    .defaultNow(),
   fileId: text("fileId").references(() => file.id, {
     onDelete: "set null",
     onUpdate: "cascade",
