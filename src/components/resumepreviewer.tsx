@@ -19,20 +19,21 @@ const tw = createTw({
   },
 });
 const ResumePreviewer = () => {
-  const { values, dispatch } = useResumeBuilderContext();
+  const { values } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
   return (
     <div className="block w-full min-h-screen">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
         <div ref={ref}>
-          <Document>
-            <Page size="A4" style={tw("flex flex-col ")}>
-              <View style={tw("p-20 bg-gray-100")}>
-                <Text style={tw("text-custom text-3xl block")}>
-                  {values.email}
-                  <br/>
-                </Text>
-                <Text style={tw("text-custom text-3xl")}>{values.name}</Text>
+          <Document style={tw("h-full")}>
+            <Page
+              size="A4"
+              style={tw("flex flex-col border p-6 text-slate-800 ")}
+              wrap={false}
+            >
+              <View style={tw("flex flex-col gap-2")}>
+                <Text style={tw(" text-5xl font-bold")}>{values.name}</Text>
+                <Text style={tw("t")}>{values.email}</Text>
               </View>
               <View style={tw("mt-12 px-8 rotate-2")}>
                 <Text style={tw("text-amber-600 text-2xl")}>Section #2</Text>
