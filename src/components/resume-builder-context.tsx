@@ -36,14 +36,23 @@ type AddName = {
   };
 };
 
-type Action = AddEmail | AddName;
+type AddPersonalInformation = {
+  type: "ADD_PERSONAL_INFORMATION";
+  payload: {
+    name?: string;
+    email?: string;
+  };
+};
+
+type Action = AddPersonalInformation;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
-    case "ADD_EMAIL":
-      return { ...state, email: action.payload.email };
-    case "ADD_NAME":
-      return { ...state, name: action.payload.name };
+    case "ADD_PERSONAL_INFORMATION":
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }

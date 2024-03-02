@@ -30,6 +30,7 @@ const ResumePreviewer = () => {
               <View style={tw("p-20 bg-gray-100")}>
                 <Text style={tw("text-custom text-3xl block")}>
                   {values.email}
+                  <br/>
                 </Text>
                 <Text style={tw("text-custom text-3xl")}>{values.name}</Text>
               </View>
