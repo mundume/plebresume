@@ -35,6 +35,28 @@ const ResumeBuilder = () => {
           })
         }
       />
+      <div className="flex gap-2">
+        <Input
+          value={values.address.city}
+          onChange={(e) =>
+            dispatch({
+              type: "ADD_PERSONAL_INFORMATION",
+              payload: { address: { city: e.target.value } },
+            })
+          }
+        />
+        <Input
+          value={values.address.state}
+          onChange={(e) =>
+            dispatch({
+              type: "ADD_PERSONAL_INFORMATION",
+              payload: {
+                address: { state: e.target.value },
+              },
+            })
+          }
+        />
+      </div>
     </div>
   );
 };

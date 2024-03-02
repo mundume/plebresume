@@ -10,6 +10,10 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
     name: "",
     email: "",
     phone: "",
+    address: {
+      city: "",
+      state: "",
+    },
   },
   dispatch: () => {},
 });
@@ -18,25 +22,20 @@ type initialState = {
   name: string;
   email: string;
   phone: string;
+  address: {
+    city?: string;
+    state?: string;
+  };
 };
 
 const initialArg: initialState = {
   name: "",
   email: "",
   phone: "",
-};
-
-type AddEmail = {
-  type: "ADD_EMAIL";
-  payload: {
-    email: string;
-  };
-};
-type AddName = {
-  type: "ADD_NAME";
-  payload: {
-    name: string;
-  };
+  address: {
+    city: "",
+    state: "",
+  },
 };
 
 type AddPersonalInformation = {
@@ -45,6 +44,10 @@ type AddPersonalInformation = {
     name?: string;
     email?: string;
     phone?: string;
+    address?: {
+      city?: string;
+      state?: string;
+    };
   };
 };
 
@@ -56,6 +59,10 @@ function reducer(state: initialState, action: Action) {
       return {
         ...state,
         ...action.payload,
+        address: {
+          ...state.address,
+          ...action.payload.address,
+        },
       };
     default:
       return state;
