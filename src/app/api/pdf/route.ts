@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import * as fs from "fs";
 
 export const POST = async (req: Request, res: Response) => {
   const body = await req.json();

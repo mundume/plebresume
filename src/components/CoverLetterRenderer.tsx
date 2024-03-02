@@ -12,7 +12,7 @@ const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
   const { response, isLoading } = useCoverLetterContext();
   const [done, setDone] = useState(false);
-
+  console.log(response);
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await fetch(`/api/pdf`, {
@@ -31,7 +31,7 @@ const CoverLetterRenderer = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "cover-letter.pdf");
+      link.setAttribute("download", `${Date.now()}.pdf`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -39,7 +39,6 @@ const CoverLetterRenderer = () => {
     },
 
     retry: true,
-    retryDelay: 500,
 
     onSuccess: () => {
       setDone(true);

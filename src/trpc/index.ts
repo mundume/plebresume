@@ -2,14 +2,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { z } from "zod";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
-import { db } from "@/config/db";
-import {
-  user as dbUser,
-  file as dbFile,
-  coverLetter as dbCoverLetter,
-  resume as dbResume,
-} from "@/config/schema";
-import { eq } from "drizzle-orm";
+import { db } from "@/config/prisma";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -20,40 +13,41 @@ export const appRouter = router({
         code: "UNAUTHORIZED",
       });
 
-    const userFromDb = await db.query.user.findFirst({
-      where: (data, { eq }) => eq(data.id, user.id),
+    const dbUser = await db.user.findFirst({
+      where: {
+        id: user.id,
+      },
     });
-
-    if (!userFromDb) {
-      await db.insert(dbUser).values([
-        {
+    if (!dbUser) {
+      await db.user.create({
+        data: {
           id: user.id,
-          firstName: user.family_name as string,
-          lastName: user.given_name as string,
           email: user.email,
+          firstName: user.family_name!,
+          lastName: user.given_name!,
         },
-      ]);
+      });
     }
     return { sucess: true };
   }),
   getUserFiles: privateProcedure.query(async ({ ctx }) => {
-    const kindeUser = ctx.user;
-    if (!kindeUser) throw new TRPCError({ code: "UNAUTHORIZED" });
-    return await db.query.file.findMany({
-      where: (user, { eq }) => eq(user.userId, kindeUser.id),
+    const user = ctx.user;
+    if (!user) throw new TRPCError({ code: "UNAUTHORIZED" });
+    return await db.file.findMany({
+      where: {
+        userId: user.id,
+      },
     });
   }),
   getFile: privateProcedure
     .input(z.object({ key: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
-      const file = await db.query.file.findFirst({
-        where: (file, { eq }) =>
-          eq(file.key, input.key) && eq(file.userId, userId),
-        // {
-        //   key: input.key,
-        //   userId,
-        // },
+      const file = await db.file.findFirst({
+        where: {
+          key: input.key,
+          userId,
+        },
       });
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
       return file;
@@ -63,15 +57,26 @@ export const appRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
 
-      const file = await db.query.file.findFirst({
-        where: (file, { eq }) =>
-          eq(file.id, input.id) && eq(file.userId, userId),
+      const file = await db.file.findFirst({
+        where: {
+          id: input.id,
+          userId,
+        },
       });
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
-      await db
-        .delete(dbFile && dbCoverLetter)
-        .where(eq(dbFile.id, input.id) && eq(dbCoverLetter.userId, userId));
-
+      await db.file.delete({
+        where: {
+          id: input.id,
+        },
+        include: {
+          coverLetters: {
+            where: {
+              id: input.id,
+              userId,
+            },
+          },
+        },
+      });
       return file;
     }),
   getCoverLetter: privateProcedure
@@ -79,15 +84,11 @@ export const appRouter = router({
     .query(async ({ ctx, input }) => {
       const { userId } = ctx;
       const { fileId } = input;
-      // const coverLetter = await db.query.coverLetter.findFirst({
-      //   where: {
-      //     id: fileId,
-      //     userId,
-      //   },
-      // });
-      const coverLetter = await db.query.coverLetter.findFirst({
-        where: (coverLetter, { eq }) =>
-          eq(coverLetter.fileId, fileId) && eq(coverLetter.userId, userId),
+      const coverLetter = await db.coverLetter.findFirst({
+        where: {
+          id: fileId,
+          userId,
+        },
       });
       if (!coverLetter) throw new TRPCError({ code: "NOT_FOUND" });
       return coverLetter;

@@ -1,6 +1,6 @@
 import CoverLetterRenderer from "@/components/CoverLetterRenderer";
 import ResumeRenderer from "@/components/ResumeRenderer";
-import { db } from "@/config/db";
+import { db } from "@/config/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -17,14 +17,11 @@ const Page = async ({ params }: Params) => {
   const user = await getUser();
   if (!user || !user.id)
     redirect(`/auth-callback?origin=coverletter/${params.fileid}`);
-  // const file = await db.query.file.findFirst({
-  //   where: {
-  //     id: params.fileid,
-  //     userId: user.id,
-  //   },
-  // });
-  const file = await db.query.file.findFirst({
-    where: (user, { eq }) => eq(user.id, user.id) && eq(user.id, params.fileid),
+  const file = await db.file.findFirst({
+    where: {
+      id: params.fileid,
+      userId: user.id,
+    },
   });
   return (
     <CoverLetterContextProvider fileId={file?.id!}>

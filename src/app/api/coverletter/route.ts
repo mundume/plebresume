@@ -1,15 +1,15 @@
-import { db } from "@/config/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { openai } from "@/lib/openai";
 import { pinecone } from "@/lib/pinecone";
 import { NextRequest, NextResponse } from "next/server";
 import { coverLetterSchema } from "@/lib/validators/coverlettervalidator";
+import { db } from "@/config/prisma";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { OpenAIStream, StreamingTextResponse } from "ai";
-import { coverLetter } from "@/config/schema";
-import { eq } from "drizzle-orm";
+import { format } from "date-fns";
 
+export const runtime = "edge";
 export const POST = async (req: NextRequest) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -23,14 +23,11 @@ export const POST = async (req: NextRequest) => {
       status: 401,
     });
 
-  // const file = await db.file.findFirst({
-  //   where: {
-  //     id: fileId,
-  //     userId: id,
-  //   },
-  // });
-  const file = await db.query.file.findFirst({
-    where: (file, { eq }) => eq(file.id, fileId) && eq(file.userId, id!),
+  const file = await db.file.findFirst({
+    where: {
+      id: fileId,
+      userId: id,
+    },
   });
   if (!file)
     return new Response("Not Found", {
@@ -103,35 +100,31 @@ Sincerely,
   const stream = OpenAIStream(response, {
     async onCompletion(completion) {
       console.log(completion);
-
-      const pleb = await db.query.coverLetter.findFirst({
-        where: (coverLetter, { eq }) =>
-          eq(coverLetter.id, fileId) && eq(coverLetter.userId, id!),
+      const pleb = await db.coverLetter.findFirst({
+        where: {
+          id: fileId,
+          userId: id,
+        },
       });
       if (pleb) {
-        await db
-          .update(coverLetter)
-          .set({ text: completion })
-          .where(
-            eq(coverLetter.id, coverLetter.id) && eq(coverLetter.userId, id!)
-          );
+        await db.coverLetter.update({
+          where: {
+            id: fileId,
+            userId: id,
+          },
+          data: {
+            text: completion,
+          },
+        });
       } else {
-        // await db.coverLetter.create({
-        //   data: {
-        //     name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
-        //     text: completion,
-        //     id: fileId,
-        //     userId: id,
-        //   },
-        // });
-        await db.insert(coverLetter).values([
-          {
+        await db.coverLetter.create({
+          data: {
             name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
             text: completion,
             id: fileId,
-            userId: id!,
+            userId: id,
           },
-        ]);
+        });
       }
     },
   });

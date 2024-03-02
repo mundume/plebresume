@@ -1,12 +1,10 @@
-import { db } from "@/config/db";
-import { file as dbFile } from "@/config/schema";
+import { db } from "@/config/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { pinecone } from "@/lib/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { eq } from "drizzle-orm";
 
 const f = createUploadthing();
 
@@ -27,28 +25,15 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      // const createdFile = await db.insert(dbFile).values([
-      //   {
-      //     key: "",
-      //     name: "",
-      //     userId: "",
-      //     url: "",
-      //     uploadStatus: "IN_PROGRESS",
-
-      //   },
-
-      // ]);
-      await db.insert(dbFile).values([
-        {
-          name: file.name,
-          size: file.size,
-          userId: metadata.userId,
+      const createdFile = await db.file.create({
+        data: {
           key: file.key,
+          name: file.name,
+          userId: metadata.userId,
           url: file.url,
+          uploadStatus: "PROCESSING",
+          size: file.size,
         },
-      ]);
-      const createdFile = await db.query.file.findFirst({
-        where: (file, { eq }) => eq(file.userId, metadata.userId),
       });
       try {
         const response = await fetch(`${file.url}`, {
@@ -63,7 +48,7 @@ export const ourFileRouter = {
             ...doc,
             metadata: {
               ...doc.metadata,
-              fileId: createdFile?.id,
+              fileId: createdFile.id,
             },
           };
         });
@@ -79,16 +64,12 @@ export const ourFileRouter = {
           pineconeIndex,
         });
 
-        // await db.file.update({
-        //   where: { id: createdFile.id },
-        //   data: {
-        //     uploadStatus: "SUCCESS",
-        //   },
-        // });
-        await db
-          .update(dbFile)
-          .set({ uploadStatus: "SUCCESS" })
-          .where(eq(dbFile.id, createdFile?.id!));
+        await db.file.update({
+          where: { id: createdFile.id },
+          data: {
+            uploadStatus: "SUCCESS",
+          },
+        });
       } catch (err) {
         console.log(err);
       }
