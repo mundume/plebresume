@@ -34,6 +34,7 @@ const ResumePreviewer = () => {
               <View style={tw("flex flex-col gap-2")}>
                 <Text style={tw(" text-5xl font-bold")}>{values.name}</Text>
                 <Text style={tw("t")}>{values.email}</Text>
+                <Text style={tw("t")}>{values.phone}</Text>
               </View>
               <View style={tw("mt-12 px-8 rotate-2")}>
                 <Text style={tw("text-amber-600 text-2xl")}>Section #2</Text>

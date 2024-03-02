@@ -9,6 +9,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   values: {
     name: "",
     email: "",
+    phone: "",
   },
   dispatch: () => {},
 });
@@ -16,11 +17,13 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
 type initialState = {
   name: string;
   email: string;
+  phone: string;
 };
 
 const initialArg: initialState = {
   name: "",
   email: "",
+  phone: "",
 };
 
 type AddEmail = {
@@ -41,6 +44,7 @@ type AddPersonalInformation = {
   payload: {
     name?: string;
     email?: string;
+    phone?: string;
   };
 };
 

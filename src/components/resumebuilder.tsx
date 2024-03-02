@@ -26,6 +26,15 @@ const ResumeBuilder = () => {
           })
         }
       />
+      <Input
+        value={values.phone}
+        onChange={(e) =>
+          dispatch({
+            type: "ADD_PERSONAL_INFORMATION",
+            payload: { phone: e.target.value },
+          })
+        }
+      />
     </div>
   );
 };
