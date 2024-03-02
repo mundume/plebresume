@@ -9,11 +9,11 @@ const Page = () => {
     <ResumeBuilderContextProvider>
       <main>
         <MaxWidthWrapper className="max-w-full">
-          <div className="flex ">
-            <div className="w-1/3">
+          <div className="flex gap-4 pt-4">
+            <div className="w-5/12">
               <ResumeBuilder />
             </div>
-            <div className="w-2/3">
+            <div className="w-7/12">
               <ResumePreviewer />
             </div>
           </div>
