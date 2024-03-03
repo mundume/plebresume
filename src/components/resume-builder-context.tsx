@@ -7,7 +7,43 @@ type ResumeBuilderContextProps = {
 };
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   values: {
-    name: "",
+    personalInfo: {
+      names: {
+        firstName: "",
+        lastName: "",
+      },
+      email: "",
+      phone: "",
+      address: {
+        city: "",
+        state: "",
+      },
+    },
+  },
+  dispatch: () => {},
+});
+
+type initialState = {
+  personalInfo: {
+    names: {
+      firstName: string;
+      lastName: string;
+    };
+    email: string;
+    phone: string;
+    address: {
+      city: string;
+      state: string;
+    };
+  };
+};
+
+const initialArg: initialState = {
+  personalInfo: {
+    names: {
+      firstName: "",
+      lastName: "",
+    },
     email: "",
     phone: "",
     address: {
@@ -15,33 +51,15 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
       state: "",
     },
   },
-  dispatch: () => {},
-});
-
-type initialState = {
-  name: string;
-  email: string;
-  phone: string;
-  address: {
-    city?: string;
-    state?: string;
-  };
-};
-
-const initialArg: initialState = {
-  name: "",
-  email: "",
-  phone: "",
-  address: {
-    city: "",
-    state: "",
-  },
 };
 
 type AddPersonalInformation = {
   type: "ADD_PERSONAL_INFORMATION";
   payload: {
-    name?: string;
+    names?: {
+      firstName?: string;
+      lastName?: string;
+    };
     email?: string;
     phone?: string;
     address?: {
@@ -58,10 +76,17 @@ function reducer(state: initialState, action: Action) {
     case "ADD_PERSONAL_INFORMATION":
       return {
         ...state,
-        ...action.payload,
-        address: {
-          ...state.address,
-          ...action.payload.address,
+        personalInfo: {
+          ...state.personalInfo,
+          ...action.payload,
+          names: {
+            ...state.personalInfo.names,
+            ...action.payload.names,
+          },
+          address: {
+            ...state.personalInfo.address,
+            ...action.payload.address,
+          },
         },
       };
     default:

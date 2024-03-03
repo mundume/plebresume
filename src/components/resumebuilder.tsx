@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { resumeSchema } from "@/lib/validators/resume-validator";
+import PersonalInfoAccordition from "./personal-info-accordition";
 
 const ResumeBuilder = () => {
   const { register, handleSubmit, formState } = useForm<
@@ -14,7 +15,10 @@ const ResumeBuilder = () => {
   >({
     resolver: zodResolver(resumeSchema),
     defaultValues: {
-      name: "nzai",
+      names: {
+        firstName: "",
+        lastName: "",
+      },
       email: "",
       phone: "",
       address: {
@@ -26,19 +30,34 @@ const ResumeBuilder = () => {
 
   const { values, dispatch } = useResumeBuilderContext();
 
-  const { name, email, phone, address } = values;
+  const { names, email, phone, address } = values.personalInfo;
+  const { firstName, lastName } = names;
   return (
     <div>
-      <Input
-        value={name}
-        {...register("name", { required: true })}
-        onChange={(e) =>
-          dispatch({
-            type: "ADD_PERSONAL_INFORMATION",
-            payload: { name: e.target.value },
-          })
-        }
-      />
+      <PersonalInfoAccordition />
+      <div className="flex gap-2">
+        <Input
+          value={firstName}
+          {...register("names.firstName", { required: true })}
+          onChange={(e) =>
+            dispatch({
+              type: "ADD_PERSONAL_INFORMATION",
+              payload: { names: { firstName: e.target.value } },
+            })
+          }
+        />
+        <Input
+          value={lastName}
+          {...register("names.lastName", { required: true })}
+          onChange={(e) =>
+            dispatch({
+              type: "ADD_PERSONAL_INFORMATION",
+              payload: { names: { lastName: e.target.value } },
+            })
+          }
+        />
+      </div>
+
       <Input
         value={email}
         {...(register("email"), { required: true })}

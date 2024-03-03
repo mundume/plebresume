@@ -10,3 +10,5 @@ export const CoverLetterFormSchema = z.object({
   jobTitle: z.string(),
   jobDescription: z.string(),
 });
+
+
