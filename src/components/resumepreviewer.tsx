@@ -22,7 +22,7 @@ const ResumePreviewer = () => {
   const { values } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
-  const { address, email, names, phone } = values.personalInfo;
+  const { address, email, names, phone, profile } = values.personalInfo;
   return (
     <div className="block w-full min-h-screen">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
@@ -49,10 +49,9 @@ const ResumePreviewer = () => {
                   {address.city}
                   {address.state && ","} {address.state}
                 </Text>
+                <Text style={tw("py-4 text-slate-600")}>{profile}</Text>
               </View>
-              <View style={tw("mt-12 px-8 rotate-2")}>
-                <Text style={tw("text-amber-600 text-2xl")}>Section #2</Text>
-              </View>
+              <View style={tw("mt-12 px-8 rotate-2")}></View>
             </Page>
           </Document>
         </div>

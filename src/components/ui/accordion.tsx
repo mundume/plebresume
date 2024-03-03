@@ -7,10 +7,6 @@ import { Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 
-export interface AccorditionProps {
-  icon?: React.ReactNode;
-}
-
 const Accordion = AccordionPrimitive.Root;
 
 const AccordionItem = React.forwardRef<
@@ -27,8 +23,9 @@ AccordionItem.displayName = "AccordionItem";
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> &
-    AccorditionProps
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+    icon?: React.ReactNode;
+  }
 >(({ className, children, icon, ...props }, ref) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
