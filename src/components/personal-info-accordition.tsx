@@ -65,11 +65,14 @@ const PersonalInfoAccordition = ({
             <Card className="p-6">
               <div className="flex items-center justify-between gap-2 py-2">
                 <div className="grid gap-1">
-                  <Label htmlFor="firstName" className="text-xs text-slate-600">
-                    First Name
+                  <Label
+                    htmlFor="first name"
+                    className="text-xs text-slate-600"
+                  >
+                    first name
                   </Label>
                   <Input
-                    placeholder="First Name"
+                    placeholder="first name"
                     value={firstName}
                     {...register("names.firstName", { required: true })}
                     onChange={(e) =>
@@ -81,8 +84,8 @@ const PersonalInfoAccordition = ({
                   />
                 </div>
                 <div className="grid gap-1">
-                  <Label htmlFor="lastName" className="text-xs text-slate-600">
-                    Last Name
+                  <Label htmlFor="last name" className="text-xs text-slate-600">
+                    last name
                   </Label>
                   <Input
                     value={lastName}
