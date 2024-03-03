@@ -3,13 +3,35 @@
 import React from "react";
 import { Input } from "./ui/input";
 import { useResumeBuilderContext } from "./resume-builder-context";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { resumeSchema } from "@/lib/validators/resume-validator";
 
 const ResumeBuilder = () => {
+  const { register, handleSubmit, formState } = useForm<
+    z.infer<typeof resumeSchema>
+  >({
+    resolver: zodResolver(resumeSchema),
+    defaultValues: {
+      name: "nzai",
+      email: "",
+      phone: "",
+      address: {
+        city: "",
+        state: "",
+      },
+    },
+  });
+
   const { values, dispatch } = useResumeBuilderContext();
+
+  const { name, email, phone, address } = values;
   return (
     <div>
       <Input
-        value={values.name}
+        value={name}
+        {...register("name", { required: true })}
         onChange={(e) =>
           dispatch({
             type: "ADD_PERSONAL_INFORMATION",
@@ -18,7 +40,9 @@ const ResumeBuilder = () => {
         }
       />
       <Input
-        value={values.email}
+        value={email}
+        {...(register("email"), { required: true })}
+        type="email"
         onChange={(e) =>
           dispatch({
             type: "ADD_PERSONAL_INFORMATION",
@@ -27,7 +51,8 @@ const ResumeBuilder = () => {
         }
       />
       <Input
-        value={values.phone}
+        value={phone}
+        {...register("phone")}
         onChange={(e) =>
           dispatch({
             type: "ADD_PERSONAL_INFORMATION",
@@ -37,7 +62,8 @@ const ResumeBuilder = () => {
       />
       <div className="flex gap-2">
         <Input
-          value={values.address.city}
+          value={address.city}
+          {...register("address.city")}
           onChange={(e) =>
             dispatch({
               type: "ADD_PERSONAL_INFORMATION",
@@ -46,7 +72,8 @@ const ResumeBuilder = () => {
           }
         />
         <Input
-          value={values.address.state}
+          value={address.state}
+          {...register("address.state")}
           onChange={(e) =>
             dispatch({
               type: "ADD_PERSONAL_INFORMATION",
