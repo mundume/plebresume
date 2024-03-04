@@ -12,20 +12,21 @@ import {
   PersonalInfomationValues,
   resumeSchema,
 } from "@/lib/validators/resume-validator";
-import { AddPersonalInformation } from "./resume-builder-context";
+import { Action, AddPersonalInformation } from "./resume-builder-context";
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 
+type AccorditionProps<T> = {
+  values: T;
+  dispatch: React.Dispatch<Action>;
+};
 const PersonalInfoAccordition = ({
   values,
   dispatch,
-}: {
-  values: PersonalInfomationValues;
-  dispatch: React.Dispatch<AddPersonalInformation>;
-}) => {
+}: AccorditionProps<PersonalInfomationValues>) => {
   const { names, email, phone, address, profile } = values;
   const { firstName, lastName } = names;
   const { register, handleSubmit, formState } =
@@ -174,9 +175,13 @@ const PersonalInfoAccordition = ({
                   />
                 </div>
               </div>
-              <div className="py-6">
+              <div className="grid gap-1 py-6">
+                <Label htmlFor="profile" className="text-xs text-slate-600">
+                  profile
+                </Label>
                 <Textarea
                   value={profile}
+                  placeholder="profile"
                   {...register("profile")}
                   onChange={(e) =>
                     dispatch({

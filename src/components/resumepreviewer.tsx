@@ -9,7 +9,7 @@ import { useResumeBuilderContext } from "./resume-builder-context";
 const tw = createTw({
   theme: {
     fontFamily: {
-      sans: ["Comic Sans"],
+      sans: ["Inter", "sans-serif"],
     },
     extend: {
       colors: {
@@ -35,17 +35,15 @@ const ResumePreviewer = () => {
             >
               <View style={tw("flex flex-col gap-2")}>
                 <Text style={tw("flex gap-4")}>
-                  <Text style={tw(" text-5xl font-bold")}>
+                  <Text style={tw("text-5xl font-bold")}>
                     {names.firstName}
                   </Text>
-                  <Text style={tw(" text-5xl font-bold")}>
-                    {names.lastName}
-                  </Text>
+                  <Text style={tw("text-5xl font-bold")}>{names.lastName}</Text>
                 </Text>
 
-                <Text style={tw("t")}>{email}</Text>
-                <Text style={tw("t")}>{phone}</Text>
-                <Text style={tw("")}>
+                <Text>{email}</Text>
+                <Text>{phone}</Text>
+                <Text>
                   {address.city}
                   {address.state && ","} {address.state}
                 </Text>

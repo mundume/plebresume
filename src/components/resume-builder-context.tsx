@@ -20,6 +20,13 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
         state: "",
       },
     },
+    workExperience: {
+      companyName: "",
+      title: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+    },
   },
   dispatch: () => {},
 });
@@ -38,6 +45,14 @@ type initialState = {
       state: string;
     };
   };
+} & {
+  workExperience: {
+    companyName: string;
+    title: string;
+    description: string;
+    startDate: string;
+    endDate: string;
+  };
 };
 
 const initialArg: initialState = {
@@ -53,6 +68,13 @@ const initialArg: initialState = {
       city: "",
       state: "",
     },
+  },
+  workExperience: {
+    companyName: "",
+    title: "",
+    description: "",
+    startDate: "",
+    endDate: "",
   },
 };
 
@@ -73,7 +95,20 @@ export type AddPersonalInformation = {
   };
 };
 
-type Action = AddPersonalInformation;
+export type AddWorkExperience = {
+  type: "ADD_WORK_EXPERIENCE";
+  payload: {
+    workExperience: {
+      companyName?: string;
+      title?: string;
+      description?: string;
+      startDate?: string;
+      endDate?: string;
+    };
+  };
+};
+
+export type Action = AddPersonalInformation | AddWorkExperience;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -91,6 +126,14 @@ function reducer(state: initialState, action: Action) {
             ...state.personalInfo.address,
             ...action.payload.address,
           },
+        },
+      };
+    case "ADD_WORK_EXPERIENCE":
+      return {
+        ...state,
+        workExperience: {
+          ...state.workExperience,
+          ...action.payload,
         },
       };
     default:
