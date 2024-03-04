@@ -7,18 +7,21 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { resumeSchema } from "@/lib/validators/resume-validator";
-import PersonalInfoAccordition from "./personal-info-accordition";
+import ResumeInfoAccordition from "./resume-info-accordition";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();
 
   return (
-    <div>
-      <PersonalInfoAccordition
-        values={values.personalInfo}
-        dispatch={dispatch}
-      />
-    </div>
+    <>
+      <div>
+        <ResumeInfoAccordition
+          values={values.personalInfo}
+          dispatch={dispatch}
+        />
+      </div>
+      <div></div>
+    </>
   );
 };
 

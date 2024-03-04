@@ -9,10 +9,13 @@ import { Eye, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import {
-  PersonalInfomationValues,
+  type PersonalInfomationValues,
   resumeSchema,
 } from "@/lib/validators/resume-validator";
-import { Action, AddPersonalInformation } from "./resume-builder-context";
+import {
+  type Action,
+  type AddPersonalInformation,
+} from "./resume-builder-context";
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,7 +26,7 @@ type AccorditionProps<T> = {
   values: T;
   dispatch: React.Dispatch<Action>;
 };
-const PersonalInfoAccordition = ({
+const ResumeInfoAccordition = ({
   values,
   dispatch,
 }: AccorditionProps<PersonalInfomationValues>) => {
@@ -199,4 +202,4 @@ const PersonalInfoAccordition = ({
   );
 };
 
-export default PersonalInfoAccordition;
+export default ResumeInfoAccordition;
