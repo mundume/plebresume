@@ -13,6 +13,7 @@ const ResumeBuilder = () => {
         <ResumeInfoAccordition
           values={values.personalInfo}
           dispatch={dispatch}
+          name="personal information"
         />
       </div>
       <div></div>
