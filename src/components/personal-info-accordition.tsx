@@ -51,7 +51,11 @@ const PersonalInfoAccordition = ({
           <AccordionTrigger
             className="font-semibold lg:text-xl"
             icon={
-              <Button size="icon" variant={"pleb"}>
+              <Button
+                size="icon"
+                variant={"pleb"}
+                className="dark:border border-slate-800"
+              >
                 <Eye className="w-4 h-4 text-slate-500" />
               </Button>
             }
