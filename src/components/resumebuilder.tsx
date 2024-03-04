@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useResumeBuilderContext } from "./resume-builder-context";
-import ResumeInfoAccordition from "./resume-info-accordition";
+import ResumeInfoAccordition from "./resume-personal-info-accordition";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();

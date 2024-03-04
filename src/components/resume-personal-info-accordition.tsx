@@ -6,10 +6,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Eye, User } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { type initialState, type Action } from "./resume-builder-context";
 import PersonalInformationAccordition from "./personal-information-accordition";
 import { PersonalInfomationValues } from "@/lib/validators/resume-validator";
+import { cn } from "@/lib/utils";
 
 type AccorditionProps = {
   values: PersonalInfomationValues;
@@ -28,13 +29,16 @@ const ResumeInfoAccordition = ({
           <AccordionTrigger
             className="font-semibold lg:text-xl"
             icon={
-              <Button
-                size="icon"
-                variant={"pleb"}
-                className="dark:border border-slate-800"
+              <span
+                className={cn(
+                  buttonVariants({
+                    size: "icon",
+                    variant: "outline",
+                  })
+                )}
               >
-                <Eye className="w-4 h-4 text-slate-500" />
-              </Button>
+                <Eye className="w-5 h-5 text-slate-500" />
+              </span>
             }
           >
             <div className="flex items-center">
