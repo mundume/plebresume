@@ -31,7 +31,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   dispatch: () => {},
 });
 
-type initialState = {
+export type initialState = {
   personalInfo: {
     names: {
       firstName: string;
