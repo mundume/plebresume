@@ -1,7 +1,7 @@
 "use client";
 
 import { WorkExperienceValues } from "@/lib/validators/resume-validator";
-import React, { createContext, use, useReducer } from "react";
+import React, { createContext, use, useMemo, useReducer } from "react";
 type ResumeBuilderContextProps = {
   values: initialState;
   dispatch: React.Dispatch<Action>;
@@ -22,6 +22,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
         state: "",
       },
     },
+    workExperience: [],
   },
   dispatch: () => {},
 });
@@ -40,6 +41,8 @@ export type initialState = {
       state: string;
     };
   };
+} & {
+  workExperience: WE;
 };
 const initialArg: initialState = {
   personalInfo: {
@@ -55,6 +58,15 @@ const initialArg: initialState = {
       state: "",
     },
   },
+  workExperience: [
+    {
+      companyName: "",
+      description: "",
+      endDate: "",
+      startDate: "",
+      title: "",
+    },
+  ],
 };
 
 export type AddPersonalInformation = {
@@ -74,7 +86,20 @@ export type AddPersonalInformation = {
   };
 };
 
-export type Action = AddPersonalInformation;
+export type WorkExperienceAction = {
+  type: "ADD_WORK_EXPERIENCES";
+  payload: WE;
+};
+
+export type WE = {
+  companyName: string;
+  description: string;
+  endDate: string;
+  startDate: string;
+  title: string;
+}[];
+
+export type Action = AddPersonalInformation | WorkExperienceAction;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -94,6 +119,12 @@ function reducer(state: initialState, action: Action) {
           },
         },
       };
+    case "ADD_WORK_EXPERIENCES": {
+      return {
+        ...state,
+        workExperience: [...state.workExperience, ...action.payload],
+      };
+    }
 
     default:
       return state;
@@ -106,11 +137,17 @@ export const ResumeBuilderContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
+  const contextValues = useMemo(
+    () => ({
+      values,
+      dispatch,
+    }),
+    [values, dispatch]
+  );
   return (
     <ResumeBuilderContext.Provider
       value={{
-        values,
-        dispatch,
+        ...contextValues,
       }}
     >
       {children}

@@ -32,6 +32,7 @@ const tw = createTw({
 const ResumePreviewer = () => {
   const { values } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
+  console.log(values.workExperience);
 
   const { address, email, names, phone, profile } = values.personalInfo;
   return (
@@ -77,7 +78,18 @@ const ResumePreviewer = () => {
                 </Text>
                 <Text style={tw("py-4 text-slate-600 text-xl")}>{profile}</Text>
               </View>
-              <View style={tw("mt-12 px-8 border-b")}></View>
+              <View style={tw("mt-12 px-8 border")}>
+                {values.workExperience.map((item, index) => (
+                  <div key={index}>
+                    <Text>{item.companyName}</Text>
+                    <Text>{item.title}</Text>
+                    <Text>
+                      {item.startDate} - {item.endDate}
+                    </Text>
+                    <Text>{item.description}</Text>
+                  </div>
+                ))}
+              </View>
             </Page>
           </Document>
         </div>

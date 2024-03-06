@@ -13,7 +13,7 @@ import { Action } from "./resume-builder-context";
 import AddExperience from "./resume-add-experiences";
 
 type AccorditionProps = {
-  values: WorkExperienceValues;
+  values: any;
   dispatch: React.Dispatch<Action>;
   name: string;
 };

@@ -3,7 +3,7 @@ import {
   type WorkExperienceValues,
 } from "@/lib/validators/resume-validator";
 import React from "react";
-import { type AddWorkExperience } from "./resume-builder-context";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Card } from "./ui/card";
@@ -11,10 +11,11 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
+import { Action } from "./resume-builder-context";
 
 type SkillsProps = {
-  values: WorkExperienceValues;
-  dispatch: React.Dispatch<AddWorkExperience>;
+  values: any;
+  dispatch: React.Dispatch<Action>;
 };
 const AddExperience = ({ values, dispatch }: SkillsProps) => {
   const { companyName, description, endDate, startDate, title } = values;
@@ -40,12 +41,7 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
             placeholder="company name"
             value={companyName}
             {...register("companyName", { required: true })}
-            onChange={(e) =>
-              dispatch({
-                type: "ADD_WORK_EXPERIENCE",
-                payload: { companyName: e.target.value },
-              })
-            }
+            onChange={(e) => console.log(e)}
           />
         </div>
         <div className="grid gap-1">
@@ -56,12 +52,7 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
             value={title}
             placeholder="job title"
             {...register("title", { required: true })}
-            onChange={(e) =>
-              dispatch({
-                type: "ADD_WORK_EXPERIENCE",
-                payload: { title: e.target.value },
-              })
-            }
+            onChange={(e) => console.log(e)}
           />
         </div>
       </div>
@@ -73,25 +64,10 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
           placeholder="description"
           value={description}
           {...(register("description"), { required: true })}
-          onChange={(e) =>
-            dispatch({
-              type: "ADD_WORK_EXPERIENCE",
-              payload: { description: e.target.value },
-            })
-          }
+          onChange={(e) => console.log(e)}
         />
       </div>
-      <Button
-        onClick={handleSubmit((data) =>
-          Array.isArray(data)
-            ? data.forEach((item) =>
-                dispatch({ type: "ADD_WORK_EXPERIENCE", payload: item })
-              )
-            : dispatch({ type: "ADD_WORK_EXPERIENCE", payload: data })
-        )}
-      >
-        submit
-      </Button>
+      <Button>submit</Button>
     </Card>
   );
 };
