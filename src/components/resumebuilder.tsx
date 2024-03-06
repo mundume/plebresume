@@ -21,7 +21,7 @@ const ResumeBuilder = () => {
         <SkillsAccordition
           values={values.workExperience}
           dispatch={dispatch}
-          name="skills"
+          name="Work Experience"
         />
       </div>
     </>

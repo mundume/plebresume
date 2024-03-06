@@ -1,10 +1,12 @@
 "use client";
 
+import { WorkExperienceValues } from "@/lib/validators/resume-validator";
 import React, { createContext, use, useReducer } from "react";
 type ResumeBuilderContextProps = {
   values: initialState;
   dispatch: React.Dispatch<Action>;
 };
+
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   values: {
     personalInfo: {
@@ -19,13 +21,6 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
         city: "",
         state: "",
       },
-    },
-    workExperience: {
-      companyName: "",
-      title: "",
-      description: "",
-      startDate: "",
-      endDate: "",
     },
   },
   dispatch: () => {},
@@ -45,16 +40,7 @@ export type initialState = {
       state: string;
     };
   };
-} & {
-  workExperience: {
-    companyName: string;
-    title: string;
-    description: string;
-    startDate: string;
-    endDate: string;
-  };
 };
-
 const initialArg: initialState = {
   personalInfo: {
     names: {
@@ -68,13 +54,6 @@ const initialArg: initialState = {
       city: "",
       state: "",
     },
-  },
-  workExperience: {
-    companyName: "",
-    title: "",
-    description: "",
-    startDate: "",
-    endDate: "",
   },
 };
 
@@ -95,20 +74,7 @@ export type AddPersonalInformation = {
   };
 };
 
-export type AddWorkExperience = {
-  type: "ADD_WORK_EXPERIENCE";
-  payload: {
-    workExperience: {
-      companyName?: string;
-      title?: string;
-      description?: string;
-      startDate?: string;
-      endDate?: string;
-    };
-  };
-};
-
-export type Action = AddPersonalInformation | AddWorkExperience;
+export type Action = AddPersonalInformation;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -128,14 +94,7 @@ function reducer(state: initialState, action: Action) {
           },
         },
       };
-    case "ADD_WORK_EXPERIENCE":
-      return {
-        ...state,
-        workExperience: {
-          ...state.workExperience,
-          ...action.payload,
-        },
-      };
+
     default:
       return state;
   }

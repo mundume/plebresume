@@ -10,6 +10,7 @@ import { Card } from "./ui/card";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
 
 type SkillsProps = {
   values: WorkExperienceValues;
@@ -42,7 +43,7 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
             onChange={(e) =>
               dispatch({
                 type: "ADD_WORK_EXPERIENCE",
-                payload: { workExperience: { companyName: e.target.value } },
+                payload: { companyName: e.target.value },
               })
             }
           />
@@ -58,7 +59,7 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
             onChange={(e) =>
               dispatch({
                 type: "ADD_WORK_EXPERIENCE",
-                payload: { workExperience: { title: e.target.value } },
+                payload: { title: e.target.value },
               })
             }
           />
@@ -75,11 +76,22 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
           onChange={(e) =>
             dispatch({
               type: "ADD_WORK_EXPERIENCE",
-              payload: { workExperience: { description: e.target.value } },
+              payload: { description: e.target.value },
             })
           }
         />
       </div>
+      <Button
+        onClick={handleSubmit((data) =>
+          Array.isArray(data)
+            ? data.forEach((item) =>
+                dispatch({ type: "ADD_WORK_EXPERIENCE", payload: item })
+              )
+            : dispatch({ type: "ADD_WORK_EXPERIENCE", payload: data })
+        )}
+      >
+        submit
+      </Button>
     </Card>
   );
 };
