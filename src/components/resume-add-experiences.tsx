@@ -78,33 +78,4 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
   );
 };
 
-//   const form = useForm<formSchema>({
-//     resolver: zodResolver(workExperience),
-//     defaultValues: {
-//       companyName: "",
-//       description: "",
-//       endDate: "",
-//       startDate: "",
-//       title: "",
-//     },
-//   });
-//   return (
-//     <div>
-//       <Card className="w-full">
-//         <form
-//           onSubmit={form.handleSubmit((data) =>
-//             dispatch({
-//               type: "ADD_WORK_EXPERIENCES",
-//               payload: [data],
-//             })
-//           )}
-//         >
-//           <Input placeholder="Job Title" {...form.register("title")} />
-//           <Button type="submit">save</Button>
-//         </form>
-//       </Card>
-//     </div>
-//   );
-// };
-
 export default AddExperience;
