@@ -3,6 +3,7 @@
 import React from "react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import ResumeInfoAccordition from "./resume-personal-info-accordition";
+import SkillsAccordition from "./resume-experience-accordition";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();
@@ -16,7 +17,13 @@ const ResumeBuilder = () => {
           name="personal information"
         />
       </div>
-      <div></div>
+      <div>
+        <SkillsAccordition
+          values={values.workExperience}
+          dispatch={dispatch}
+          name="skills"
+        />
+      </div>
     </>
   );
 };

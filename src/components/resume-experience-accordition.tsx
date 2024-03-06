@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { Eye, User } from "lucide-react";
 import { WorkExperienceValues } from "@/lib/validators/resume-validator";
 import { Action } from "./resume-builder-context";
+import AddExperience from "./resume-add-experiences";
 
 type AccorditionProps = {
   values: WorkExperienceValues;
@@ -41,7 +42,9 @@ const SkillsAccordition = ({ dispatch, name, values }: AccorditionProps) => {
               <p className="text-slate-800">{name}</p>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="border-none">pleb</AccordionContent>
+          <AccordionContent className="border-none">
+            <AddExperience values={values} dispatch={dispatch} />
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
     </div>

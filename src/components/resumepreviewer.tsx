@@ -1,5 +1,13 @@
 "use client";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Svg,
+  Line,
+} from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
@@ -49,7 +57,18 @@ const ResumePreviewer = () => {
                 </Text>
                 <Text style={tw("py-4 text-slate-600")}>{profile}</Text>
               </View>
-              <View style={tw("mt-12 px-8 rotate-2")}></View>
+              <View style={tw("mt-12 px-8 rotate-2")}>
+                <Svg height="21" width="1500">
+                  <Line
+                    x1="0"
+                    y1="0"
+                    x2="200"
+                    y2="200"
+                    strokeWidth={2}
+                    stroke="rgb(255,0,0)"
+                  />
+                </Svg>
+              </View>
             </Page>
           </Document>
         </div>
