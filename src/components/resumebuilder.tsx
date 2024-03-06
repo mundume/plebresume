@@ -5,6 +5,7 @@ import { useResumeBuilderContext } from "./resume-builder-context";
 import ResumeInfoAccordition from "./resume-personal-info-accordition";
 import SkillsAccordition from "./resume-experience-accordition";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();
@@ -28,20 +29,10 @@ const ResumeBuilder = () => {
       </div>
       <div>
         <SkillsAccordition
-          values={values.personalInfo}
+          values={values.workExperience}
           dispatch={dispatch}
           name="Work Experience"
         />
-        <Button
-          onClick={() =>
-            dispatch({
-              type: "ADD_WORK_EXPERIENCES",
-              payload: valuess,
-            })
-          }
-        >
-          Save
-        </Button>
       </div>
     </>
   );

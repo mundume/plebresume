@@ -1,7 +1,13 @@
 "use client";
 
 import { WorkExperienceValues } from "@/lib/validators/resume-validator";
-import React, { createContext, use, useMemo, useReducer } from "react";
+import React, {
+  createContext,
+  use,
+  useCallback,
+  useMemo,
+  useReducer,
+} from "react";
 type ResumeBuilderContextProps = {
   values: initialState;
   dispatch: React.Dispatch<Action>;
@@ -42,7 +48,7 @@ export type initialState = {
     };
   };
 } & {
-  workExperience: WE;
+  workExperience: WorKexperience;
 };
 const initialArg: initialState = {
   personalInfo: {
@@ -88,15 +94,15 @@ export type AddPersonalInformation = {
 
 export type WorkExperienceAction = {
   type: "ADD_WORK_EXPERIENCES";
-  payload: WE;
+  payload: WorKexperience;
 };
 
-export type WE = {
-  companyName: string;
-  description: string;
-  endDate: string;
-  startDate: string;
-  title: string;
+export type WorKexperience = {
+  companyName?: string;
+  description?: string;
+  endDate?: string;
+  startDate?: string;
+  title?: string;
 }[];
 
 export type Action = AddPersonalInformation | WorkExperienceAction;

@@ -1,26 +1,36 @@
 import {
+  resumeSchema,
   workExperience,
   type WorkExperienceValues,
 } from "@/lib/validators/resume-validator";
 import React from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Card } from "./ui/card";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Action } from "./resume-builder-context";
+import { Action, WorKexperience } from "./resume-builder-context";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { register } from "module";
 
 type SkillsProps = {
-  values: any;
+  values: WorKexperience;
   dispatch: React.Dispatch<Action>;
 };
 const AddExperience = ({ values, dispatch }: SkillsProps) => {
-  const { companyName, description, endDate, startDate, title } = values;
-
-  const { register, handleSubmit, formState } = useForm<WorkExperienceValues>({
+  const form = useForm({
     resolver: zodResolver(workExperience),
     defaultValues: {
       companyName: "",
@@ -30,46 +40,71 @@ const AddExperience = ({ values, dispatch }: SkillsProps) => {
       title: "",
     },
   });
+
   return (
-    <Card className="p-6">
-      <div className="flex items-center justify-between gap-2 py-2">
-        <div className="grid gap-1">
-          <Label htmlFor="company name" className="text-xs text-slate-600">
-            company name
-          </Label>
-          <Input
-            placeholder="company name"
-            value={companyName}
-            {...register("companyName", { required: true })}
-            onChange={(e) => console.log(e)}
-          />
-        </div>
-        <div className="grid gap-1">
-          <Label htmlFor="jobtitle" className="text-xs text-slate-600">
-            job title
-          </Label>
-          <Input
-            value={title}
-            placeholder="job title"
-            {...register("title", { required: true })}
-            onChange={(e) => console.log(e)}
-          />
-        </div>
-      </div>
-      <div className="grid gap-1 py-2 ">
-        <Label htmlFor="description" className="text-xs text-slate-600">
-          description
-        </Label>
-        <Textarea
-          placeholder="description"
-          value={description}
-          {...(register("description"), { required: true })}
-          onChange={(e) => console.log(e)}
+    <Form {...form} control={form.control}>
+      <form
+        onSubmit={form.handleSubmit((data) => {
+          console.log(data);
+          dispatch({ type: "ADD_WORK_EXPERIENCES", payload: [data] });
+        })}
+        className="space-y-8"
+      >
+        <FormField
+          control={form.control}
+          name="companyName"
+          render={({ field, formState }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder="shadcn"
+                  {...field}
+                  onError={() => formState.errors.title}
+                />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <Button>submit</Button>
-    </Card>
+
+        <button type="submit">pleb</button>
+      </form>
+    </Form>
   );
 };
+
+//   const form = useForm<formSchema>({
+//     resolver: zodResolver(workExperience),
+//     defaultValues: {
+//       companyName: "",
+//       description: "",
+//       endDate: "",
+//       startDate: "",
+//       title: "",
+//     },
+//   });
+//   return (
+//     <div>
+//       <Card className="w-full">
+//         <form
+//           onSubmit={form.handleSubmit((data) =>
+//             dispatch({
+//               type: "ADD_WORK_EXPERIENCES",
+//               payload: [data],
+//             })
+//           )}
+//         >
+//           <Input placeholder="Job Title" {...form.register("title")} />
+//           <Button type="submit">save</Button>
+//         </form>
+//       </Card>
+//     </div>
+//   );
+// };
 
 export default AddExperience;

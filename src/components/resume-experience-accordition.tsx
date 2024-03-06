@@ -9,11 +9,11 @@ import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { Eye, User } from "lucide-react";
 import { WorkExperienceValues } from "@/lib/validators/resume-validator";
-import { Action } from "./resume-builder-context";
+import { Action, WorKexperience } from "./resume-builder-context";
 import AddExperience from "./resume-add-experiences";
 
 type AccorditionProps = {
-  values: any;
+  values: WorKexperience;
   dispatch: React.Dispatch<Action>;
   name: string;
 };

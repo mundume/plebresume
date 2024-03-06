@@ -16,12 +16,12 @@ export const resumeSchema = z.object({
 });
 
 export const workExperience = z.object({
-  companyName: z.string(),
-  title: z.string(),
+  companyName: z.string().min(1, { message: "Name is required" }),
+  title: z.string().min(1, { message: "Title is required" }),
   description: z.string(),
   startDate: z.string(),
   endDate: z.string(),
 });
 
 export type PersonalInfomationValues = z.infer<typeof resumeSchema>;
-export type WorkExperienceValues = z.infer<typeof workExperience>;
+export type WorkExperienceValues = z.infer<typeof workExperience>[];
