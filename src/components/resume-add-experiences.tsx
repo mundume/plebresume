@@ -30,51 +30,69 @@ type SkillsProps = {
   dispatch: React.Dispatch<Action>;
 };
 const AddExperience = ({ values, dispatch }: SkillsProps) => {
-  const form = useForm({
-    resolver: zodResolver(workExperience),
-    defaultValues: {
-      companyName: "",
-      description: "",
-      endDate: "",
-      startDate: "",
-      title: "",
-    },
-  });
+  const form = useForm<WorkExperienceValues>({});
 
   return (
-    <Form {...form} control={form.control}>
-      <form
-        onSubmit={form.handleSubmit((data) => {
-          console.log(data);
-          dispatch({ type: "ADD_WORK_EXPERIENCES", payload: [data] });
-        })}
-        className="space-y-8"
-      >
-        <FormField
-          control={form.control}
-          name="companyName"
-          render={({ field, formState }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder="shadcn"
-                  {...field}
-                  onError={() => formState.errors.title}
-                />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <Card>
+      <Form {...form} control={form.control}>
+        <form
+          onSubmit={form.handleSubmit((data) => {
+            console.log({
+              ...data,
+            });
+            dispatch({ type: "ADD_WORK_EXPERIENCES", payload: [data] });
+          })}
+          className="space-y-8"
+        >
+          <FormField
+            control={form.control}
+            name="companyName"
+            render={({ field, formState }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="shadcn"
+                    {...field}
+                    {...(form.register("companyName"), { required: true })}
+                    value={field.value}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="startDate"
+            render={({ field, formState }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input
+                    type="date"
+                    placeholder="shadcn"
+                    {...field}
+                    {...(form.register("companyName"), { required: true })}
+                    value={field.value}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <button type="submit">pleb</button>
-      </form>
-    </Form>
+          <button type="submit">pleb</button>
+        </form>
+      </Form>
+    </Card>
   );
 };
 

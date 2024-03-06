@@ -32,7 +32,6 @@ const tw = createTw({
 const ResumePreviewer = () => {
   const { values } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
-  console.log(values.workExperience);
 
   const { address, email, names, phone, profile } = values.personalInfo;
   return (

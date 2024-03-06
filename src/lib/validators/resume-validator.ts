@@ -24,4 +24,4 @@ export const workExperience = z.object({
 });
 
 export type PersonalInfomationValues = z.infer<typeof resumeSchema>;
-export type WorkExperienceValues = z.infer<typeof workExperience>[];
+export type WorkExperienceValues = z.infer<typeof workExperience>;
