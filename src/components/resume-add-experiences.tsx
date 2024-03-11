@@ -54,8 +54,8 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const formattedExperienceData = {
       ...data,
-      startDate: data.startDate.toISOString(),
-      endDate: data.endDate.toISOString(),
+      startDate: format(data.startDate, "MMMM/yyyy"),
+      endDate: format(data.endDate, "MMMM/yyyy"),
     };
     console.log(data);
     toast(`${JSON.stringify(data, null, 2)}`);
