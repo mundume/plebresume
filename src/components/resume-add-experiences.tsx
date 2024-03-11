@@ -1,19 +1,14 @@
-import {
-  resumeSchema,
-  workExperience,
-  type WorkExperienceValues,
-} from "@/lib/validators/resume-validator";
-import React from "react";
+"use client";
 
-import { useFieldArray, useForm } from "react-hook-form";
-import { Card } from "./ui/card";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import { Action, WorKexperience } from "./resume-builder-context";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { UseFormStateReturn, useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -22,78 +17,137 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { register } from "module";
+} from "@/components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { toast } from "sonner";
+import type { Action, WorKexperience } from "./resume-builder-context";
+import { Input } from "./ui/input";
 
-type SkillsProps = {
+const FormSchema = z.object({
+  companyName: z.string().min(1, { message: "Name is required" }),
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string(),
+  startDate: z.string(),
+  endDate: z.string(),
+});
+type ExperienceProps = {
   values: WorKexperience;
   dispatch: React.Dispatch<Action>;
 };
-const AddExperience = ({ values, dispatch }: SkillsProps) => {
-  const form = useForm<WorkExperienceValues>({});
+
+export default function AddExperience({ values, dispatch }: ExperienceProps) {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
+    toast(`${JSON.stringify(data, null, 2)}`);
+    dispatch({
+      type: "ADD_WORK_EXPERIENCES",
+      payload: [data],
+    });
+  }
 
   return (
-    <Card>
-      <Form {...form} control={form.control}>
-        <form
-          onSubmit={form.handleSubmit((data) => {
-            console.log({
-              ...data,
-            });
-            dispatch({ type: "ADD_WORK_EXPERIENCES", payload: [data] });
-          })}
-          className="space-y-8"
-        >
-          <FormField
-            control={form.control}
-            name="companyName"
-            render={({ field, formState }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="shadcn"
-                    {...field}
-                    {...(form.register("companyName"), { required: true })}
-                    value={field.value}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={({ field, formState }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input
-                    type="date"
-                    placeholder="shadcn"
-                    {...field}
-                    {...(form.register("companyName"), { required: true })}
-                    value={field.value}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="companyName"
+          render={({ field }) => (
+            <CustomFormItem label={field.value} description="live and love">
+              <Input placeholder="enter company name" {...field} />
+            </CustomFormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="startDate"
+          render={({ field, formState }) => (
+            <FormItem>
+              <FormLabel>start Date</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="endDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>end date</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>title</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <button type="submit">pleb</button>
-        </form>
-      </Form>
-    </Card>
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
-};
+}
 
-export default AddExperience;
+const CustomFormItem = ({
+  label,
+  children,
+  description,
+}: {
+  label: string;
+  children: React.ReactNode;
+  description: string;
+}) => (
+  <FormItem>
+    <FormLabel>{label}</FormLabel>
+    <FormControl>{children}</FormControl>
+    <FormDescription>{description}</FormDescription>
+  </FormItem>
+);

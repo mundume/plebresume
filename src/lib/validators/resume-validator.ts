@@ -23,5 +23,11 @@ export const workExperience = z.object({
   endDate: z.string(),
 });
 
+// companyName?: string;
+//   description?: string;
+//   endDate?: string;
+//   startDate?: string;
+//   title?: string;
+
 export type PersonalInfomationValues = z.infer<typeof resumeSchema>;
 export type WorkExperienceValues = z.infer<typeof workExperience>;

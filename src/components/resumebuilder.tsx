@@ -6,6 +6,7 @@ import ResumeInfoAccordition from "./resume-personal-info-accordition";
 import SkillsAccordition from "./resume-experience-accordition";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import Todo from "@/app/resume/todo";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();
