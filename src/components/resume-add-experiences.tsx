@@ -71,16 +71,28 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>jobtitle</FormLabel>
+              <FormControl>
+                <Input placeholder="job title" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="companyName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>company name</FormLabel>
               <FormControl>
                 <Input placeholder="enter company name" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -90,13 +102,11 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>description</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="job description" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -119,7 +129,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                         )}
                       >
                         {field.value ? (
-                          format(field.value, "PPP")
+                          format(field.value, "MMMM/yyyy")
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -140,7 +150,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                   </PopoverContent>
                 </Popover>
                 <FormDescription>
-                  Your date of birth is used to calculate your age.
+                  lie to the recruiter because we know youre shit
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -163,7 +173,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                         )}
                       >
                         {field.value ? (
-                          format(field.value, "PPP")
+                          format(field.value, "MMMM/yyyy")
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -184,30 +194,13 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                   </PopoverContent>
                 </Popover>
                 <FormDescription>
-                  Your date of birth is used to calculate your age.
+                  lie to the recruiter because we know youre shit
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>title</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <Button type="submit">Submit</Button>
       </form>

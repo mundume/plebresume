@@ -65,12 +65,15 @@ const ResumePreviewer = () => {
                 <Text>
                   {values.workExperience?.map((item, index) => (
                     <View key={index} style={tw("flex flex-col")}>
-                      <Text style={tw("text-xl font-medium")}>
-                        {item.title}
-                      </Text>
-                      <Text style={tw("")}>{item.companyName}</Text>
-                      <Text>
-                        {item.startDate} to {item.endDate}
+                      <Text style={tw("flex flex-col")}>
+                        <Text style={tw("text-xl font-medium")}>
+                          {item.title}
+                        </Text>
+                        <Text style={tw("")}>{item.companyName}</Text>
+                        <Text>
+                          {item.startDate} {item.endDate !== "" && "to"}{" "}
+                          {item.endDate}
+                        </Text>
                       </Text>
                       <Text>{item.description}</Text>
                     </View>
