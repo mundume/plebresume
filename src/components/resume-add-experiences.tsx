@@ -26,13 +26,20 @@ import {
 import { toast } from "sonner";
 import type { Action, WorKexperience } from "./resume-builder-context";
 import { Input } from "./ui/input";
+import { DatePickerDemo } from "./datepicker";
 
 const FormSchema = z.object({
-  companyName: z.string().min(1, { message: "Name is required" }),
-  title: z.string().min(1, { message: "Title is required" }),
+  companyName: z.string({ required_error: "porn star" }),
+  title: z.string({
+    required_error: "job title is required",
+  }),
   description: z.string(),
-  startDate: z.string(),
-  endDate: z.string(),
+  startDate: z.date({
+    required_error: "to get the timeline, start date is required",
+  }),
+  endDate: z.date({
+    required_error: "to get the timeline, end date is required",
+  }),
 });
 type ExperienceProps = {
   values: WorKexperience;
@@ -45,11 +52,17 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    const formattedData = {
+      ...data,
+      startDate: data.startDate.toISOString(), // Example date formatting
+      endDate: data.endDate.toISOString(), // Example date formatting
+    };
     console.log(data);
     toast(`${JSON.stringify(data, null, 2)}`);
     dispatch({
       type: "ADD_WORK_EXPERIENCES",
-      payload: [data],
+
+      payload: [formattedData],
     });
   }
 
@@ -60,9 +73,16 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
           control={form.control}
           name="companyName"
           render={({ field }) => (
-            <CustomFormItem label={field.value} description="live and love">
-              <Input placeholder="enter company name" {...field} />
-            </CustomFormItem>
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="enter company name" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
           )}
         />
         <FormField
@@ -88,7 +108,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
             <FormItem>
               <FormLabel>start Date</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <DatePickerDemo value={field.value} />
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -104,7 +124,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
             <FormItem>
               <FormLabel>end date</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <DatePickerDemo value={field.value} />
               </FormControl>
               <FormDescription>
                 This is your public display name.
