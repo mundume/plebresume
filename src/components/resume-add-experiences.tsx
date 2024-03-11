@@ -27,6 +27,7 @@ import { toast } from "sonner";
 import type { Action, WorKexperience } from "./resume-builder-context";
 import { Input } from "./ui/input";
 import { DatePickerDemo } from "./datepicker";
+import { Card } from "./ui/card";
 
 const FormSchema = z.object({
   companyName: z.string({ required_error: "porn star" }),
@@ -67,159 +68,145 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>jobtitle</FormLabel>
-              <FormControl>
-                <Input placeholder="job title" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="companyName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>company name</FormLabel>
-              <FormControl>
-                <Input placeholder="enter company name" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>description</FormLabel>
-              <FormControl>
-                <Input placeholder="job description" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex items-center justify-between gap-2">
+    <Card className="p-6">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="startDate"
+            name="title"
             render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>start date</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "MMMM/yyyy")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>
-                  lie to the recruiter because we know youre shit
-                </FormDescription>
+              <FormItem>
+                <FormLabel>jobtitle</FormLabel>
+                <FormControl>
+                  <Input placeholder="job title" {...field} />
+                </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="endDate"
+            name="companyName"
             render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>end date</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "MMMM/yyyy")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>
-                  lie to the recruiter because we know youre shit
-                </FormDescription>
+              <FormItem>
+                <FormLabel>company name</FormLabel>
+                <FormControl>
+                  <Input placeholder="enter company name" {...field} />
+                </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
           />
-        </div>
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>description</FormLabel>
+                <FormControl>
+                  <Input placeholder="job description" {...field} />
+                </FormControl>
 
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex items-center justify-between gap-2">
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>start date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "MMMM/yyyy")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    lie to the recruiter because we know youre shit
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>end date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            " pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "MMMM/yyyy")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    lie to the recruiter because we know youre shit
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
+    </Card>
   );
 }
-
-const CustomFormItem = ({
-  label,
-  children,
-  description,
-}: {
-  label: string;
-  children: React.ReactNode;
-  description: string;
-}) => (
-  <FormItem>
-    <FormLabel>{label}</FormLabel>
-    <FormControl>{children}</FormControl>
-    <FormDescription>{description}</FormDescription>
-  </FormItem>
-);
