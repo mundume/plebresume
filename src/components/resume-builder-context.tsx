@@ -5,6 +5,7 @@ import React, {
   createContext,
   use,
   useCallback,
+  useContext,
   useMemo,
   useReducer,
 } from "react";
@@ -162,7 +163,7 @@ export const ResumeBuilderContextProvider = ({
 };
 
 export const useResumeBuilderContext = () => {
-  const context = use(ResumeBuilderContext);
+  const context = useContext(ResumeBuilderContext);
   if (context === undefined) {
     throw new Error(
       "useResumeBuilderContext must be used within a ResumeBuilderContextProvider"

@@ -12,6 +12,10 @@ import {
   MDXEditor,
   type MDXEditorMethods,
   type MDXEditorProps,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  toolbarPlugin,
+  ListsToggle,
 } from "@mdxeditor/editor";
 
 // Only import this to the next file
@@ -30,6 +34,16 @@ export default function InitializedMDXEditor({
         markdownShortcutPlugin(),
         linkPlugin(),
         linkDialogPlugin(),
+        toolbarPlugin({
+          toolbarContents: () => (
+            <>
+              {" "}
+              <UndoRedo />
+              <BoldItalicUnderlineToggles />
+              <ListsToggle />
+            </>
+          ),
+        }),
       ]}
       {...props}
       ref={editorRef}

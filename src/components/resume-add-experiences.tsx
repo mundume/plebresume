@@ -30,6 +30,8 @@ import { DatePickerDemo } from "./datepicker";
 import { Card } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
+import { ForwardRefEditor } from "./ForwardedRefEditor";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const FormSchema = z.object({
   companyName: z.string({ required_error: "company name is required" }),
@@ -40,9 +42,8 @@ const FormSchema = z.object({
   startDate: z.date({
     required_error: "to get the timeline, start date is required",
   }),
-  endDate: z.date({
-    required_error: "to get the timeline, end date is required",
-  }),
+  endDate: z.date({}).optional(),
+  currentlyWorking: z.boolean().default(false).optional(),
 });
 type ExperienceProps = {
   values: WorKexperience;
@@ -53,15 +54,14 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-  const [isChecked, setIsChecked] = useState(false);
-  const handleChecked = () => {
-    setIsChecked(!isChecked);
-  };
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const formattedExperienceData = {
       ...data,
       startDate: format(data.startDate, "MMMM/yyyy"),
-      endDate: isChecked ? "Present" : format(data.endDate, "MMMM/yyyy"),
+      endDate: data.currentlyWorking
+        ? "Present"
+        : format(data.endDate!, "MMMM/yyyy"),
     };
     console.log(data);
     toast(`${JSON.stringify(data, null, 2)}`);
@@ -119,10 +119,9 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               <FormItem>
                 <FormLabel>description</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="job description"
-                    {...field}
-                    value={field.value || ""}
+                  <ForwardRefEditor
+                    markdown={field.value || ""}
+                    onChange={field.onChange}
                   />
                 </FormControl>
 
@@ -175,8 +174,8 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                 </FormItem>
               )}
             />
+
             <FormField
-              disabled
               control={form.control}
               name="endDate"
               render={({ field }) => (
@@ -191,6 +190,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                             " pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
+                          disabled={form.watch("currentlyWorking")}
                         >
                           {field.value ? (
                             format(field.value, "MMMM/yyyy")
@@ -222,6 +222,29 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               )}
             />
           </div>
+          <FormField
+            control={form.control}
+            name="currentlyWorking"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start p-4 space-x-3 space-y-0 border rounded-md shadow">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    Use different settings for my mobile devices
+                  </FormLabel>
+                  <FormDescription>
+                    You can manage your mobile notifications in the page.
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
 
           <Button type="submit">Submit</Button>
         </form>
