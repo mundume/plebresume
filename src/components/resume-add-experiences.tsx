@@ -28,9 +28,11 @@ import type { Action, WorKexperience } from "./resume-builder-context";
 import { Input } from "./ui/input";
 import { DatePickerDemo } from "./datepicker";
 import { Card } from "./ui/card";
+import { Checkbox } from "./ui/checkbox";
+import { useState } from "react";
 
 const FormSchema = z.object({
-  companyName: z.string({ required_error: "porn star" }),
+  companyName: z.string({ required_error: "company name is required" }),
   title: z.string({
     required_error: "job title is required",
   }),
@@ -51,12 +53,15 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
+  const [isChecked, setIsChecked] = useState(false);
+  const handleChecked = () => {
+    setIsChecked(!isChecked);
+  };
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const formattedExperienceData = {
       ...data,
       startDate: format(data.startDate, "MMMM/yyyy"),
-      endDate: format(data.endDate, "MMMM/yyyy"),
+      endDate: isChecked ? "Present" : format(data.endDate, "MMMM/yyyy"),
     };
     console.log(data);
     toast(`${JSON.stringify(data, null, 2)}`);
@@ -78,7 +83,11 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               <FormItem>
                 <FormLabel>jobtitle</FormLabel>
                 <FormControl>
-                  <Input placeholder="job title" {...field} />
+                  <Input
+                    placeholder="job title"
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -92,7 +101,11 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               <FormItem>
                 <FormLabel>company name</FormLabel>
                 <FormControl>
-                  <Input placeholder="enter company name" {...field} />
+                  <Input
+                    placeholder="enter company name"
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -106,7 +119,11 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               <FormItem>
                 <FormLabel>description</FormLabel>
                 <FormControl>
-                  <Input placeholder="job description" {...field} />
+                  <Input
+                    placeholder="job description"
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -159,6 +176,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               )}
             />
             <FormField
+              disabled
               control={form.control}
               name="endDate"
               render={({ field }) => (
@@ -195,6 +213,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                       />
                     </PopoverContent>
                   </Popover>
+
                   <FormDescription>
                     lie to the recruiter because we know youre shit
                   </FormDescription>
