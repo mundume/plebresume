@@ -1,7 +1,7 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { ResumeBuilderContextProvider } from "@/components/resume-builder-context";
 import ResumeBuilder from "@/components/resumebuilder";
-import ResumePreviewer, { Pleb } from "@/components/resumepreviewer";
+import ResumePreviewer from "@/components/resumepreviewer";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";

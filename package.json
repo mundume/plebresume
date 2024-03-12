@@ -16,6 +16,7 @@
     "@kinde-oss/kinde-auth-nextjs": "^2.0.13",
     "@mdxeditor/editor": "^2.5.0",
     "@neondatabase/serverless": "^0.8.1",
+    "@onedoc/client": "^0.1.29",
     "@onedoc/react-print": "^0.1.119",
     "@pinecone-database/pinecone": "^1.1.2",
     "@prisma/adapter-neon": "5.10.2",
