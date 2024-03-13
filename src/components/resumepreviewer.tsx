@@ -1,42 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { createTw } from "react-pdf-tailwind";
+
 import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
-import { useCoverLetterContext } from "./Provider";
 import { useResumeBuilderContext } from "./resume-builder-context";
-import Markdown from "react-markdown";
-import ReactMarkdownProps from "react-markdown";
-import Resume from "./resume";
-type MarkdownProps = typeof ReactMarkdownProps;
 
 const ResumePreviewer = () => {
   const { values } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   const { address, email, names, phone, profile } = values.personalInfo;
+  const {} = values.workExperience;
   return (
     <div className="block w-full min-h-screen">
-      {isClient && (
-        <PDFDownloadLink
-          document={<Resume values={values} />}
-          fileName="somename.pdf"
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? "Loading document..." : "Download now!"
-          }
-        </PDFDownloadLink>
-      )}
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
-        <div ref={ref} className="">
-          <Resume values={values} />
+        <div ref={ref} className="p-10 font-sans text-slate-800">
+          <div className="flex items-center justify-between">
+            <h1 className="text-4xl font-bold">
+              {names.firstName} {names.lastName}
+            </h1>
+            <h1 className="p-2 text-xl border rounded-full ">NK</h1>
+          </div>
         </div>
       </SimpleBar>
     </div>
