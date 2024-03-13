@@ -19,7 +19,7 @@ const PersonalInformationAccordition = ({
   values,
   dispatch,
 }: InformationAccordition) => {
-  const { names, email, phone, address, profile } = values;
+  const { names, email, phone, address, profile, proffession } = values;
   const { firstName, lastName } = names;
   const { register, handleSubmit, formState } =
     useForm<PersonalInfomationValues>({
@@ -30,6 +30,8 @@ const PersonalInformationAccordition = ({
           lastName: "",
         },
         email: "",
+        profile: "",
+        proffession: "",
         phone: "",
         address: {
           city: "",
@@ -39,8 +41,8 @@ const PersonalInformationAccordition = ({
     });
   return (
     <Card className="p-6">
-      <div className="flex items-center justify-between gap-2 py-2">
-        <div className="grid gap-1">
+      <div className="flex items-center justify-between gap-2 pt-3">
+        <div className="grid gap-1 ">
           <Label htmlFor="first name" className="text-xs text-slate-600">
             first name
           </Label>
@@ -73,7 +75,23 @@ const PersonalInformationAccordition = ({
           />
         </div>
       </div>
-      <div className="grid gap-1 py-2 ">
+      <div className="grid gap-1 pt-3">
+        <Label htmlFor="last name" className="text-xs text-slate-600">
+          proffession
+        </Label>
+        <Input
+          value={proffession}
+          placeholder="Your proffession"
+          {...register("proffession", { required: true })}
+          onChange={(e) =>
+            dispatch({
+              type: "ADD_PERSONAL_INFORMATION",
+              payload: { proffession: e.target.value },
+            })
+          }
+        />
+      </div>
+      <div className="grid gap-1 pt-3 ">
         <Label htmlFor="email" className="text-xs text-slate-600">
           email
         </Label>
@@ -90,7 +108,7 @@ const PersonalInformationAccordition = ({
           }
         />
       </div>
-      <div className="grid gap-1 py-2">
+      <div className="grid gap-1 pt-3">
         <Label htmlFor="phone" className="text-xs text-slate-600">
           phone
         </Label>
@@ -107,7 +125,7 @@ const PersonalInformationAccordition = ({
           }
         />
       </div>
-      <div className="flex items-center justify-between gap-2 py-2">
+      <div className="flex items-center justify-between gap-2 pt-3">
         <div className="grid gap-1">
           <Label htmlFor="city" className="text-xs text-slate-600">
             city

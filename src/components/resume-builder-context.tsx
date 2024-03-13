@@ -22,6 +22,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
         lastName: "",
       },
       profile: "",
+      proffession: "",
       email: "",
       phone: "",
       address: {
@@ -41,6 +42,7 @@ export type initialState = {
       lastName: string;
     };
     email: string;
+    proffession: string;
     phone: string;
     profile: string;
     address: {
@@ -58,6 +60,7 @@ const initialArg: initialState = {
       lastName: "",
     },
     email: "",
+    proffession: "",
     phone: "",
     profile: "",
     address: {
@@ -86,6 +89,7 @@ export type AddPersonalInformation = {
     email?: string;
     phone?: string;
     profile?: string;
+    proffession?: string;
     address?: {
       city?: string;
       state?: string;

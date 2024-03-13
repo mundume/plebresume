@@ -9,6 +9,7 @@ export const resumeSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email" }),
   phone: z.string().min(10).max(30),
   profile: z.string().min(10).max(1000),
+  proffession: z.string(),
   address: z.object({
     city: z.string(),
     state: z.string(),
