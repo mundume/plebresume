@@ -77,7 +77,7 @@ const PersonalInformationAccordition = ({
       </div>
       <div className="grid gap-1 pt-3">
         <Label htmlFor="last name" className="text-xs text-slate-600">
-          proffession
+          Wanted Job Title
         </Label>
         <Input
           value={proffession}
