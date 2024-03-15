@@ -39,7 +39,7 @@ const SkillsAccordition = ({ dispatch, name, values }: AccorditionProps) => {
           >
             <div className="flex items-center">
               <User className="w-6 h-6 mr-1.5 text-slate-500" />
-              <p className="text-slate-800">{name}</p>
+              <p className="font-sans text-slate-800">{name}</p>
             </div>
           </AccordionTrigger>
           <AccordionContent className="border-none">

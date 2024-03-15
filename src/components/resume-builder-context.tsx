@@ -1,6 +1,5 @@
 "use client";
 
-import { WorkExperienceValues } from "@/lib/validators/resume-validator";
 import React, {
   createContext,
   use,
@@ -22,8 +21,8 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
         lastName: "",
       },
       profile: "",
-      proffession: "",
       email: "",
+      proffession: "",
       phone: "",
       address: {
         city: "",
@@ -87,9 +86,9 @@ export type AddPersonalInformation = {
       lastName?: string;
     };
     email?: string;
+    proffession?: string;
     phone?: string;
     profile?: string;
-    proffession?: string;
     address?: {
       city?: string;
       state?: string;

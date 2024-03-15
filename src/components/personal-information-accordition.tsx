@@ -47,6 +47,7 @@ const PersonalInformationAccordition = ({
             first name
           </Label>
           <Input
+            className="py-6"
             placeholder="first name"
             value={firstName}
             {...register("names.firstName", { required: true })}
@@ -63,6 +64,7 @@ const PersonalInformationAccordition = ({
             last name
           </Label>
           <Input
+            className="py-6"
             value={lastName}
             placeholder="last name"
             {...register("names.lastName", { required: true })}
@@ -80,6 +82,7 @@ const PersonalInformationAccordition = ({
           Wanted Job Title
         </Label>
         <Input
+          className="py-6"
           value={proffession}
           placeholder="Your proffession"
           {...register("proffession", { required: true })}
@@ -96,6 +99,7 @@ const PersonalInformationAccordition = ({
           email
         </Label>
         <Input
+          className="py-6"
           placeholder="email"
           value={email}
           {...(register("email"), { required: true })}
@@ -114,6 +118,7 @@ const PersonalInformationAccordition = ({
         </Label>
 
         <Input
+          className="py-6"
           value={phone}
           placeholder="phone"
           {...register("phone")}
@@ -131,6 +136,7 @@ const PersonalInformationAccordition = ({
             city
           </Label>
           <Input
+            className="py-6"
             value={address.city}
             placeholder="city"
             {...register("address.city")}
@@ -147,6 +153,7 @@ const PersonalInformationAccordition = ({
             state
           </Label>
           <Input
+            className="py-6"
             value={address.state}
             placeholder="state"
             {...register("address.state")}
@@ -166,6 +173,7 @@ const PersonalInformationAccordition = ({
           profile
         </Label>
         <Textarea
+          className="py-6"
           value={profile}
           placeholder="profile"
           {...register("profile")}

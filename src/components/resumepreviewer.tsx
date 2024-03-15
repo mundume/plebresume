@@ -11,7 +11,8 @@ const ResumePreviewer = () => {
 
   const { address, email, names, phone, profile, proffession } =
     values.personalInfo;
-  const {} = values.workExperience;
+  const { companyName, description, title, endDate, startDate } =
+    values.workExperience;
   return (
     <div className="items-center block w-full min-h-screen p-10 m-auto shadow-2xl">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
@@ -57,6 +58,11 @@ const ResumePreviewer = () => {
             </p>
             <span className="">{profile}</span>
           </p>
+        </div>
+        <div>
+          rafiki
+          {companyName}
+          date {startDate}
         </div>
       </SimpleBar>
     </div>
