@@ -80,10 +80,8 @@ export default function AddExperience({
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const formattedExperienceData = {
       ...data,
-      startDate: format(data.startDate, "MMMM/yyyy"),
-      endDate: data.currentlyWorking
-        ? "Present"
-        : format(data.endDate!, "MMMM/yyyy"),
+      startDate: format(data.startDate, "yyyy-MM-dd"),
+      endDate: data.currentlyWorking ? "Present" : data.endDate!,
     };
     console.log(data);
     toast(`${JSON.stringify(data, null, 2)}`);
@@ -146,7 +144,12 @@ export default function AddExperience({
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <ForwardRefEditor markdown={field.value || ""} {...field} />
+                  <ForwardRefEditor
+                    markdown={field.value || ""}
+                    {...field}
+                    className="prose"
+                    onChange={(e) => field.onChange(e)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

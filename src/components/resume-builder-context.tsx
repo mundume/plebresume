@@ -26,8 +26,8 @@ export type ResumeBuilderContextProps = {
       companyName: string;
       title: string;
       description: string;
-      startDate: Date | string;
-      endDate?: Date | undefined | string;
+      startDate: string;
+      endDate?: string;
       currentlyWorking?: boolean | undefined;
     }>
   >;
@@ -180,15 +180,15 @@ export const ResumeBuilderContextProvider = ({
     companyName: string;
     title: string;
     description: string;
-    startDate: Date | string;
-    endDate?: Date | undefined | string;
-    currentlyWorking?: boolean | undefined;
+    startDate: string;
+    endDate?: string;
+    currentlyWorking?: boolean;
   }>({
     companyName: "",
     title: "",
     description: "",
-    startDate: new Date(),
-    endDate: undefined,
+    startDate: "",
+    endDate: "",
     currentlyWorking: false,
   });
   console.log(currentValues);
