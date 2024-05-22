@@ -189,7 +189,9 @@ export const ResumeBuilderContextProvider = ({
     description: "",
     startDate: new Date(),
     endDate: undefined,
+    currentlyWorking: false,
   });
+  console.log(currentValues);
   const contextValues = useMemo(
     () => ({
       values,
@@ -197,7 +199,7 @@ export const ResumeBuilderContextProvider = ({
       currentValues,
       setCurrentValues,
     }),
-    [values, dispatch]
+    [values, dispatch, currentValues, setCurrentValues]
   );
   return (
     <ResumeBuilderContext.Provider
@@ -211,7 +213,7 @@ export const ResumeBuilderContextProvider = ({
 };
 
 export const useResumeBuilderContext = () => {
-  const context = use(ResumeBuilderContext);
+  const context = useContext(ResumeBuilderContext);
   if (context === undefined) {
     throw new Error(
       "useResumeBuilderContext must be used within a ResumeBuilderContextProvider"

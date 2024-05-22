@@ -67,12 +67,15 @@ type ExperienceProps = {
   >;
 };
 
-export default function AddExperience({ values, dispatch }: ExperienceProps) {
+export default function AddExperience({
+  values,
+  dispatch,
+  currentValues,
+  setCurrentValues,
+}: ExperienceProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
-  const [currentValues, setCurrentValues] = useState(form.getValues());
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const formattedExperienceData = {
@@ -266,7 +269,6 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
       </Form>
       <div className="mt-8">
         <h2 className="text-lg font-bold">Live Preview</h2>
-        <pre>{JSON.stringify(currentValues, null, 2)}</pre>
       </div>
     </Card>
   );

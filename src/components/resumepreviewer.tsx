@@ -6,13 +6,12 @@ import SimpleBar from "simplebar-react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 
 const ResumePreviewer = () => {
-  const { values } = useResumeBuilderContext();
+  const { values, currentValues } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
   const { address, email, names, phone, profile, proffession } =
     values.personalInfo;
-  const { companyName, description, title, endDate, startDate } =
-    values.workExperience;
+  const { companyName, description, endDate, startDate, title } = currentValues;
   return (
     <div className="items-center block w-full min-h-screen p-10 m-auto shadow-2xl">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
@@ -62,7 +61,8 @@ const ResumePreviewer = () => {
         <div>
           rafiki
           {companyName}
-          date {startDate}
+          {description}
+          {title}
         </div>
       </SimpleBar>
     </div>
