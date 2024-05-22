@@ -28,7 +28,12 @@ export default function InitializedMDXEditor({
       plugins={[
         // Example Plugin Usage
         headingsPlugin(),
-        listsPlugin(),
+        listsPlugin({
+          orderedList: true,
+          bulletList: true,
+          unorderedList: true,
+        }),
+
         quotePlugin(),
         thematicBreakPlugin(),
         markdownShortcutPlugin(),
@@ -37,7 +42,6 @@ export default function InitializedMDXEditor({
         toolbarPlugin({
           toolbarContents: () => (
             <>
-              {" "}
               <UndoRedo />
               <BoldItalicUnderlineToggles />
               <ListsToggle />

@@ -10,6 +10,7 @@ import Todo from "@/app/resume/todo";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();
+  const context = useResumeBuilderContext();
   const valuess = [
     {
       companyName: "glglg",
@@ -29,11 +30,7 @@ const ResumeBuilder = () => {
         />
       </div>
       <div>
-        <SkillsAccordition
-          values={values.workExperience}
-          dispatch={dispatch}
-          name="Work Experience"
-        />
+        <SkillsAccordition context={context} name="Work Experience" />
       </div>
     </>
   );

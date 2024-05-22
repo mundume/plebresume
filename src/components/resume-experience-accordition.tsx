@@ -9,15 +9,21 @@ import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { Eye, User } from "lucide-react";
 import { WorkExperienceValues } from "@/lib/validators/resume-validator";
-import { Action, WorKexperience } from "./resume-builder-context";
+import {
+  Action,
+  ResumeBuilderContextProps,
+  WorKexperience,
+} from "./resume-builder-context";
 import AddExperience from "./resume-add-experiences";
 
 type AccorditionProps = {
-  values: WorKexperience;
-  dispatch: React.Dispatch<Action>;
+  context: ResumeBuilderContextProps;
   name: string;
 };
-const SkillsAccordition = ({ dispatch, name, values }: AccorditionProps) => {
+const SkillsAccordition = ({
+  context: { values, dispatch, currentValues, setCurrentValues },
+  name,
+}: AccorditionProps) => {
   return (
     <div>
       <Accordion type="single" collapsible>
@@ -43,7 +49,12 @@ const SkillsAccordition = ({ dispatch, name, values }: AccorditionProps) => {
             </div>
           </AccordionTrigger>
           <AccordionContent className="border-none">
-            <AddExperience values={values} dispatch={dispatch} />
+            <AddExperience
+              values={values.workExperience}
+              dispatch={dispatch}
+              currentValues={currentValues}
+              setCurrentValues={setCurrentValues}
+            />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

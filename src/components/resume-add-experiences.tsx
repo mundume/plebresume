@@ -3,8 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import { UseFormStateReturn, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { SetStateAction, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -26,34 +27,52 @@ import {
 import { toast } from "sonner";
 import type { Action, WorKexperience } from "./resume-builder-context";
 import { Input } from "./ui/input";
-import { DatePickerDemo } from "./datepicker";
 import { Card } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
-import { useState } from "react";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const FormSchema = z.object({
-  companyName: z.string({ required_error: "company name is required" }),
+  companyName: z.string({ required_error: "Company name is required" }),
   title: z.string({
-    required_error: "job title is required",
+    required_error: "Job title is required",
   }),
   description: z.string(),
   startDate: z.date({
-    required_error: "to get the timeline, start date is required",
+    required_error: "To get the timeline, start date is required",
   }),
   endDate: z.date({}).optional(),
   currentlyWorking: z.boolean().default(false).optional(),
 });
+
 type ExperienceProps = {
   values: WorKexperience;
   dispatch: React.Dispatch<Action>;
+  currentValues: {
+    companyName: string;
+    title: string;
+    description: string;
+    startDate: Date | string;
+    endDate?: Date | undefined | string;
+    currentlyWorking?: boolean | undefined;
+  };
+  setCurrentValues: React.Dispatch<
+    SetStateAction<{
+      companyName: string;
+      title: string;
+      description: string;
+      startDate: Date | string;
+      endDate?: Date | undefined | string;
+      currentlyWorking?: boolean | undefined;
+    }>
+  >;
 };
 
 export default function AddExperience({ values, dispatch }: ExperienceProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+
+  const [currentValues, setCurrentValues] = useState(form.getValues());
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const formattedExperienceData = {
@@ -67,29 +86,35 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
     toast(`${JSON.stringify(data, null, 2)}`);
     dispatch({
       type: "ADD_WORK_EXPERIENCES",
-
       payload: [formattedExperienceData],
     });
+  }
+
+  function handleFormChange() {
+    setCurrentValues(form.getValues());
   }
 
   return (
     <Card className="p-6">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          onChange={handleFormChange}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>jobtitle</FormLabel>
+                <FormLabel>Job Title</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="job title"
+                    placeholder="Job title"
                     {...field}
                     value={field.value || ""}
                   />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -99,15 +124,14 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
             name="companyName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>company name</FormLabel>
+                <FormLabel>Company Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="enter company name"
+                    placeholder="Enter company name"
                     {...field}
                     value={field.value || ""}
                   />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -117,14 +141,10 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>description</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <ForwardRefEditor
-                    markdown={field.value || ""}
-                    onChange={field.onChange}
-                  />
+                  <ForwardRefEditor markdown={field.value || ""} {...field} />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -135,7 +155,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               name="startDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>start date</FormLabel>
+                  <FormLabel>Start Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -168,7 +188,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                     </PopoverContent>
                   </Popover>
                   <FormDescription>
-                    lie to the recruiter because we know youre shit
+                    Please select the start date.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -180,7 +200,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
               name="endDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>end date</FormLabel>
+                  <FormLabel>End Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -213,10 +233,7 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                       />
                     </PopoverContent>
                   </Popover>
-
-                  <FormDescription>
-                    lie to the recruiter because we know youre shit
-                  </FormDescription>
+                  <FormDescription>Please select the end date.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -235,11 +252,9 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
                 </FormControl>
 
                 <div className="space-y-1 leading-none">
-                  <FormLabel>
-                    Use different settings for my mobile devices
-                  </FormLabel>
+                  <FormLabel>Currently Working</FormLabel>
                   <FormDescription>
-                    You can manage your mobile notifications in the page.
+                    Check if you are currently working at this job.
                   </FormDescription>
                 </div>
               </FormItem>
@@ -249,6 +264,10 @@ export default function AddExperience({ values, dispatch }: ExperienceProps) {
           <Button type="submit">Submit</Button>
         </form>
       </Form>
+      <div className="mt-8">
+        <h2 className="text-lg font-bold">Live Preview</h2>
+        <pre>{JSON.stringify(currentValues, null, 2)}</pre>
+      </div>
     </Card>
   );
 }

@@ -2,15 +2,35 @@
 
 import React, {
   createContext,
+  SetStateAction,
   use,
   useCallback,
   useContext,
   useMemo,
   useReducer,
+  useState,
 } from "react";
-type ResumeBuilderContextProps = {
+export type ResumeBuilderContextProps = {
   values: initialState;
   dispatch: React.Dispatch<Action>;
+  currentValues: {
+    companyName: string;
+    title: string;
+    description: string;
+    startDate: Date | string;
+    endDate?: Date | undefined | string;
+    currentlyWorking?: boolean | undefined;
+  };
+  setCurrentValues: React.Dispatch<
+    SetStateAction<{
+      companyName: string;
+      title: string;
+      description: string;
+      startDate: Date | string;
+      endDate?: Date | undefined | string;
+      currentlyWorking?: boolean | undefined;
+    }>
+  >;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -32,6 +52,15 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
     workExperience: [],
   },
   dispatch: () => {},
+  currentValues: {
+    companyName: "",
+    title: "",
+    description: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    currentlyWorking: false,
+  },
+  setCurrentValues: () => {},
 });
 
 export type initialState = {
@@ -104,8 +133,8 @@ export type WorkExperienceAction = {
 export type WorKexperience = {
   companyName?: string;
   description?: string;
-  endDate?: string;
-  startDate?: string;
+  endDate?: Date | string;
+  startDate?: Date | string;
   title?: string;
 }[];
 
@@ -147,10 +176,26 @@ export const ResumeBuilderContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
+  const [currentValues, setCurrentValues] = useState<{
+    companyName: string;
+    title: string;
+    description: string;
+    startDate: Date | string;
+    endDate?: Date | undefined | string;
+    currentlyWorking?: boolean | undefined;
+  }>({
+    companyName: "",
+    title: "",
+    description: "",
+    startDate: new Date(),
+    endDate: undefined,
+  });
   const contextValues = useMemo(
     () => ({
       values,
       dispatch,
+      currentValues,
+      setCurrentValues,
     }),
     [values, dispatch]
   );
@@ -166,7 +211,7 @@ export const ResumeBuilderContextProvider = ({
 };
 
 export const useResumeBuilderContext = () => {
-  const context = useContext(ResumeBuilderContext);
+  const context = use(ResumeBuilderContext);
   if (context === undefined) {
     throw new Error(
       "useResumeBuilderContext must be used within a ResumeBuilderContextProvider"
