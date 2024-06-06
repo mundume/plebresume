@@ -6,10 +6,14 @@ export const formSchema = z.object({
     required_error: "Job title is required",
   }),
   description: z.string(),
-  startDate: z.date({
-    required_error: "To get the timeline, start date is required",
-  }),
-  endDate: z.date({}).optional(),
+  startDate:
+    z.date({
+      required_error: "To get the timeline, start date is required",
+    }) ||
+    z
+      .string({ required_error: "To get the timeline, start date is required" })
+      .optional(),
+  endDate: z.date({}).optional() || z.string({}).optional(),
   currentlyWorking: z.boolean().default(false).optional(),
 });
 

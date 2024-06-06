@@ -36,6 +36,7 @@ import { Checkbox } from "./ui/checkbox";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 import { index } from "drizzle-orm/sqlite-core";
 import { EmploymentSchema, FormSchema, employmentSchema } from "@/lib/schemas";
+import { ControlledUsage } from "./markdown";
 
 type ExperienceProps = {
   values: WorKexperience;
@@ -136,10 +137,9 @@ export default function AddExperience({
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <ForwardRefEditor
-                        markdown={field.value || ""}
                         {...field}
-                        className="prose"
-                        onChange={(e) => field.onChange(e)}
+                        onChange={field.onChange}
+                        markdown={field.value || "your description here"}
                       />
                     </FormControl>
                     <FormMessage />
