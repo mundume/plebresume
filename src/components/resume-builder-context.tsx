@@ -4,31 +4,50 @@ import React, {
   createContext,
   SetStateAction,
   use,
-  useCallback,
-  useContext,
   useMemo,
   useReducer,
   useState,
 } from "react";
+import { useForm, UseFormReturn } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EmploymentSchema, employmentSchema } from "@/lib/schemas";
 export type ResumeBuilderContextProps = {
   values: initialState;
+  form: UseFormReturn<
+    {
+      experience: {
+        companyName: string;
+        title: string;
+        description: string;
+        startDate: Date;
+        endDate?: Date | undefined;
+        currentlyWorking?: boolean | undefined;
+      }[];
+    },
+    any,
+    undefined
+  >;
   dispatch: React.Dispatch<Action>;
   currentValues: {
-    companyName: string;
-    title: string;
-    description: string;
-    startDate: Date | string;
-    endDate?: Date | undefined | string;
-    currentlyWorking?: boolean | undefined;
-  };
-  setCurrentValues: React.Dispatch<
-    SetStateAction<{
+    experience: {
       companyName: string;
       title: string;
       description: string;
-      startDate: string;
-      endDate?: string;
+      startDate: Date;
+      endDate?: Date | undefined;
       currentlyWorking?: boolean | undefined;
+    }[];
+  };
+  setCurrentValues: React.Dispatch<
+    React.SetStateAction<{
+      experience: {
+        companyName: string;
+        title: string;
+        description: string;
+        startDate: Date;
+        endDate?: Date | undefined;
+        currentlyWorking?: boolean | undefined;
+      }[];
     }>
   >;
 };
@@ -49,17 +68,14 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
         state: "",
       },
     },
-    workExperience: [],
+
+    workExperience: {
+      experience: [],
+    },
   },
   dispatch: () => {},
-  currentValues: {
-    companyName: "",
-    title: "",
-    description: "",
-    startDate: new Date(),
-    endDate: new Date(),
-    currentlyWorking: false,
-  },
+  form: {} as any,
+  currentValues: { experience: [] },
   setCurrentValues: () => {},
 });
 
@@ -96,15 +112,9 @@ const initialArg: initialState = {
       state: "",
     },
   },
-  workExperience: [
-    {
-      companyName: "",
-      description: "",
-      endDate: "",
-      startDate: "",
-      title: "",
-    },
-  ],
+  workExperience: {
+    experience: [],
+  },
 };
 
 export type AddPersonalInformation = {
@@ -131,12 +141,15 @@ export type WorkExperienceAction = {
 };
 
 export type WorKexperience = {
-  companyName?: string;
-  description?: string;
-  endDate?: Date | string;
-  startDate?: Date | string;
-  title?: string;
-}[];
+  experience: {
+    companyName: string;
+    title: string;
+    description: string;
+    startDate: Date;
+    endDate?: Date | undefined;
+    currentlyWorking?: boolean | undefined;
+  }[];
+};
 
 export type Action = AddPersonalInformation | WorkExperienceAction;
 
@@ -161,7 +174,13 @@ function reducer(state: initialState, action: Action) {
     case "ADD_WORK_EXPERIENCES": {
       return {
         ...state,
-        workExperience: [...state.workExperience, ...action.payload],
+        workExperience: {
+          ...state.workExperience,
+          experience: [
+            ...state.workExperience.experience,
+            ...action.payload.experience,
+          ],
+        },
       };
     }
 
@@ -176,30 +195,43 @@ export const ResumeBuilderContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
-  const [currentValues, setCurrentValues] = useState<{
-    companyName: string;
-    title: string;
-    description: string;
-    startDate: string;
-    endDate?: string;
-    currentlyWorking?: boolean;
-  }>({
-    companyName: "",
-    title: "",
-    description: "",
-    startDate: "",
-    endDate: "",
-    currentlyWorking: false,
+  const [currentValues, setCurrentValues] = useState<EmploymentSchema>({
+    experience: [
+      {
+        companyName: "",
+        title: "",
+        description: "",
+        startDate: new Date(),
+        endDate: new Date(),
+      },
+    ],
   });
-  console.log(currentValues);
+
+  const form = useForm<EmploymentSchema>({
+    resolver: zodResolver(employmentSchema),
+    defaultValues: {
+      experience: [
+        {
+          companyName: undefined,
+          title: undefined,
+          description: undefined,
+          startDate: undefined,
+          endDate: undefined,
+          currentlyWorking: undefined,
+        },
+      ],
+    },
+  });
+
   const contextValues = useMemo(
     () => ({
       values,
       dispatch,
       currentValues,
+      form,
       setCurrentValues,
     }),
-    [values, dispatch, currentValues, setCurrentValues]
+    [values, dispatch, currentValues, setCurrentValues, form]
   );
   return (
     <ResumeBuilderContext.Provider
@@ -213,7 +245,7 @@ export const ResumeBuilderContextProvider = ({
 };
 
 export const useResumeBuilderContext = () => {
-  const context = useContext(ResumeBuilderContext);
+  const context = use(ResumeBuilderContext);
   if (context === undefined) {
     throw new Error(
       "useResumeBuilderContext must be used within a ResumeBuilderContextProvider"

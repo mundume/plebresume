@@ -8,24 +8,12 @@ import { useResumeBuilderContext } from "./resume-builder-context";
 import { format } from "date-fns";
 
 const ResumePreviewer = () => {
-  const { values, currentValues } = useResumeBuilderContext();
+  const { values, currentValues, form } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
   const { address, email, names, phone, profile, proffession } =
     values.personalInfo;
-  const {
-    companyName,
-    description,
-    endDate,
-    startDate,
-    title,
-    currentlyWorking,
-  } = currentValues;
-  const l = startDate
-    ? format(startDate, "MMM, yyyy")
-    : endDate
-    ? format(endDate, "MMM, yyyy")
-    : "";
+  const k = form.watch("experience");
   return (
     <div className="items-center block w-full min-h-screen p-10 m-auto shadow-2xl">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
@@ -82,19 +70,11 @@ const ResumePreviewer = () => {
             Work Experience
           </p>
           <div>
-            <div className="flex items-center justify-between">
-              <p className="flex text-sm font-mono font-medium text-blue-500">
-                {l} -{" "}
-                {currentlyWorking
-                  ? "Present"
-                  : endDate
-                  ? format(endDate, "MMMM/yyyy")
-                  : ""}
-              </p>
-              <p className="font-semibold">{companyName}</p>
-              <p className="font-semibold"> {title}</p>
-            </div>
-            <Markdown className="px-4 prose">{description}</Markdown>
+            {k.map((item, index) => (
+              <div key={index}>
+                <p>{item.companyName}</p>
+              </div>
+            ))}
           </div>
         </div>
       </SimpleBar>
