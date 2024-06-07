@@ -258,6 +258,7 @@ export default function AddExperience() {
                 description: "",
                 startDate: new Date(),
                 title: "",
+                location: "",
                 endDate: undefined,
                 currentlyWorking: false,
               })
