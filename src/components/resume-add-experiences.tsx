@@ -36,40 +36,8 @@ import { Checkbox } from "./ui/checkbox";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 import { index } from "drizzle-orm/sqlite-core";
 import { EmploymentSchema, FormSchema, employmentSchema } from "@/lib/schemas";
-import { ControlledUsage } from "./markdown";
-
-type ExperienceProps = {
-  values: WorKexperience;
-  dispatch: React.Dispatch<Action>;
-  currentValues: {
-    companyName: string;
-    title: string;
-    description: string;
-    startDate: Date | string;
-    endDate?: Date | undefined | string;
-    currentlyWorking?: boolean | undefined;
-  };
-  setCurrentValues: React.Dispatch<
-    SetStateAction<
-      {
-        companyName: string;
-        title: string;
-        description: string;
-        startDate: Date | string;
-        endDate?: Date | undefined | string;
-        currentlyWorking?: boolean | undefined;
-      }[]
-    >
-  >;
-};
-
-export default function AddExperience({
-  values,
-  dispatch,
-  currentValues,
-  setCurrentValues,
-}: ExperienceProps) {
-  const { form } = useResumeBuilderContext();
+export default function AddExperience() {
+  const { form, dispatch } = useResumeBuilderContext();
   function onSubmit(data: EmploymentSchema) {
     console.log("fields");
 
@@ -123,6 +91,23 @@ export default function AddExperience({
                         placeholder="Enter company name"
                         {...field}
                         value={field.value || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`experience.${index}.location`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Location</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter company name"
+                        {...field}
+                        value={field?.value || ""}
                       />
                     </FormControl>
                     <FormMessage />

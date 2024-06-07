@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import { json } from "stream/consumers";
 
 const ResumePreviewer = () => {
-  const { values, currentValues, form } = useResumeBuilderContext();
+  const { values, form } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
   const { address, email, names, phone, profile, proffession } =
@@ -71,27 +71,29 @@ const ResumePreviewer = () => {
         </p>
         <div>
           {k.map((item, index) => (
-            <div key={index} className="flex justify-between  my-4">
-              {
-                <div className="flex gap-2 text-sm text-blue-400 font-mono">
-                  {item.startDate && (
-                    <p>
-                      {format(new Date(item?.startDate) || "", "MMM, yyyy")}
-                    </p>
-                  )}
-                  -{" "}
-                  <p>
-                    {" "}
-                    {item.currentlyWorking
-                      ? "Present"
-                      : item.endDate &&
-                        format(new Date(item?.endDate!) || "", "MMM, yyyy")}
+            <div
+              key={index}
+              className="grid  grid-cols-12 my-4 gap-6 items-start "
+            >
+              <div className=" col-span-3  flex  gap-2 text-xs text-blue-400 font-mono  ">
+                {item.startDate && (
+                  <p className=" text-xs">
+                    {format(new Date(item?.startDate) || "", "MMM, yyyy")}
                   </p>
-                </div>
-              }
-              <div className="">
+                )}
+                -{" "}
+                <p className=" text-xs">
+                  {" "}
+                  {item.currentlyWorking
+                    ? "Present"
+                    : item.endDate &&
+                      format(new Date(item?.endDate!) || "", "MMM, yyyy")}
+                </p>
+              </div>
+
+              <div className=" col-span-7">
                 <div
-                  className="flex gap-2 font-sans text-slate-800 items-center
+                  className="flex  gap-2 font-sans text-slate-800 items-center
                   "
                 >
                   <h2 className="font-semibold ">{item?.title}</h2>{" "}
@@ -104,7 +106,9 @@ const ResumePreviewer = () => {
                   {item?.description}
                 </Markdown>
               </div>
-              <div className=""></div>
+              <div className="text-slate-600 font-mono text-xs col-span-2">
+                {item.location}
+              </div>
             </div>
           ))}
         </div>

@@ -20,6 +20,7 @@ export type ResumeBuilderContextProps = {
         title: string;
         description: string;
         startDate: Date;
+        location: string;
         endDate?: Date | undefined;
         currentlyWorking?: boolean | undefined;
       }[];
@@ -28,28 +29,6 @@ export type ResumeBuilderContextProps = {
     undefined
   >;
   dispatch: React.Dispatch<Action>;
-  currentValues: {
-    experience: {
-      companyName: string;
-      title: string;
-      description: string;
-      startDate: Date;
-      endDate?: Date | undefined;
-      currentlyWorking?: boolean | undefined;
-    }[];
-  };
-  setCurrentValues: React.Dispatch<
-    React.SetStateAction<{
-      experience: {
-        companyName: string;
-        title: string;
-        description: string;
-        startDate: Date;
-        endDate?: Date | undefined;
-        currentlyWorking?: boolean | undefined;
-      }[];
-    }>
-  >;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -75,8 +54,6 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   },
   dispatch: () => {},
   form: {} as any,
-  currentValues: { experience: [] },
-  setCurrentValues: () => {},
 });
 
 export type initialState = {
@@ -195,17 +172,6 @@ export const ResumeBuilderContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
-  const [currentValues, setCurrentValues] = useState<EmploymentSchema>({
-    experience: [
-      {
-        companyName: "",
-        title: "",
-        description: "",
-        startDate: new Date(),
-        endDate: new Date(),
-      },
-    ],
-  });
 
   const form = useForm<EmploymentSchema>({
     resolver: zodResolver(employmentSchema),
@@ -218,6 +184,7 @@ export const ResumeBuilderContextProvider = ({
           startDate: undefined,
           endDate: undefined,
           currentlyWorking: undefined,
+          location: undefined,
         },
       ],
     },
@@ -227,11 +194,10 @@ export const ResumeBuilderContextProvider = ({
     () => ({
       values,
       dispatch,
-      currentValues,
+
       form,
-      setCurrentValues,
     }),
-    [values, dispatch, currentValues, setCurrentValues, form]
+    [values, dispatch, form]
   );
   return (
     <ResumeBuilderContext.Provider

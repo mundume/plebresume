@@ -15,6 +15,7 @@ export const formSchema = z.object({
       .optional(),
   endDate: z.date({}).optional() || z.string({}).optional(),
   currentlyWorking: z.boolean().default(false).optional(),
+  location: z.string({ required_error: "Location is required" }),
 });
 
 export const employmentSchema = z.object({
