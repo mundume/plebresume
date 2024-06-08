@@ -1,9 +1,13 @@
-"use client";
-import { CalendarIcon } from "@radix-ui/react-icons";
+import React from "react";
+import { ZodSchema } from "zod";
+import {
+  useFieldArray,
+  UseFormReturn,
+  FieldValues,
+  Path,
+} from "react-hook-form";
 import { format } from "date-fns";
-import { useFieldArray } from "react-hook-form";
-
-import { cn } from "@/lib/utils";
+import { CalendarIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -20,31 +24,28 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { toast } from "sonner";
-import { useResumeBuilderContext } from "./resume-builder-context";
-import { Input } from "./ui/input";
-import { Card } from "./ui/card";
-import { Checkbox } from "./ui/checkbox";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
-import { index } from "drizzle-orm/sqlite-core";
-import { EmploymentSchema } from "@/lib/schemas";
-export default function AddExperience() {
-  const { form, dispatch } = useResumeBuilderContext();
-  function onSubmit(data: EmploymentSchema) {
-    console.log("fields");
 
-    console.log(data);
+type Props<T extends FieldValues> = {
+  schema: ZodSchema;
+  form: UseFormReturn<T>;
+  value: Path<T>;
+  onSubmit: (data: T) => void;
+};
 
-    toast(`${JSON.stringify(data, null, 2)}`);
-    dispatch({
-      type: "ADD_WORK_EXPERIENCES",
-      payload: data,
-    });
-  }
-
+const GenericForm = <T extends FieldValues>({
+  schema,
+  form,
+  value,
+  onSubmit,
+}: Props<T>) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "experience",
+    name: value as Path<T>,
   });
 
   return (
@@ -55,7 +56,7 @@ export default function AddExperience() {
             <div key={field.id} className="space-y-4">
               <FormField
                 control={form.control}
-                name={`experience.${index}.title`}
+                name={`${value}.${index}.title` as Path<T>}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Title</FormLabel>
@@ -72,7 +73,7 @@ export default function AddExperience() {
               />
               <FormField
                 control={form.control}
-                name={`experience.${index}.companyName`}
+                name={`${value}.${index}.companyName` as Path<T>}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Name</FormLabel>
@@ -89,13 +90,13 @@ export default function AddExperience() {
               />
               <FormField
                 control={form.control}
-                name={`experience.${index}.location`}
+                name={`${value}.${index}.location` as Path<T>}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Location</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter company name"
+                        placeholder="Enter location"
                         {...field}
                         value={field?.value || ""}
                       />
@@ -106,7 +107,7 @@ export default function AddExperience() {
               />
               <FormField
                 control={form.control}
-                name={`experience.${index}.description`}
+                name={`${value}.${index}.description` as Path<T>}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Description</FormLabel>
@@ -124,7 +125,7 @@ export default function AddExperience() {
               <div className="flex items-center justify-between gap-2">
                 <FormField
                   control={form.control}
-                  name={`experience.${index}.startDate`}
+                  name={`${value}.${index}.startDate` as Path<T>}
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Start Date</FormLabel>
@@ -139,7 +140,7 @@ export default function AddExperience() {
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "MMMM/yyyy")
+                                format(new Date(field.value), "MMMM/yyyy")
                               ) : (
                                 <span>Pick a date</span>
                               )}
@@ -150,8 +151,10 @@ export default function AddExperience() {
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
                             mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
+                            selected={new Date(field.value)}
+                            onSelect={(date) =>
+                              field.onChange(date?.toISOString())
+                            }
                             disabled={(date) =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
@@ -169,7 +172,7 @@ export default function AddExperience() {
 
                 <FormField
                   control={form.control}
-                  name={`experience.${index}.endDate`}
+                  name={`${value}.${index}.endDate` as Path<T>}
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>End Date</FormLabel>
@@ -183,11 +186,11 @@ export default function AddExperience() {
                                 !field.value && "text-muted-foreground"
                               )}
                               disabled={form.watch(
-                                `experience.${index}.currentlyWorking`
+                                `${value}.${index}.currentlyWorking` as Path<T>
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "MMMM/yyyy")
+                                format(new Date(field.value), "MMMM/yyyy")
                               ) : (
                                 <span>Pick a date</span>
                               )}
@@ -198,8 +201,10 @@ export default function AddExperience() {
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
                             mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
+                            selected={new Date(field.value)}
+                            onSelect={(date) =>
+                              field.onChange(date?.toISOString())
+                            }
                             disabled={(date) =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
@@ -217,7 +222,7 @@ export default function AddExperience() {
               </div>
               <FormField
                 control={form.control}
-                name={`experience.${index}.currentlyWorking`}
+                name={`${value}.${index}.currentlyWorking` as Path<T>}
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start p-4 space-x-3 space-y-0 border rounded-md shadow">
                     <FormControl>
@@ -236,6 +241,13 @@ export default function AddExperience() {
                   </FormItem>
                 )}
               />
+              <Button
+                type="button"
+                onClick={() => remove(index)}
+                variant={"destructive"}
+              >
+                Remove
+              </Button>
             </div>
           ))}
 
@@ -246,7 +258,7 @@ export default function AddExperience() {
               append({
                 companyName: "",
                 description: "",
-                startDate: new Date(),
+                startDate: new Date().toISOString(),
                 title: "",
                 location: "",
                 endDate: undefined,
@@ -256,14 +268,6 @@ export default function AddExperience() {
           >
             Add one employment
           </Button>
-          {/* @ts-ignore */}
-          <Button
-            type="button"
-            onClick={() => remove(index)}
-            variant={"destructive"}
-          >
-            remove
-          </Button>
         </form>
       </Form>
       <div className="mt-8">
@@ -271,4 +275,6 @@ export default function AddExperience() {
       </div>
     </Card>
   );
-}
+};
+
+export default GenericForm;
