@@ -1,5 +1,5 @@
 import React from "react";
-import { ZodSchema } from "zod";
+import { z, ZodSchema } from "zod";
 import {
   useFieldArray,
   UseFormReturn,
@@ -29,12 +29,21 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
+import { EmploymentSchema } from "@/lib/schemas";
 
 type Props<T extends FieldValues> = {
   schema: ZodSchema;
   form: UseFormReturn<T>;
-  value: Path<T>;
+  value: keyof EmploymentSchema;
   onSubmit: (data: T) => void;
+  values: {
+    degree: string;
+    school: string;
+    location: string;
+    startDate: string;
+    endDate: string;
+    currentlyStudying: string;
+  };
 };
 
 const GenericForm = <T extends FieldValues>({
@@ -42,10 +51,11 @@ const GenericForm = <T extends FieldValues>({
   form,
   value,
   onSubmit,
+  values,
 }: Props<T>) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: value as Path<T>,
+    name: value as any,
   });
 
   return (
@@ -59,7 +69,7 @@ const GenericForm = <T extends FieldValues>({
                 name={`${value}.${index}.title` as Path<T>}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>{values.degree}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter title"
@@ -76,7 +86,7 @@ const GenericForm = <T extends FieldValues>({
                 name={`${value}.${index}.companyName` as Path<T>}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Name</FormLabel>
+                    <FormLabel>{values.school}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter company name"
@@ -93,7 +103,7 @@ const GenericForm = <T extends FieldValues>({
                 name={`${value}.${index}.location` as Path<T>}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Location</FormLabel>
+                    <FormLabel>{values.location}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter location"
@@ -175,7 +185,7 @@ const GenericForm = <T extends FieldValues>({
                   name={`${value}.${index}.endDate` as Path<T>}
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>End Date</FormLabel>
+                      <FormLabel>{field.name}</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -252,20 +262,7 @@ const GenericForm = <T extends FieldValues>({
           ))}
 
           <Button type="submit">Submit</Button>
-          <Button
-            type="button"
-            onClick={() =>
-              append({
-                companyName: "",
-                description: "",
-                startDate: new Date().toISOString(),
-                title: "",
-                location: "",
-                endDate: undefined,
-                currentlyWorking: false,
-              })
-            }
-          >
+          <Button type="button" onClick={() => append()}>
             Add one employment
           </Button>
         </form>

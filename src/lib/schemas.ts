@@ -34,6 +34,12 @@ export const educationFormSchema = z.object({
   currentlyStudying: z.boolean().default(false).optional(),
   location: z.string({ required_error: "Location is required" }),
 });
+export const educationSchema = z.object({
+  education: z.array(educationFormSchema),
+});
+
+export type EducationFormSchema = z.infer<typeof educationFormSchema>;
+export type EducationSchema = z.infer<typeof educationSchema>;
 
 export type FormSchema = z.infer<typeof formSchema>;
 export type EmploymentSchema = z.infer<typeof employmentSchema>;
