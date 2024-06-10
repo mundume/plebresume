@@ -4,7 +4,7 @@ import { EducationFormSchema, employmentSchema } from "@/lib/schemas";
 import { useResumeBuilderContext } from "./resume-builder-context";
 
 function GenericFormParent() {
-  const { form, dispatch } = useResumeBuilderContext();
+  const { form, dispatch, educationForm } = useResumeBuilderContext();
   const values = {
     degree: "Degree",
     school: "School",
@@ -17,10 +17,9 @@ function GenericFormParent() {
   return (
     <>
       <GenericForm
-        form={form}
-        schema={employmentSchema}
+        form={educationForm}
         onSubmit={() => {}}
-        value={"experience"}
+        value={"education"}
         values={values}
       />
     </>

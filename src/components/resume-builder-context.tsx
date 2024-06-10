@@ -1,34 +1,19 @@
 "use client";
 
-import React, {
-  createContext,
-  SetStateAction,
-  use,
-  useMemo,
-  useReducer,
-  useState,
-} from "react";
+import React, { createContext, use, useMemo, useReducer } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EmploymentSchema, employmentSchema } from "@/lib/schemas";
+import {
+  educationSchema,
+  EducationSchema,
+  EmploymentSchema,
+  employmentSchema,
+} from "@/lib/schemas";
 export type ResumeBuilderContextProps = {
   values: initialState;
-  form: UseFormReturn<
-    {
-      experience: {
-        companyName: string;
-        title: string;
-        description: string;
-        startDate: Date;
-        location: string;
-        endDate?: Date | undefined;
-        currentlyWorking?: boolean | undefined;
-      }[];
-    },
-    any,
-    undefined
-  >;
+  form: UseFormReturn<EmploymentSchema, any, undefined>;
   dispatch: React.Dispatch<Action>;
+  educationForm: UseFormReturn<EducationSchema, any, undefined>;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -51,9 +36,14 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
     workExperience: {
       experience: [],
     },
+
+    education: {
+      education: [],
+    },
   },
   dispatch: () => {},
   form: {} as any,
+  educationForm: {} as any,
 });
 
 export type initialState = {
@@ -71,8 +61,8 @@ export type initialState = {
       state: string;
     };
   };
-} & {
-  workExperience: WorKexperience;
+  workExperience: EmploymentSchema;
+  education: EducationSchema;
 };
 const initialArg: initialState = {
   personalInfo: {
@@ -90,7 +80,31 @@ const initialArg: initialState = {
     },
   },
   workExperience: {
-    experience: [],
+    experience: [
+      {
+        name: "",
+        title: "",
+        description: "",
+        startDate: new Date(),
+        endDate: new Date(),
+        currently: false,
+        location: "",
+      },
+    ],
+  },
+  education: {
+    education: [
+      {
+        name: "",
+
+        title: "",
+        description: "",
+        startDate: new Date(),
+        endDate: new Date(),
+        currently: false,
+        location: "",
+      },
+    ],
   },
 };
 
@@ -114,7 +128,7 @@ export type AddPersonalInformation = {
 
 export type WorkExperienceAction = {
   type: "ADD_WORK_EXPERIENCES";
-  payload: WorKexperience;
+  payload: EmploymentSchema;
 };
 
 export type WorKexperience = {
@@ -128,7 +142,15 @@ export type WorKexperience = {
   }[];
 };
 
-export type Action = AddPersonalInformation | WorkExperienceAction;
+export type EducationAction = {
+  type: "ADD_EDUCATION";
+  payload: EducationSchema;
+};
+
+export type Action =
+  | AddPersonalInformation
+  | WorkExperienceAction
+  | EducationAction;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -161,6 +183,19 @@ function reducer(state: initialState, action: Action) {
       };
     }
 
+    case "ADD_EDUCATION": {
+      return {
+        ...state,
+        education: {
+          ...state.education,
+          education: [
+            ...state.education.education,
+            ...action.payload.education,
+          ],
+        },
+      };
+    }
+
     default:
       return state;
   }
@@ -175,29 +210,22 @@ export const ResumeBuilderContextProvider = ({
 
   const form = useForm<EmploymentSchema>({
     resolver: zodResolver(employmentSchema),
-    defaultValues: {
-      experience: [
-        {
-          companyName: undefined,
-          title: undefined,
-          description: undefined,
-          startDate: undefined,
-          endDate: undefined,
-          currentlyWorking: undefined,
-          location: undefined,
-        },
-      ],
-    },
+    defaultValues: {},
+  });
+
+  const educationForm = useForm<EducationSchema>({
+    resolver: zodResolver(educationSchema),
+    defaultValues: {},
   });
 
   const contextValues = useMemo(
     () => ({
       values,
       dispatch,
-
+      educationForm,
       form,
     }),
-    [values, dispatch, form]
+    [values, dispatch, form, educationForm]
   );
   return (
     <ResumeBuilderContext.Provider

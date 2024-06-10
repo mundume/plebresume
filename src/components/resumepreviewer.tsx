@@ -9,12 +9,14 @@ import { format } from "date-fns";
 import { json } from "stream/consumers";
 
 const ResumePreviewer = () => {
-  const { values, form } = useResumeBuilderContext();
+  const { values, form, educationForm } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
   const { address, email, names, phone, profile, proffession } =
     values.personalInfo;
   const k = form.watch("experience");
+  const l = educationForm.watch("education");
+  console.log(l);
   return (
     <div className="items-center block w-full h-full p-10 m-auto shadow-2xl">
       <div ref={ref} className="pb-10 font-sans text-slate-800">
@@ -56,13 +58,13 @@ const ResumePreviewer = () => {
         </div>
       </div>
       <div>
-        <p className="flex text-sm text-slate-600">
+        <div className="flex text-sm text-slate-600">
           <p className="pr-5 text-xl font-bold text-slate-800 ">
             <span className="pr-1 underline text-blue-400">01</span>
             Profile
           </p>
-          <span className="">{profile}</span>
-        </p>
+          <p className="">{profile}</p>
+        </div>
       </div>
       <div className="py-4">
         <p className="pr-5 text-xl font-bold text-slate-800 ">
@@ -70,7 +72,7 @@ const ResumePreviewer = () => {
           Work Experience
         </p>
         <div>
-          {k.map((item, index) => (
+          {k?.map((item, index) => (
             <div
               key={index}
               className="grid  grid-cols-12 my-4 gap-6 items-start "
@@ -84,7 +86,7 @@ const ResumePreviewer = () => {
                 -{" "}
                 <p className=" text-xs">
                   {" "}
-                  {item.currentlyWorking
+                  {item.currently
                     ? "Present"
                     : item.endDate &&
                       format(new Date(item?.endDate!) || "", "MMM, yyyy")}
@@ -97,9 +99,50 @@ const ResumePreviewer = () => {
                   "
                 >
                   <h2 className="font-semibold ">{item?.title}</h2>{" "}
-                  {item?.companyName && <p className="text-base">at</p>}
+                  {item?.name && <p className="text-base">at</p>}
+                  <h2 className="font-semibold text-blue-400">{item?.name}</h2>
+                </div>
+                <Markdown className={"prose text-sm"}>
+                  {item?.description}
+                </Markdown>
+              </div>
+              <div className="text-slate-600 font-mono text-xs col-span-2">
+                {item.location}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="">
+          {l?.map((item, index) => (
+            <div
+              key={index}
+              className="grid  grid-cols-12 my-4 gap-6 items-start "
+            >
+              <div className=" col-span-3  flex  gap-2 text-xs text-blue-400 font-mono  ">
+                {item.startDate && (
+                  <p className=" text-xs">
+                    {format(new Date(item?.startDate) || "", "MMM, yyyy")}
+                  </p>
+                )}
+                -{" "}
+                <p className=" text-xs">
+                  {" "}
+                  {item.currently
+                    ? "Present"
+                    : item.endDate &&
+                      format(new Date(item?.endDate!) || "", "MMM, yyyy")}
+                </p>
+              </div>
+
+              <div className=" col-span-7">
+                <div
+                  className="flex  gap-2 font-sans text-slate-800 items-center
+                  "
+                >
+                  <h2 className="font-semibold ">{item?.title}</h2>{" "}
+                  {item?.name && <p className="text-base">at</p>}
                   <h2 className="font-semibold text-blue-400">
-                    {item?.companyName}
+                    {item?.location}
                   </h2>
                 </div>
                 <Markdown className={"prose text-sm"}>
