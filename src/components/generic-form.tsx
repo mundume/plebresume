@@ -1,5 +1,3 @@
-import React from "react";
-import { z, ZodSchema } from "zod";
 import {
   useFieldArray,
   UseFormReturn,
@@ -29,7 +27,6 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { ForwardRefEditor } from "./ForwardedRefEditor";
-import { EmploymentSchema } from "@/lib/schemas";
 import {
   Accordion,
   AccordionContent,
@@ -42,12 +39,12 @@ type Props<T extends FieldValues> = {
   value: any;
   onSubmit: (data: T) => void;
   values: {
-    degree: string;
-    school: string;
+    name: string;
+    title: string;
     location: string;
     startDate: string;
     endDate: string;
-    currentlyStudying: string;
+    currently: string;
   };
 };
 
@@ -63,7 +60,7 @@ const GenericForm = <T extends FieldValues>({
   });
 
   return (
-    <Card className="p-6">
+    <Card className="p-6 rounded border-none">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {fields.map((field, index) => (
@@ -71,46 +68,52 @@ const GenericForm = <T extends FieldValues>({
               type="single"
               collapsible
               key={field.id}
-              className="space-y-4 border p-4 rounded hover:bg-blue-50 dark:hover:bg-muted/30"
+              className="space-y-4 border p-4 rounded "
             >
               <AccordionItem value="item-1">
-                <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                <AccordionTrigger>
+                  {form.watch(`${value}.${index}.name` as Path<T>) ||
+                    "(Not Specified)"}
+                </AccordionTrigger>
                 <AccordionContent className="border-none">
-                  <div key={field.id} className=" my-4">
-                    <FormField
-                      control={form.control}
-                      name={`${value}.${index}.title` as Path<T>}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{values.degree}</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter title"
-                              {...field}
-                              value={field.value || ""}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`${value}.${index}.companyName` as Path<T>}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{values.school}</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter company name"
-                              {...field}
-                              value={field.value || ""}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <div key={field.id} className=" my-4 space-y-4">
+                    <div className="flex  justify-between">
+                      <FormField
+                        control={form.control}
+                        name={`${value}.${index}.title` as Path<T>}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{values.title}</FormLabel>
+                            <FormControl>
+                              <Input
+                                className="rounded"
+                                placeholder="Enter title"
+                                {...field}
+                                value={field.value || ""}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`${value}.${index}.name` as Path<T>}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{values.name}</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder=""
+                                {...field}
+                                value={field.value || ""}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                     <FormField
                       control={form.control}
                       name={`${value}.${index}.location` as Path<T>}
@@ -202,7 +205,7 @@ const GenericForm = <T extends FieldValues>({
                         name={`${value}.${index}.endDate` as Path<T>}
                         render={({ field }) => (
                           <FormItem className="flex flex-col">
-                            <FormLabel>{field.name}</FormLabel>
+                            <FormLabel>{values.endDate}</FormLabel>
                             <Popover>
                               <PopoverTrigger asChild>
                                 <FormControl>

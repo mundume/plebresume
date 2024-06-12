@@ -3,33 +3,33 @@ import GenericForm from "./generic-form";
 import { EducationFormSchema, employmentSchema } from "@/lib/schemas";
 import { useResumeBuilderContext } from "./resume-builder-context";
 
-function GenericFormParent() {
-  const { form, dispatch, educationForm } = useResumeBuilderContext();
+export default function AddExperienceForm() {
+  const { form } = useResumeBuilderContext();
   const values = {
-    degree: "Degree",
-    school: "School",
+    name: "Company Name",
+    title: "Job Title",
     location: "Location",
+    description: "Description",
     startDate: "Start Date",
     endDate: "End Date",
-    currentlyStudying: "Currently Studying",
+    currently: "Currently Working",
   };
 
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">Education</h1>
+        <h1 className="text-2xl font-bold">Work Experience</h1>
         <p className=" text-sm  text-slate-600">
-          a great education background will make you stand out from the masses
+          add your relevant work experience(previous 10 years). Use bullet
+          points to list your achievements.
         </p>
       </div>
       <GenericForm
-        form={educationForm}
+        form={form}
         onSubmit={() => {}}
-        value={"education"}
+        value={"experience"}
         values={values}
       />
     </div>
   );
 }
-
-export default GenericFormParent;

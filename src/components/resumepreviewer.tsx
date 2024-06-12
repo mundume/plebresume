@@ -14,11 +14,11 @@ const ResumePreviewer = () => {
 
   const { address, email, names, phone, profile, proffession } =
     values.personalInfo;
-  const k = form.watch("experience");
-  const l = educationForm.watch("education");
-  console.log(l);
+  const workExperience = form.watch("experience");
+  const education = educationForm.watch("education");
+
   return (
-    <div className="items-center block w-full h-full p-10 m-auto shadow-2xl">
+    <div className="items-center block w-full h-full p-10 m-auto shadow-2xl min-h-screen">
       <div ref={ref} className="pb-10 font-sans text-slate-800">
         <div className="flex flex-col ">
           <div className="flex items-center justify-between w-full">
@@ -72,7 +72,7 @@ const ResumePreviewer = () => {
           Work Experience
         </p>
         <div>
-          {k?.map((item, index) => (
+          {workExperience?.map((item, index) => (
             <div
               key={index}
               className="grid  grid-cols-12 my-4 gap-6 items-start "
@@ -112,8 +112,14 @@ const ResumePreviewer = () => {
             </div>
           ))}
         </div>
-        <div className="">
-          {l?.map((item, index) => (
+      </div>
+      <div className="py-4">
+        <p className="pr-5 text-xl font-bold text-slate-800 ">
+          <span className="pr-1 underline text-blue-400">03</span>
+          Education
+        </p>
+        <div>
+          {education?.map((item, index) => (
             <div
               key={index}
               className="grid  grid-cols-12 my-4 gap-6 items-start "
@@ -141,9 +147,7 @@ const ResumePreviewer = () => {
                 >
                   <h2 className="font-semibold ">{item?.title}</h2>{" "}
                   {item?.name && <p className="text-base">at</p>}
-                  <h2 className="font-semibold text-blue-400">
-                    {item?.location}
-                  </h2>
+                  <h2 className="font-semibold text-blue-400">{item?.name}</h2>
                 </div>
                 <Markdown className={"prose text-sm"}>
                   {item?.description}

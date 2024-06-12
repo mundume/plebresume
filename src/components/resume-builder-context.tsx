@@ -138,7 +138,7 @@ export type WorKexperience = {
     description: string;
     startDate: Date;
     endDate?: Date | undefined;
-    currentlyWorking?: boolean | undefined;
+    currently?: boolean | undefined;
   }[];
 };
 
