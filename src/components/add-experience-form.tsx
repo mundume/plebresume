@@ -6,9 +6,9 @@ import { useResumeBuilderContext } from "./resume-builder-context";
 export default function AddExperienceForm() {
   const { form } = useResumeBuilderContext();
   const values = {
-    name: "Company Name",
+    name: "Employer",
     title: "Job Title",
-    location: "Location",
+    location: "City",
     description: "Description",
     startDate: "Start Date",
     endDate: "End Date",

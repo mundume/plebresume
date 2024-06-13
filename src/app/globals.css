@@ -11,6 +11,25 @@
   all: revert;
 }
 
+.accordion {
+  position: relative;
+}
+
+.trash-button {
+  display: none;
+  opacity: 0;
+  margin: 10;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  right: -38px;
+  top: 30px;
+}
+
+.accordion:hover .trash-button {
+  display: flex;
+  opacity: 1;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

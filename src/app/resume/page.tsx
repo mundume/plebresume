@@ -16,12 +16,12 @@ const Page = async () => {
     <>
       <ResumeBuilderContextProvider>
         <main>
-          <MaxWidthWrapper className="max-w-full">
+          <MaxWidthWrapper className="max-w-full ">
             <div className="flex gap-4 pt-4">
-              <div className="w-5/12">
+              <div className="w-6/12">
                 <ResumeBuilder />
               </div>
-              <div className="w-7/12">
+              <div className="w-6/12">
                 <ResumePreviewer />
               </div>
             </div>

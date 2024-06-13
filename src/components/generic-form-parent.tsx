@@ -6,12 +6,13 @@ import { useResumeBuilderContext } from "./resume-builder-context";
 function GenericFormParent() {
   const { form, dispatch, educationForm } = useResumeBuilderContext();
   const values = {
-    degree: "Degree",
-    school: "School",
-    location: "Location",
+    name: "School Name",
+    title: "Degree",
+    description: "Description",
+    location: "City",
     startDate: "Start Date",
     endDate: "End Date",
-    currentlyStudying: "Currently Studying",
+    currently: "Currently Attending",
   };
 
   return (

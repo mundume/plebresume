@@ -33,6 +33,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Trash, Trash2 } from "lucide-react";
 
 type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
@@ -60,24 +61,27 @@ const GenericForm = <T extends FieldValues>({
   });
 
   return (
-    <Card className="p-6 rounded border-none">
+    <Card className="p-6 rounded border-none shadow-none">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {fields.map((field, index) => (
             <Accordion
               type="single"
               collapsible
+              className="flex gap-2 items-center accordion"
               key={field.id}
-              className="space-y-4 border p-4 rounded "
             >
-              <AccordionItem value="item-1">
+              <AccordionItem
+                value={`item-${index}`}
+                className="space-y-4 border p-4 rounded flex-1"
+              >
                 <AccordionTrigger>
                   {form.watch(`${value}.${index}.name` as Path<T>) ||
                     "(Not Specified)"}
                 </AccordionTrigger>
                 <AccordionContent className="border-none">
-                  <div key={field.id} className=" my-4 space-y-4">
-                    <div className="flex  justify-between">
+                  <div className="my-4 space-y-4">
+                    <div className="flex justify-between">
                       <FormField
                         control={form.control}
                         name={`${value}.${index}.title` as Path<T>}
@@ -212,11 +216,11 @@ const GenericForm = <T extends FieldValues>({
                                   <Button
                                     variant={"outline"}
                                     className={cn(
-                                      " pl-3 text-left font-normal",
+                                      "pl-3 text-left font-normal",
                                       !field.value && "text-muted-foreground"
                                     )}
                                     disabled={form.watch(
-                                      `${value}.${index}.currentlyWorking` as Path<T>
+                                      `${value}.${index}.currently` as Path<T>
                                     )}
                                   >
                                     {field.value ? (
@@ -256,9 +260,9 @@ const GenericForm = <T extends FieldValues>({
                     </div>
                     <FormField
                       control={form.control}
-                      name={`${value}.${index}.currentlyWorking` as Path<T>}
+                      name={`${value}.${index}.currently` as Path<T>}
                       render={({ field }) => (
-                        <FormItem className="flex flex-row items-start p-4 space-x-3 space-y-0  rounded-md shadow">
+                        <FormItem className="flex flex-row items-start p-4 space-x-3 space-y-0 rounded-md shadow">
                           <FormControl>
                             <Checkbox
                               checked={field.value}
@@ -275,16 +279,17 @@ const GenericForm = <T extends FieldValues>({
                         </FormItem>
                       )}
                     />
-                    <Button
-                      type="button"
-                      onClick={() => remove(index)}
-                      variant={"destructive"}
-                    >
-                      Remove
-                    </Button>
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              <Button
+                type="button"
+                size="icon"
+                className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
+                onClick={() => remove(index)}
+              >
+                <Trash2 className="w-5 h-5" />
+              </Button>
             </Accordion>
           ))}
 
