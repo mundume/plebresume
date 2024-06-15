@@ -33,7 +33,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Trash, Trash2 } from "lucide-react";
+import { Plus, PlusIcon, Trash, Trash2 } from "lucide-react";
 
 type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
@@ -271,9 +271,9 @@ const GenericForm = <T extends FieldValues>({
                           </FormControl>
 
                           <div className="space-y-1 leading-none">
-                            <FormLabel>Currently Working</FormLabel>
+                            <FormLabel>{values.currently}</FormLabel>
                             <FormDescription>
-                              Check if you are currently working at this job.
+                              Check if you are {values.currently}.
                             </FormDescription>
                           </div>
                         </FormItem>
@@ -292,18 +292,22 @@ const GenericForm = <T extends FieldValues>({
               </Button>
             </Accordion>
           ))}
-
-          <Button type="submit">Submit</Button>
-          <Button
-            type="button"
-            onClick={() =>
-              append({
-                ...form.getValues(),
-              })
-            }
-          >
-            Add one employment
-          </Button>
+          <div className="flex flex-col items-center justify-between gap-4">
+            <Button
+              type="button"
+              className="w-full shadow-none bg-primary hover:bg-primary/90 text-white"
+              onClick={() =>
+                append({
+                  ...form.getValues(),
+                })
+              }
+            >
+              <PlusIcon className="w-5 h-5" /> Add More
+            </Button>
+            <Button type="submit" className="w-full">
+              Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </Card>

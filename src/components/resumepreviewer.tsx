@@ -7,6 +7,7 @@ import SimpleBar from "simplebar-react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import { format } from "date-fns";
 import { json } from "stream/consumers";
+import Resume from "./resume";
 
 const ResumePreviewer = () => {
   const { values, form, educationForm } = useResumeBuilderContext();

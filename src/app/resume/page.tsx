@@ -21,7 +21,7 @@ const Page = async () => {
               <div className="w-6/12">
                 <ResumeBuilder />
               </div>
-              <div className="w-6/12">
+              <div className="w-5/12 fixed top-6 right-20 ">
                 <ResumePreviewer />
               </div>
             </div>

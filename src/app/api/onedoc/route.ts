@@ -4,10 +4,18 @@ import { compile } from "@onedoc/react-print";
 import { Receipt } from "@/components/reciepts";
 import { Onedoc } from "@onedoc/client";
 import Resume from "@/components/resume";
+import { TailwindResume } from "@/components/tailwind-resume";
+import ResumePreviewer from "@/components/resumepreviewer";
+import { db } from "@/config/prisma";
 
 const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
 
 export const GET = async (req: NextApiRequest) => {
+  const p = await db.user.findFirst({
+    where: {
+      email: "nzaih18@gmail.com",
+    },
+  });
   const receipt = {
     id: 1,
     date: "2021-01-01",
@@ -17,10 +25,10 @@ export const GET = async (req: NextApiRequest) => {
     values: {
       personalInfo: {
         names: {
-          firstName: "Nzai",
-          lastName: "Kilonzo",
+          firstName: p?.firstName,
+          lastName: p?.lastName,
         },
-        email: "nzaik@me.com",
+        email: p?.email,
         phone: "0700000000",
         proffession: "Software Engineer",
         profile:

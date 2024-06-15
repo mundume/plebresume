@@ -74,3 +74,5 @@ model Resume {
   userId      String?
   CoverLetter CoverLetter[]
 }
+
+
