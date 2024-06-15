@@ -76,8 +76,11 @@ const GenericForm = <T extends FieldValues>({
                 className="space-y-4 border p-4 rounded flex-1"
               >
                 <AccordionTrigger>
-                  {form.watch(`${value}.${index}.name` as Path<T>) ||
-                    "(Not Specified)"}
+                  {form.watch(`${value}.${index}.title` as Path<T>)
+                    ? `${form.watch(`${value}.${index}.title` as Path<T>)} ${
+                        form.watch(`${value}.${index}.name` as Path<T>) && "at"
+                      } ${form.watch(`${value}.${index}.name` as Path<T>)}`
+                    : "Not Specified"}
                 </AccordionTrigger>
                 <AccordionContent className="border-none">
                   <div className="my-4 space-y-4">

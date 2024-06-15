@@ -210,12 +210,36 @@ export const ResumeBuilderContextProvider = ({
 
   const form = useForm<EmploymentSchema>({
     resolver: zodResolver(employmentSchema),
-    defaultValues: {},
+    defaultValues: {
+      experience: [
+        {
+          name: "",
+          title: "",
+          description: "",
+          startDate: undefined,
+          endDate: undefined,
+          currently: false,
+          location: "",
+        },
+      ],
+    },
   });
 
   const educationForm = useForm<EducationSchema>({
     resolver: zodResolver(educationSchema),
-    defaultValues: {},
+    defaultValues: {
+      education: [
+        {
+          name: "",
+          title: "",
+          description: "",
+          startDate: undefined,
+          endDate: undefined,
+          currently: false,
+          location: "",
+        },
+      ],
+    },
   });
 
   const contextValues = useMemo(
