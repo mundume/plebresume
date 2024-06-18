@@ -8,12 +8,14 @@ import {
   EducationSchema,
   EmploymentSchema,
   employmentSchema,
+  SocialLinksSchema,
 } from "@/lib/schemas";
 export type ResumeBuilderContextProps = {
   values: initialState;
   form: UseFormReturn<EmploymentSchema, any, undefined>;
   dispatch: React.Dispatch<Action>;
   educationForm: UseFormReturn<EducationSchema, any, undefined>;
+  socialLinkForm: UseFormReturn<SocialLinksSchema, any, undefined>;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -40,10 +42,14 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
     education: {
       education: [],
     },
+    socialLinks: {
+      socialLinks: [],
+    },
   },
   dispatch: () => {},
   form: {} as any,
   educationForm: {} as any,
+  socialLinkForm: {} as any,
 });
 
 export type initialState = {
@@ -63,6 +69,7 @@ export type initialState = {
   };
   workExperience: EmploymentSchema;
   education: EducationSchema;
+  socialLinks: SocialLinksSchema;
 };
 const initialArg: initialState = {
   personalInfo: {
@@ -85,8 +92,8 @@ const initialArg: initialState = {
         name: "",
         title: "",
         description: "",
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: undefined,
+        endDate: undefined,
         currently: false,
         location: "",
       },
@@ -99,10 +106,18 @@ const initialArg: initialState = {
 
         title: "",
         description: "",
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: undefined,
+        endDate: undefined,
         currently: false,
         location: "",
+      },
+    ],
+  },
+  socialLinks: {
+    socialLinks: [
+      {
+        name: "",
+        link: "",
       },
     ],
   },
@@ -147,10 +162,15 @@ export type EducationAction = {
   payload: EducationSchema;
 };
 
+export type SocialLinksAction = {
+  type: "ADD_SOCIAL_LINKS";
+  payload: SocialLinksSchema;
+};
 export type Action =
   | AddPersonalInformation
   | WorkExperienceAction
-  | EducationAction;
+  | EducationAction
+  | SocialLinksAction;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -196,6 +216,19 @@ function reducer(state: initialState, action: Action) {
       };
     }
 
+    case "ADD_SOCIAL_LINKS": {
+      return {
+        ...state,
+        socialLinks: {
+          ...state.socialLinks,
+          socialLinks: [
+            ...state.socialLinks.socialLinks,
+            ...action.payload.socialLinks,
+          ],
+        },
+      };
+    }
+
     default:
       return state;
   }
@@ -224,7 +257,11 @@ export const ResumeBuilderContextProvider = ({
       ],
     },
   });
-
+  const socialLinkForm = useForm<SocialLinksSchema>({
+    defaultValues: {
+      socialLinks: [{ name: "", link: "" }],
+    },
+  });
   const educationForm = useForm<EducationSchema>({
     resolver: zodResolver(educationSchema),
     defaultValues: {
@@ -248,8 +285,9 @@ export const ResumeBuilderContextProvider = ({
       dispatch,
       educationForm,
       form,
+      socialLinkForm,
     }),
-    [values, dispatch, form, educationForm]
+    [values, dispatch, form, educationForm, socialLinkForm]
   );
   return (
     <ResumeBuilderContext.Provider

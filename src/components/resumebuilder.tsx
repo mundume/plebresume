@@ -3,6 +3,7 @@ import { useResumeBuilderContext } from "./resume-builder-context";
 import ResumeInfoAccordition from "./resume-personal-info-accordition";
 import GenericFormParent from "./generic-form-parent";
 import AddExperienceForm from "./add-experience-form";
+import SocialLinks from "./social-links";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();
@@ -25,6 +26,9 @@ const ResumeBuilder = () => {
       "
       >
         <GenericFormParent />
+      </div>
+      <div>
+        <SocialLinks />
       </div>
     </div>
   );
