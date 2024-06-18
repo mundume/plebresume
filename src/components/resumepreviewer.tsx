@@ -10,19 +10,34 @@ import { json } from "stream/consumers";
 import Resume from "./resume";
 
 const ResumePreviewer = () => {
-  const { values, form, educationForm } = useResumeBuilderContext();
+  const { values, form, educationForm, socialLinkForm } =
+    useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
   const { address, email, names, phone, profile, proffession } =
     values.personalInfo;
   const workExperience = form.watch("experience");
   const education = educationForm.watch("education");
+  const socialLinks = socialLinkForm.watch("socialLinks");
 
   return (
     <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen ">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
         <div ref={ref} className=" font-sans text-slate-800">
           <div className="flex flex-col ">
+            <div className=" flex items-center gap-2 justify-center w-full text-xs">
+              <p className="font-semibold">Links : </p>
+              {socialLinks.map((link, index) => (
+                <a
+                  href={link.link}
+                  key={index}
+                  target="_blank"
+                  className="text-primary text-xs underline-offset-4 hover:underline underline mr-2"
+                >
+                  <span>{link.name}</span>
+                </a>
+              ))}
+            </div>
             <div className="flex items-center justify-between w-full">
               <h1 className="text-2xl font-bold">
                 {names.firstName} {names.lastName}
