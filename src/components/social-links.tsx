@@ -18,10 +18,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Plus, Trash } from "lucide-react";
+import { Plus, Trash, Trash2 } from "lucide-react";
 
 const SocialLinks = () => {
   const { socialLinkForm } = useResumeBuilderContext();
+  console.log(socialLinkForm.watch("socialLinks"));
   const { fields, append, remove } = useFieldArray({
     control: socialLinkForm.control,
     name: "socialLinks",
@@ -36,20 +37,39 @@ const SocialLinks = () => {
       </div>
       <div>
         <Form {...socialLinkForm}>
-          <form action="">
+          <form className="space-y-8">
             {fields.map((field, index) => (
               <Accordion
                 key={field.id}
                 collapsible
                 type="single"
-                className=" accordion w-full"
+                className="flex gap-2 items-center accordion space-y-4"
               >
                 <AccordionItem
                   value={`item-${index}`}
-                  className="space-y-4 border p-4 rounded flex-1"
+                  className="space-y-4 border p-4 rounded w-full "
                 >
                   <AccordionTrigger>
-                    <p>{field.name}</p>
+                    <div className="flex justify-start">
+                      {socialLinkForm.watch(
+                        `socialLinks.${index}.name` as any
+                      ) ? (
+                        <div className="flex flex-col justify-start items-start">
+                          <h2 className=" flex-1">
+                            {socialLinkForm.watch(
+                              `socialLinks.${index}.name` as any
+                            )}
+                          </h2>
+                          <p className="text-xs text-slate-500 flex-1 hover:no-underline">
+                            {socialLinkForm.watch(
+                              `socialLinks.${index}.link` as any
+                            )}
+                          </p>
+                        </div>
+                      ) : (
+                        "Not Specified"
+                      )}
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent className="w-full">
                     <div className="flex items-center gap-4 ">
@@ -86,29 +106,30 @@ const SocialLinks = () => {
                         )}
                       />
                     </div>
-                    <Button
-                      type="button"
-                      size="icon"
-                      className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
-                      onClick={() => remove(index)}
-                    >
-                      <Trash className="w-4 h-4" />
-                    </Button>
                   </AccordionContent>
                 </AccordionItem>
+                <Button
+                  type="button"
+                  size="icon"
+                  className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
+                  onClick={() => remove(index)}
+                >
+                  <Trash2 className="w-5 h-5" />
+                </Button>
               </Accordion>
             ))}
             <div className="space-y-2 my-4">
               <Button
-                className="w-full "
+                type="button"
+                className=" w-full shadow-none bg-primary hover:bg-primary/90 text-white"
                 onClick={() =>
                   append({
-                    name: "",
                     link: "",
+                    name: "",
                   })
                 }
               >
-                <Plus className="w-4 h-4" /> Add
+                <Plus className="w-4 h-4 mr-2" /> Add Link
               </Button>
             </div>
           </form>

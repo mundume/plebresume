@@ -73,7 +73,7 @@ const GenericForm = <T extends FieldValues>({
             >
               <AccordionItem
                 value={`item-${index}`}
-                className="space-y-4 border p-4 rounded flex-1"
+                className="space-y-4 border p-4 rounded w-full"
               >
                 <AccordionTrigger>
                   {form.watch(`${value}.${index}.title` as Path<T>)
@@ -305,7 +305,7 @@ const GenericForm = <T extends FieldValues>({
                 })
               }
             >
-              <PlusIcon className="w-5 h-5" /> Add More
+              <PlusIcon className="w-5 h-5 mr-2" /> Add More
             </Button>
             <Button type="submit" className="w-full">
               Submit
