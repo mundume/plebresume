@@ -50,32 +50,70 @@ function SkillsForm() {
                   className="space-y-4 border p-4 rounded w-full"
                 >
                   <AccordionTrigger>
-                    {skillsForm.watch(`skills.${index}.name` as any)
-                      ? skillsForm.watch(`skills.${index}.name` as any)
-                      : "(Not Specified)"}
+                    <div className="flex justify-start">
+                      {skillsForm.watch(`skills.${index}.skills` as any) ? (
+                        <div className="flex flex-col justify-start items-start">
+                          <h2 className=" flex-1">
+                            {skillsForm.watch(`skills.${index}.skills` as any)}
+                          </h2>
+                          {skillsForm.watch(`skills.${index}.level` as any) && (
+                            <p className="text-xs text-slate-500 flex-1 hover:no-underline">
+                              {skillsForm.watch(`skills.${index}.level` as any)}{" "}
+                              years of experience
+                            </p>
+                          )}
+                        </div>
+                      ) : (
+                        "Not Specified"
+                      )}
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <FormField
-                      control={skillsForm.control}
-                      name={`skills.${index}.name` as any}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Skill</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter skill name"
-                              {...field}
-                              className="h-12"
-                            />
-                          </FormControl>
-                          <FormDescription>
-                            Enter your skill name
-                          </FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                      key={field.id}
-                    />
+                    <div className="flex gap-4 w-full">
+                      <FormField
+                        control={skillsForm.control}
+                        name={`skills.${index}.skills` as any}
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Skill</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="skill name"
+                                {...field}
+                                className="h-12"
+                              />
+                            </FormControl>
+                            <FormDescription>
+                              Enter your skill name
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                        key={field.id}
+                      />
+                      <FormField
+                        control={skillsForm.control}
+                        name={`skills.${index}.level` as any}
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Level</FormLabel>
+                            <FormControl>
+                              <Input
+                                type="number"
+                                placeholder="level(in years of experience)"
+                                {...field}
+                                className="h-12"
+                              />
+                            </FormControl>
+                            <FormDescription>
+                              years of experience
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                        key={field.id}
+                      />
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
@@ -96,6 +134,7 @@ function SkillsForm() {
                 onClick={() =>
                   append({
                     skills: "",
+                    level: "",
                   })
                 }
               >

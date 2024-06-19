@@ -10,7 +10,7 @@ import { json } from "stream/consumers";
 import Resume from "./resume";
 
 const ResumePreviewer = () => {
-  const { values, form, educationForm, socialLinkForm } =
+  const { values, form, educationForm, socialLinkForm, skillsForm } =
     useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
@@ -19,6 +19,7 @@ const ResumePreviewer = () => {
   const workExperience = form.watch("experience");
   const education = educationForm.watch("education");
   const socialLinks = socialLinkForm.watch("socialLinks");
+  const skills = skillsForm.watch("skills");
 
   return (
     <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen ">
@@ -175,6 +176,24 @@ const ResumePreviewer = () => {
                 <div className="text-slate-600 font-mono text-xs col-span-2 text-center">
                   {item.location}
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="">
+          <p className="pr-5 text-base font-bold text-slate-800 ">
+            <span className="pr-1 underline text-blue-400">04</span>
+            Skills
+          </p>
+          <div className=" grid grid-cols-3">
+            {skills.map((item, index) => (
+              <div key={index} className="flex gap-2">
+                <p className="text-slate-600 text-xs">
+                  {item?.skills && `- ${item?.skills}`}
+                </p>
+                <p className="text-slate-600 text-xs">
+                  {item?.level && `${item?.level} years`}
+                </p>
               </div>
             ))}
           </div>

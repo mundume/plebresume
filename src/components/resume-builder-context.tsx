@@ -132,6 +132,7 @@ const initialArg: initialState = {
     skills: [
       {
         skills: "",
+        level: "",
       },
     ],
   },
@@ -310,7 +311,7 @@ export const ResumeBuilderContextProvider = ({
 
   const skillsForm = useForm<SkillsFormSchema>({
     defaultValues: {
-      skills: [{ skills: "" }],
+      skills: [{ skills: "", level: "" }],
     },
   });
 
