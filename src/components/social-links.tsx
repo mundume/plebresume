@@ -22,7 +22,6 @@ import { Plus, Trash, Trash2 } from "lucide-react";
 
 const SocialLinks = () => {
   const { socialLinkForm } = useResumeBuilderContext();
-  console.log(socialLinkForm.watch("socialLinks"));
   const { fields, append, remove } = useFieldArray({
     control: socialLinkForm.control,
     name: "socialLinks",
@@ -43,11 +42,11 @@ const SocialLinks = () => {
                 key={field.id}
                 collapsible
                 type="single"
-                className="flex gap-2 items-center accordion space-y-4"
+                className="flex gap-2 items-center accordion"
               >
                 <AccordionItem
                   value={`item-${index}`}
-                  className="space-y-4 border p-4 rounded w-full "
+                  className=" border p-4 rounded w-full "
                 >
                   <AccordionTrigger>
                     <div className="flex justify-start">

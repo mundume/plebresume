@@ -8,6 +8,7 @@ import {
   EducationSchema,
   EmploymentSchema,
   employmentSchema,
+  SkillsFormSchema,
   SocialLinksSchema,
 } from "@/lib/schemas";
 export type ResumeBuilderContextProps = {
@@ -16,10 +17,14 @@ export type ResumeBuilderContextProps = {
   dispatch: React.Dispatch<Action>;
   educationForm: UseFormReturn<EducationSchema, any, undefined>;
   socialLinkForm: UseFormReturn<SocialLinksSchema, any, undefined>;
+  skillsForm: UseFormReturn<SkillsFormSchema, any, undefined>;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   values: {
+    skillsForm: {
+      skills: [],
+    },
     personalInfo: {
       names: {
         firstName: "",
@@ -46,6 +51,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
       socialLinks: [],
     },
   },
+  skillsForm: {} as any,
   dispatch: () => {},
   form: {} as any,
   educationForm: {} as any,
@@ -70,6 +76,7 @@ export type initialState = {
   workExperience: EmploymentSchema;
   education: EducationSchema;
   socialLinks: SocialLinksSchema;
+  skillsForm: SkillsFormSchema;
 };
 const initialArg: initialState = {
   personalInfo: {
@@ -121,6 +128,13 @@ const initialArg: initialState = {
       },
     ],
   },
+  skillsForm: {
+    skills: [
+      {
+        skills: "",
+      },
+    ],
+  },
 };
 
 export type AddPersonalInformation = {
@@ -166,11 +180,17 @@ export type SocialLinksAction = {
   type: "ADD_SOCIAL_LINKS";
   payload: SocialLinksSchema;
 };
+
+export type SkillsAction = {
+  type: "ADD_SKILLS";
+  payload: SkillsFormSchema;
+};
 export type Action =
   | AddPersonalInformation
   | WorkExperienceAction
   | EducationAction
-  | SocialLinksAction;
+  | SocialLinksAction
+  | SkillsAction;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -228,6 +248,15 @@ function reducer(state: initialState, action: Action) {
         },
       };
     }
+    case "ADD_SKILLS": {
+      return {
+        ...state,
+        skillsForm: {
+          ...state.skillsForm,
+          skills: [...state.skillsForm.skills, ...action.payload.skills],
+        },
+      };
+    }
 
     default:
       return state;
@@ -279,6 +308,12 @@ export const ResumeBuilderContextProvider = ({
     },
   });
 
+  const skillsForm = useForm<SkillsFormSchema>({
+    defaultValues: {
+      skills: [{ skills: "" }],
+    },
+  });
+
   const contextValues = useMemo(
     () => ({
       values,
@@ -286,8 +321,9 @@ export const ResumeBuilderContextProvider = ({
       educationForm,
       form,
       socialLinkForm,
+      skillsForm,
     }),
-    [values, dispatch, form, educationForm, socialLinkForm]
+    [values, dispatch, form, educationForm, socialLinkForm, skillsForm]
   );
   return (
     <ResumeBuilderContext.Provider

@@ -56,6 +56,17 @@ export const socialLinksSchema = z.object({
   socialLinks: z.array(socialLinks),
 });
 
+export const skillsSchema = z.object({
+  skills: z.string(),
+});
+
+export const skillsFormSchema = z.object({
+  skills: z.array(skillsSchema),
+});
+
+export type SkillsFormSchema = z.infer<typeof skillsFormSchema>;
+export type SkillsSchema = z.infer<typeof skillsSchema>;
+
 export type SocialLinksSchema = z.infer<typeof socialLinksSchema>;
 
 export type EducationFormSchema = z.infer<typeof educationFormSchema>;
