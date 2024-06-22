@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z, ZodSchema } from "zod";
 
 export const formSchema = z.object({
   name: z.string({ required_error: "Company name is required" }),
@@ -67,6 +67,13 @@ export const skillsFormSchema = z.object({
 
 export const HobbiesSchema = z.object({
   hobbies: z.string(),
+});
+export const LanguagesSchema = z.object({
+  languages: z.string(),
+  level: z.string(),
+});
+export const LanguagesFormSchema = z.object({
+  languages: z.array(LanguagesSchema),
 });
 export type HobbiesFormSchema = z.infer<typeof HobbiesSchema>;
 
