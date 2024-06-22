@@ -5,6 +5,7 @@ import GenericFormParent from "./generic-form-parent";
 import AddExperienceForm from "./add-experience-form";
 import SocialLinks from "./social-links";
 import SkillsForm from "./skills-form";
+import HobbiesForm from "./hobbies-form";
 
 const ResumeBuilder = () => {
   const { values, dispatch } = useResumeBuilderContext();
@@ -33,6 +34,9 @@ const ResumeBuilder = () => {
       </div>
       <div className="">
         <SkillsForm />
+      </div>
+      <div className="">
+        <HobbiesForm />
       </div>
     </div>
   );

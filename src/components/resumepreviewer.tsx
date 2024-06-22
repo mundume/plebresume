@@ -7,8 +7,14 @@ import { useResumeBuilderContext } from "./resume-builder-context";
 import { format } from "date-fns";
 
 const ResumePreviewer = () => {
-  const { values, form, educationForm, socialLinkForm, skillsForm } =
-    useResumeBuilderContext();
+  const {
+    values,
+    form,
+    educationForm,
+    socialLinkForm,
+    skillsForm,
+    hobbiesForm,
+  } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
   const { address, email, names, phone, profile, proffession } =
@@ -17,6 +23,7 @@ const ResumePreviewer = () => {
   const education = educationForm.watch("education");
   const socialLinks = socialLinkForm.watch("socialLinks");
   const skills = skillsForm.watch("skills");
+  const hobbies = hobbiesForm.watch("hobbies");
 
   return (
     <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen ">
@@ -37,12 +44,12 @@ const ResumePreviewer = () => {
               ))}
             </div>
             <div className="flex items-center justify-between w-full">
-              <h1 className="text-2xl font-bold">
+              <h1 className="text-xl font-bold">
                 {names.firstName} {names.lastName}
               </h1>
-              <span className="p-2 border rounded-full ">NK</span>
+              <span className="p-1 border rounded-full ">NK</span>
             </div>
-            <p className="py-4 font-semibold ">{proffession}</p>
+            <p className="py-1 font-semibold text-sm ">{proffession}</p>
           </div>
           <div className="flex text-xs">
             <div className="flex-1">
@@ -73,7 +80,7 @@ const ResumePreviewer = () => {
           </div>
         </div>
         <div>
-          <div className="flex text-slate-600 text-xs py-2">
+          <div className="flex text-slate-600 text-xs py-1">
             <p className="pr-5 text-base font-bold text-slate-800 ">
               <span className="pr-1 underline text-blue-400">01</span>
               Profile
@@ -129,7 +136,7 @@ const ResumePreviewer = () => {
             ))}
           </div>
         </div>
-        <div className="py-2">
+        <div className="py-1">
           <p className="pr-5 text-base font-bold text-slate-800 ">
             <span className="pr-1 underline text-blue-400">03</span>
             Education
@@ -193,6 +200,17 @@ const ResumePreviewer = () => {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+        <div className="py-1">
+          <p className="pr-5 text-base font-bold text-slate-800 ">
+            <span className="pr-1 underline text-blue-400">05</span>
+            Hobbies
+          </p>
+          <div className=" grid grid-cols-2">
+            <p>
+              {hobbies && <p className="text-slate-600 text-xs">{hobbies}</p>}
+            </p>
           </div>
         </div>
       </SimpleBar>
