@@ -8,6 +8,7 @@ import {
   EducationSchema,
   EmploymentSchema,
   employmentSchema,
+  HobbiesFormSchema,
   SkillsFormSchema,
   SocialLinksSchema,
 } from "@/lib/schemas";
@@ -18,13 +19,11 @@ export type ResumeBuilderContextProps = {
   educationForm: UseFormReturn<EducationSchema, any, undefined>;
   socialLinkForm: UseFormReturn<SocialLinksSchema, any, undefined>;
   skillsForm: UseFormReturn<SkillsFormSchema, any, undefined>;
+  hobbiesForm: UseFormReturn<HobbiesFormSchema>;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   values: {
-    skillsForm: {
-      skills: [],
-    },
     personalInfo: {
       names: {
         firstName: "",
@@ -50,12 +49,19 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
     socialLinks: {
       socialLinks: [],
     },
+    skillsForm: {
+      skills: [],
+    },
+    hobbiesForm: {
+      hobbies: "",
+    },
   },
   skillsForm: {} as any,
   dispatch: () => {},
   form: {} as any,
   educationForm: {} as any,
   socialLinkForm: {} as any,
+  hobbiesForm: {} as any,
 });
 
 export type initialState = {
@@ -77,6 +83,7 @@ export type initialState = {
   education: EducationSchema;
   socialLinks: SocialLinksSchema;
   skillsForm: SkillsFormSchema;
+  hobbiesForm: HobbiesFormSchema;
 };
 const initialArg: initialState = {
   personalInfo: {
@@ -136,6 +143,9 @@ const initialArg: initialState = {
       },
     ],
   },
+  hobbiesForm: {
+    hobbies: "",
+  },
 };
 
 export type AddPersonalInformation = {
@@ -186,12 +196,18 @@ export type SkillsAction = {
   type: "ADD_SKILLS";
   payload: SkillsFormSchema;
 };
+
+export type AddHobbies = {
+  type: "ADD_HOBBIES";
+  payload: HobbiesFormSchema;
+};
 export type Action =
   | AddPersonalInformation
   | WorkExperienceAction
   | EducationAction
   | SocialLinksAction
-  | SkillsAction;
+  | SkillsAction
+  | AddHobbies;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -259,6 +275,16 @@ function reducer(state: initialState, action: Action) {
       };
     }
 
+    case "ADD_HOBBIES": {
+      return {
+        ...state,
+        hobbiesForm: {
+          ...state.hobbiesForm,
+          hobbies: action.payload.hobbies,
+        },
+      };
+    }
+
     default:
       return state;
   }
@@ -315,6 +341,9 @@ export const ResumeBuilderContextProvider = ({
     },
   });
 
+  const hobbiesForm = useForm<HobbiesFormSchema>({
+    defaultValues: { hobbies: "" },
+  });
   const contextValues = useMemo(
     () => ({
       values,
@@ -323,8 +352,17 @@ export const ResumeBuilderContextProvider = ({
       form,
       socialLinkForm,
       skillsForm,
+      hobbiesForm,
     }),
-    [values, dispatch, form, educationForm, socialLinkForm, skillsForm]
+    [
+      values,
+      dispatch,
+      form,
+      educationForm,
+      socialLinkForm,
+      skillsForm,
+      hobbiesForm,
+    ]
   );
   return (
     <ResumeBuilderContext.Provider
