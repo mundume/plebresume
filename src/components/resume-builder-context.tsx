@@ -9,6 +9,7 @@ import {
   EmploymentSchema,
   employmentSchema,
   HobbiesFormSchema,
+  LanguagesFormSchema,
   SkillsFormSchema,
   SocialLinksSchema,
 } from "@/lib/schemas";
@@ -20,6 +21,7 @@ export type ResumeBuilderContextProps = {
   socialLinkForm: UseFormReturn<SocialLinksSchema, any, undefined>;
   skillsForm: UseFormReturn<SkillsFormSchema, any, undefined>;
   hobbiesForm: UseFormReturn<HobbiesFormSchema>;
+  languageForm: UseFormReturn<LanguagesFormSchema>;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -62,6 +64,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   educationForm: {} as any,
   socialLinkForm: {} as any,
   hobbiesForm: {} as any,
+  languageForm: {} as any,
 });
 
 export type initialState = {
@@ -84,6 +87,7 @@ export type initialState = {
   socialLinks: SocialLinksSchema;
   skillsForm: SkillsFormSchema;
   hobbiesForm: HobbiesFormSchema;
+  languageForm: LanguagesFormSchema;
 };
 const initialArg: initialState = {
   personalInfo: {
@@ -146,6 +150,14 @@ const initialArg: initialState = {
   hobbiesForm: {
     hobbies: "",
   },
+  languageForm: {
+    languages: [
+      {
+        languages: "",
+        level: "",
+      },
+    ],
+  },
 };
 
 export type AddPersonalInformation = {
@@ -201,13 +213,19 @@ export type AddHobbies = {
   type: "ADD_HOBBIES";
   payload: HobbiesFormSchema;
 };
+
+export type AddLanguage = {
+  type: "ADD_LANGUAGE";
+  payload: LanguagesFormSchema;
+};
 export type Action =
   | AddPersonalInformation
   | WorkExperienceAction
   | EducationAction
   | SocialLinksAction
   | SkillsAction
-  | AddHobbies;
+  | AddHobbies
+  | AddLanguage;
 
 function reducer(state: initialState, action: Action) {
   switch (action.type) {
@@ -285,6 +303,19 @@ function reducer(state: initialState, action: Action) {
       };
     }
 
+    case "ADD_LANGUAGE": {
+      return {
+        ...state,
+        languageForm: {
+          ...state.languageForm,
+          language: [
+            ...state.languageForm.languages,
+            ...action.payload.languages,
+          ],
+        },
+      };
+    }
+
     default:
       return state;
   }
@@ -344,6 +375,10 @@ export const ResumeBuilderContextProvider = ({
   const hobbiesForm = useForm<HobbiesFormSchema>({
     defaultValues: { hobbies: "" },
   });
+
+  const languageForm = useForm<LanguagesFormSchema>({
+    defaultValues: { languages: [{ languages: "", level: "" }] },
+  });
   const contextValues = useMemo(
     () => ({
       values,
@@ -353,6 +388,7 @@ export const ResumeBuilderContextProvider = ({
       socialLinkForm,
       skillsForm,
       hobbiesForm,
+      languageForm,
     }),
     [
       values,
@@ -362,8 +398,10 @@ export const ResumeBuilderContextProvider = ({
       socialLinkForm,
       skillsForm,
       hobbiesForm,
+      languageForm,
     ]
   );
+
   return (
     <ResumeBuilderContext.Provider
       value={{

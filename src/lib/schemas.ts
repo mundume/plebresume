@@ -75,6 +75,8 @@ export const LanguagesSchema = z.object({
 export const LanguagesFormSchema = z.object({
   languages: z.array(LanguagesSchema),
 });
+
+export type LanguagesFormSchema = z.infer<typeof LanguagesFormSchema>;
 export type HobbiesFormSchema = z.infer<typeof HobbiesSchema>;
 
 export type SkillsFormSchema = z.infer<typeof skillsFormSchema>;
