@@ -135,7 +135,8 @@ function SkillsForm() {
               <div className="space-y-2 my-4">
                 <Button
                   type="button"
-                  className=" w-full shadow-none bg-primary hover:bg-primary/90 text-white"
+                  variant={"ghost"}
+                  className=" w-full"
                   onClick={() =>
                     append({
                       skills: "",
@@ -143,7 +144,7 @@ function SkillsForm() {
                     })
                   }
                 >
-                  <Plus className="w-4 h-4 mr-2" /> Add Skill
+                  <Plus className="w-4 h-4 mr-2" /> Add 1 more skill
                 </Button>
               </div>
             </form>

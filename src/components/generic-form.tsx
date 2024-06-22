@@ -307,14 +307,15 @@ const GenericForm = <T extends FieldValues>({
             <div className="flex flex-col items-center justify-between gap-4">
               <Button
                 type="button"
-                className="w-full shadow-none bg-primary hover:bg-primary/90 text-white"
+                variant={"ghost"}
+                className="w-full"
                 onClick={() =>
                   append({
                     ...form.getValues(),
                   })
                 }
               >
-                <PlusIcon className="w-5 h-5 mr-2" /> Add More
+                <PlusIcon className="w-5 h-5 mr-2" /> Add 1 more {value}
               </Button>
               <Button type="submit" className="w-full">
                 Submit

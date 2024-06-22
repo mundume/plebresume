@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import {
   CheckCircle2,
@@ -13,7 +12,6 @@ import {
 } from "lucide-react";
 import Dropzone from "react-dropzone";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
 import { toast } from "sonner";

@@ -14,6 +14,7 @@ const ResumePreviewer = () => {
     socialLinkForm,
     skillsForm,
     hobbiesForm,
+    languageForm,
   } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
@@ -24,6 +25,7 @@ const ResumePreviewer = () => {
   const socialLinks = socialLinkForm.watch("socialLinks");
   const skills = skillsForm.watch("skills");
   const hobbies = hobbiesForm.watch("hobbies");
+  const languages = languageForm.watch("languages");
 
   return (
     <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen ">
@@ -211,6 +213,24 @@ const ResumePreviewer = () => {
             <p>
               {hobbies && <p className="text-slate-600 text-xs">{hobbies}</p>}
             </p>
+          </div>
+        </div>
+        <div className="">
+          <p className="pr-5 text-base font-bold text-slate-800 ">
+            <span className="pr-1 underline text-blue-400">05</span>
+            Languages
+          </p>
+          <div className=" grid grid-cols-3">
+            {languages.map((item, index) => (
+              <div key={index} className="flex gap-2">
+                <p className="text-slate-600 text-xs">
+                  {item?.languages && `- ${item?.languages}`}
+                </p>
+                <p className="text-slate-600 text-xs">
+                  {item?.level && `${item?.level} years`}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </SimpleBar>
