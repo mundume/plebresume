@@ -61,13 +61,12 @@ const GenericForm = <T extends FieldValues>({
   });
 
   return (
-    <Card className="p-6 rounded border-none shadow-none">
+    <Card className="rounded border-none shadow-none">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {fields.map((field, index) => (
             <Accordion
-              type="single"
-              collapsible
+              type="multiple"
               className="flex gap-2 items-center accordion"
               key={field.id}
             >

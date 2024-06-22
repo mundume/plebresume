@@ -40,7 +40,7 @@ const PersonalInformationAccordition = ({
       },
     });
   return (
-    <Card className="p-6">
+    <Card className=" border-none shadow-none">
       <div className="flex items-center justify-between gap-2 pt-3">
         <div className="grid gap-1 w-full">
           <Label htmlFor="first name" className="text-xs text-slate-600">

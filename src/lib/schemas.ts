@@ -65,6 +65,11 @@ export const skillsFormSchema = z.object({
   skills: z.array(skillsSchema),
 });
 
+export const HobbiesSchema = z.object({
+  hobbies: z.string(),
+});
+export type HobbiesFormSchema = z.infer<typeof HobbiesSchema>;
+
 export type SkillsFormSchema = z.infer<typeof skillsFormSchema>;
 export type SkillsSchema = z.infer<typeof skillsSchema>;
 

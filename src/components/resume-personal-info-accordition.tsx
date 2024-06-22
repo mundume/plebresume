@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Eye, User } from "lucide-react";
-import { Button, buttonVariants } from "./ui/button";
-import { type initialState, type Action } from "./resume-builder-context";
+import { type Action } from "./resume-builder-context";
 import PersonalInformationAccordition from "./personal-information-accordition";
 import { PersonalInfomationValues } from "@/lib/validators/resume-validator";
-import { cn } from "@/lib/utils";
 
 type AccorditionProps = {
   values: PersonalInfomationValues;
@@ -23,7 +14,7 @@ const ResumeInfoAccordition = ({
   name,
 }: AccorditionProps) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 border p-6 rounded">
       <div>
         <h1 className="text-2xl font-bold">Personal Information</h1>
         <p className=" text-sm  text-slate-600">
