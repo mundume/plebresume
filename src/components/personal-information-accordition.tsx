@@ -42,13 +42,13 @@ const PersonalInformationAccordition = ({
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between gap-2 pt-3">
-        <div className="grid gap-1 ">
+        <div className="grid gap-1 w-full">
           <Label htmlFor="first name" className="text-xs text-slate-600">
             first name
           </Label>
           <Input
-            className="py-6"
             placeholder="first name"
+            className=""
             value={firstName}
             {...register("names.firstName", { required: true })}
             onChange={(e) =>
@@ -59,12 +59,12 @@ const PersonalInformationAccordition = ({
             }
           />
         </div>
-        <div className="grid gap-1">
+        <div className="grid gap-1 w-full">
           <Label htmlFor="last name" className="text-xs text-slate-600">
             last name
           </Label>
           <Input
-            className="py-6"
+            className=""
             value={lastName}
             placeholder="last name"
             {...register("names.lastName", { required: true })}
@@ -82,7 +82,6 @@ const PersonalInformationAccordition = ({
           Wanted Job Title
         </Label>
         <Input
-          className="py-6"
           value={proffession}
           placeholder="Your proffession"
           {...register("proffession", { required: true })}
@@ -99,7 +98,6 @@ const PersonalInformationAccordition = ({
           email
         </Label>
         <Input
-          className="py-6"
           placeholder="email"
           value={email}
           {...(register("email"), { required: true })}
@@ -118,7 +116,6 @@ const PersonalInformationAccordition = ({
         </Label>
 
         <Input
-          className="py-6"
           value={phone}
           placeholder="phone"
           {...register("phone")}
@@ -131,12 +128,11 @@ const PersonalInformationAccordition = ({
         />
       </div>
       <div className="flex items-center justify-between gap-2 pt-3">
-        <div className="grid gap-1">
+        <div className="grid gap-1 w-full">
           <Label htmlFor="city" className="text-xs text-slate-600">
             city
           </Label>
           <Input
-            className="py-6"
             value={address.city}
             placeholder="city"
             {...register("address.city")}
@@ -148,12 +144,11 @@ const PersonalInformationAccordition = ({
             }
           />
         </div>
-        <div className="grid gap-1">
+        <div className="grid gap-1 w-full">
           <Label htmlFor="state" className="text-xs text-slate-600">
             state
           </Label>
           <Input
-            className="py-6"
             value={address.state}
             placeholder="state"
             {...register("address.state")}

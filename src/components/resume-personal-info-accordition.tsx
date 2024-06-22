@@ -23,37 +23,14 @@ const ResumeInfoAccordition = ({
   name,
 }: AccorditionProps) => {
   return (
-    <div>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger
-            className="font-semibold lg:text-xl"
-            icon={
-              <span
-                className={cn(
-                  buttonVariants({
-                    size: "icon",
-                    variant: "outline",
-                  })
-                )}
-              >
-                <Eye className="w-5 h-5 text-slate-500" />
-              </span>
-            }
-          >
-            <div className="flex items-center">
-              <User className="w-6 h-6 mr-1.5 text-slate-500" />
-              <p className="text-slate-800">{name}</p>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="border-none">
-            <PersonalInformationAccordition
-              values={values}
-              dispatch={dispatch}
-            />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+    <div className="space-y-4">
+      <div>
+        <h1 className="text-2xl font-bold">Personal Information</h1>
+        <p className=" text-sm  text-slate-600">
+          add your personal information.
+        </p>
+      </div>
+      <PersonalInformationAccordition dispatch={dispatch} values={values} />
     </div>
   );
 };

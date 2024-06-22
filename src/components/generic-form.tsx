@@ -84,12 +84,12 @@ const GenericForm = <T extends FieldValues>({
                 </AccordionTrigger>
                 <AccordionContent className="border-none">
                   <div className="my-4 space-y-4">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center gap-2">
                       <FormField
                         control={form.control}
                         name={`${value}.${index}.title` as Path<T>}
                         render={({ field }) => (
-                          <FormItem>
+                          <FormItem className="w-full">
                             <FormLabel>{values.title}</FormLabel>
                             <FormControl>
                               <Input
@@ -107,7 +107,7 @@ const GenericForm = <T extends FieldValues>({
                         control={form.control}
                         name={`${value}.${index}.name` as Path<T>}
                         render={({ field }) => (
-                          <FormItem>
+                          <FormItem className="w-full">
                             <FormLabel>{values.name}</FormLabel>
                             <FormControl>
                               <Input
