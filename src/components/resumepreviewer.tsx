@@ -17,6 +17,7 @@ const ResumePreviewer = () => {
     skillsForm,
     hobbiesForm,
     languageForm,
+    userId,
   } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 

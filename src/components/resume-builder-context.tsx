@@ -22,6 +22,7 @@ export type ResumeBuilderContextProps = {
   skillsForm: UseFormReturn<SkillsFormSchema, any, undefined>;
   hobbiesForm: UseFormReturn<HobbiesFormSchema>;
   languageForm: UseFormReturn<LanguagesFormSchema>;
+  userId: string;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -323,8 +324,10 @@ function reducer(state: initialState, action: Action) {
 
 export const ResumeBuilderContextProvider = ({
   children,
+  userId,
 }: {
   children: React.ReactNode;
+  userId: string;
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
 
@@ -389,6 +392,7 @@ export const ResumeBuilderContextProvider = ({
       skillsForm,
       hobbiesForm,
       languageForm,
+      userId,
     }),
     [
       values,
@@ -399,6 +403,7 @@ export const ResumeBuilderContextProvider = ({
       skillsForm,
       hobbiesForm,
       languageForm,
+      userId,
     ]
   );
 
