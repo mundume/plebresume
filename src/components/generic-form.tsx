@@ -194,9 +194,7 @@ const GenericForm = <T extends FieldValues>({
                                   <Calendar
                                     mode="single"
                                     selected={new Date(field.value)}
-                                    onSelect={(date) =>
-                                      field.onChange(date?.toISOString())
-                                    }
+                                    onSelect={(date) => field.onChange(date)}
                                     disabled={(date) =>
                                       date > new Date() ||
                                       date < new Date("1900-01-01")
@@ -251,9 +249,7 @@ const GenericForm = <T extends FieldValues>({
                                   <Calendar
                                     mode="single"
                                     selected={new Date(field.value)}
-                                    onSelect={(date) =>
-                                      field.onChange(date?.toISOString())
-                                    }
+                                    onSelect={(date) => field.onChange(date)}
                                     disabled={(date) =>
                                       date > new Date() ||
                                       date < new Date("1900-01-01")

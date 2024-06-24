@@ -17,12 +17,13 @@ const ResumePreviewer = () => {
     skillsForm,
     hobbiesForm,
     languageForm,
+    personalInfoForm,
     userId,
   } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
 
-  const { address, email, names, phone, profile, proffession } =
-    values.personalInfo;
+  const personalInfo = personalInfoForm.watch("resume");
+
   const workExperience = form.watch("experience");
   const education = educationForm.watch("education");
   const socialLinks = socialLinkForm.watch("socialLinks");
@@ -30,6 +31,7 @@ const ResumePreviewer = () => {
   const hobbies = hobbiesForm.watch("hobbies");
   const languages = languageForm.watch("languages");
 
+  console.log(personalInfo);
   return (
     <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen ">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
@@ -50,11 +52,13 @@ const ResumePreviewer = () => {
             </div>
             <div className="flex items-center justify-between w-full">
               <h1 className="text-xl font-bold">
-                {names.firstName} {names.lastName}
+                {personalInfo.names.firstName} {personalInfo.names.lastName}
               </h1>
               <span className="p-1 border rounded-full ">NK</span>
             </div>
-            <p className="py-1 font-semibold text-sm ">{proffession}</p>
+            <p className="py-1 font-semibold text-sm ">
+              {personalInfo.proffession}
+            </p>
           </div>
           <div className="flex text-xs">
             <div className="flex-1">
@@ -63,22 +67,23 @@ const ResumePreviewer = () => {
                 <span className="flex-1 font-bold  text-blue-400">
                   email
                 </span>{" "}
-                <span className="flex-1">{email}</span>
+                <span className="flex-1">{personalInfo.email}</span>
               </p>
               <p className="flex  text-slate-600 ">
                 {" "}
                 <span className="flex-1 font-bold  text-blue-400">
                   phone
                 </span>{" "}
-                <span className="flex-1">{phone}</span>
+                <span className="flex-1">{personalInfo.phone}</span>
               </p>
             </div>
             <div className="flex-1">
               <p className="flex  text-slate-600 ">
                 <span className="flex-1 font-bold text-blue-400">Address</span>
                 <span className="flex-1">
-                  {address.city}
-                  {address.state && ","} {address.state}
+                  {personalInfo.address.city}
+                  {personalInfo.address.state && ","}{" "}
+                  {personalInfo.address.state}
                 </span>
               </p>
             </div>
@@ -90,7 +95,7 @@ const ResumePreviewer = () => {
               <span className="pr-1 underline text-blue-400">01</span>
               Profile
             </p>
-            <p className="">{profile}</p>
+            <p className="">{personalInfo.profile}</p>
           </div>
         </div>
         <div className="">

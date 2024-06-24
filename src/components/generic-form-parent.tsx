@@ -2,9 +2,10 @@ import React from "react";
 import GenericForm from "./generic-form";
 import { EducationFormSchema, employmentSchema } from "@/lib/schemas";
 import { useResumeBuilderContext } from "./resume-builder-context";
+import { db } from "@/config/prisma";
 
 function GenericFormParent() {
-  const { form, dispatch, educationForm } = useResumeBuilderContext();
+  const { dispatch, educationForm, userId } = useResumeBuilderContext();
   const values = {
     name: "School Name",
     title: "Degree",
@@ -13,6 +14,12 @@ function GenericFormParent() {
     startDate: "Start Date",
     endDate: "End Date",
     currently: "Currently Attending",
+  };
+
+  const onSubmit = () => {
+    educationForm.handleSubmit((data) => {
+      console.log(data);
+    })();
   };
 
   return (
@@ -25,7 +32,7 @@ function GenericFormParent() {
       </div>
       <GenericForm
         form={educationForm}
-        onSubmit={() => {}}
+        onSubmit={onSubmit}
         value={"education"}
         values={values}
       />

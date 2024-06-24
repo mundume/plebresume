@@ -14,7 +14,11 @@ export default function AddExperienceForm() {
     endDate: "End Date",
     currently: "Currently Working",
   };
-
+  const onSubmit = () => {
+    form.handleSubmit((data) => {
+      console.log(data);
+    })();
+  };
   return (
     <div className="space-y-4">
       <div>
@@ -26,7 +30,7 @@ export default function AddExperienceForm() {
       </div>
       <GenericForm
         form={form}
-        onSubmit={() => {}}
+        onSubmit={onSubmit}
         value={"experience"}
         values={values}
       />

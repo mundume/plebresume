@@ -13,9 +13,14 @@ import {
   SkillsFormSchema,
   SocialLinksSchema,
 } from "@/lib/schemas";
+import {
+  PersonalInfomationValues,
+  resumeSchema,
+} from "@/lib/validators/resume-validator";
 export type ResumeBuilderContextProps = {
   values: initialState;
   form: UseFormReturn<EmploymentSchema, any, undefined>;
+  personalInfoForm: UseFormReturn<PersonalInfomationValues, any, undefined>;
   dispatch: React.Dispatch<Action>;
   educationForm: UseFormReturn<EducationSchema, any, undefined>;
   socialLinkForm: UseFormReturn<SocialLinksSchema, any, undefined>;
@@ -163,20 +168,7 @@ const initialArg: initialState = {
 
 export type AddPersonalInformation = {
   type: "ADD_PERSONAL_INFORMATION";
-  payload: {
-    names?: {
-      firstName?: string;
-      lastName?: string;
-    };
-    email?: string;
-    proffession?: string;
-    phone?: string;
-    profile?: string;
-    address?: {
-      city?: string;
-      state?: string;
-    };
-  };
+  payload: PersonalInfomationValues;
 };
 
 export type WorkExperienceAction = {
@@ -236,14 +228,6 @@ function reducer(state: initialState, action: Action) {
         personalInfo: {
           ...state.personalInfo,
           ...action.payload,
-          names: {
-            ...state.personalInfo.names,
-            ...action.payload.names,
-          },
-          address: {
-            ...state.personalInfo.address,
-            ...action.payload.address,
-          },
         },
       };
     case "ADD_WORK_EXPERIENCES": {
@@ -331,6 +315,26 @@ export const ResumeBuilderContextProvider = ({
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
 
+  const personalInfoForm = useForm<PersonalInfomationValues>({
+    defaultValues: {
+      resume: {
+        names: {
+          firstName: "mund",
+          lastName: "",
+        },
+        email: "",
+        proffession: "",
+        phone: "",
+        profile: "",
+        address: {
+          city: "",
+          state: "",
+        },
+      },
+    },
+    resolver: zodResolver(resumeSchema),
+  });
+
   const form = useForm<EmploymentSchema>({
     resolver: zodResolver(employmentSchema),
     defaultValues: {
@@ -393,6 +397,7 @@ export const ResumeBuilderContextProvider = ({
       hobbiesForm,
       languageForm,
       userId,
+      personalInfoForm,
     }),
     [
       values,
@@ -404,6 +409,7 @@ export const ResumeBuilderContextProvider = ({
       hobbiesForm,
       languageForm,
       userId,
+      personalInfoForm,
     ]
   );
 

@@ -6,16 +6,12 @@ export const formSchema = z.object({
     required_error: "Job title is required",
   }),
   description: z.string(),
-  startDate:
-    z
-      .date({
-        required_error: "To get the timeline, start date is required",
-      })
-      .optional() ||
-    z
-      .string({ required_error: "To get the timeline, start date is required" })
-      .optional(),
-  endDate: z.date({}).optional() || z.string({}).optional(),
+  startDate: z
+    .date({
+      required_error: "To get the timeline, start date is required",
+    })
+    .optional(),
+  endDate: z.date({}).optional(),
   currently: z.boolean().default(false).optional(),
   location: z.string({ required_error: "Location is required" }),
 });
