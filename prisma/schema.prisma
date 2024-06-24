@@ -20,6 +20,7 @@ model User {
   file        File[]
   coverLetter CoverLetter[]
   resume      Resume[]
+  createdResume CreatedResume[]
 }
 
 enum UploadStatus {
@@ -73,6 +74,82 @@ model Resume {
   user        User?         @relation(fields: [userId], references: [id])
   userId      String?
   CoverLetter CoverLetter[]
+}
+
+
+
+
+model CreatedResume {
+  id              Int             @id @default(autoincrement())
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  city            String
+  state           String?
+  profession      String
+  profile         String
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  socialLinks     SocialLink[]
+  workExperience  WorkExperience[]
+  education       Education[]
+  skills          Skill[]
+  hobbies         String[]
+  languages       Language[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+}
+
+model SocialLink {
+  id        Int      @id @default(autoincrement())
+  name      String
+  link      String
+  resumeId  Int
+  resume    CreatedResume   @relation(fields: [resumeId], references: [id])
+}
+
+model WorkExperience {
+  id          Int      @id @default(autoincrement())
+  title       String
+  name        String?
+  description String
+  location    String
+  startDate   DateTime
+  endDate     DateTime?
+  currently   Boolean
+  resumeId    Int
+  resume      CreatedResume   @relation(fields: [resumeId], references: [id])
+}
+
+model Education {
+  id          Int      @id @default(autoincrement())
+  title       String
+  name        String?
+  description String
+  location    String
+  startDate   DateTime
+  endDate     DateTime?
+  currently   Boolean
+  resumeId    Int
+  resume      CreatedResume   @relation(fields: [resumeId], references: [id])
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  skills    String
+  level     Int
+  resumeId  Int
+  resume   CreatedResume  @relation(fields: [resumeId], references: [id])
+}
+
+model Language {
+  id        Int      @id @default(autoincrement())
+  languages String
+  level     Int
+  resumeId  Int
+  resume   CreatedResume  @relation(fields: [resumeId], references: [id])
 }
 
 

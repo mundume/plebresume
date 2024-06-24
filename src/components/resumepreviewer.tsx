@@ -5,6 +5,8 @@ import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import { format } from "date-fns";
+import { db } from "@/config/prisma";
+import { useEffect } from "react";
 
 const ResumePreviewer = () => {
   const {

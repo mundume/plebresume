@@ -56,10 +56,7 @@ const nextConfig = {
   },
 };
 
-module.exports = {
-  ...nextConfig,
-  profiler: true,
-};
+module.exports = nextConfig;
 
 // Injected content via Sentry wizard below
 

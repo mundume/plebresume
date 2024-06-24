@@ -1,6 +1,5 @@
 "use client";
 
-import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import UserCard from "./UserCard";
 import UploadButton from "./uploadButton";
 import { trpc } from "@/app/_trpc/client";
@@ -8,8 +7,7 @@ import SkeletonLoading from "./SkeletonLoading";
 import { DataTable } from "./DataTable";
 import { columns } from "./Columns";
 
-type User = KindeUser;
-const CoverLetterPage = ({ user }: { user: User }) => {
+const CoverLetterPage = ({ user }: { user: any }) => {
   const {
     data: getUserFiles,
     isLoading,
