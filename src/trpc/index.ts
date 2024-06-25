@@ -93,6 +93,24 @@ export const appRouter = router({
       if (!coverLetter) throw new TRPCError({ code: "NOT_FOUND" });
       return coverLetter;
     }),
+  createResume: privateProcedure
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ ctx }) => {
+      const { userId } = ctx;
+      const user = await db.user.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+      if (!user) throw new TRPCError({ code: "NOT_FOUND" });
+      const resume = await db.createdResume.create({
+        data: {
+          userId,
+          name: `${user.firstName} ${user.lastName} resume ${Date.now()}`,
+        },
+      });
+      return resume;
+    }),
 });
 
 // export type definition of API
