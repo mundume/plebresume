@@ -111,6 +111,14 @@ export const appRouter = router({
       });
       return resume;
     }),
+  getResumes: privateProcedure.query(async ({ ctx }) => {
+    const { userId } = ctx;
+    return await db.createdResume.findMany({
+      where: {
+        userId,
+      },
+    });
+  }),
 });
 
 // export type definition of API
