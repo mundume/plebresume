@@ -1,5 +1,4 @@
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { compile } from "@onedoc/react-print";
 import { Receipt } from "@/components/reciepts";
 import { Onedoc } from "@onedoc/client";
@@ -10,7 +9,7 @@ import { db } from "@/config/prisma";
 
 const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
 
-export const GET = async (req: NextApiRequest) => {
+export const GET = async (req: NextRequest) => {
   const p = await db.user.findFirst({
     where: {
       email: "nzaih18@gmail.com",
