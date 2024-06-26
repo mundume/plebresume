@@ -18,6 +18,7 @@ import {
 import { format } from "date-fns/format";
 import DeleteFileButton from "./DeleteFileButton";
 import Link from "next/link";
+import ResumeDelete from "./resume-delete-file";
 
 type TRPCRouterOutput = inferRouterOutputs<AppRouter>;
 
@@ -90,7 +91,7 @@ export const resumeColumns: ColumnDef<TFileData>[] = [
             <DropdownMenuSeparator />
 
             <DropdownMenuItem>
-              <DeleteFileButton fileId={resume.id} />
+              <ResumeDelete fileId={resume.id} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

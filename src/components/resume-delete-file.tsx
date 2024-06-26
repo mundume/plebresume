@@ -1,29 +1,26 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import { useState } from "react";
-import { Command, Delete } from "lucide-react";
+import React, { useState } from "react";
+import { Button } from "./ui/button";
+import { Command, Delete, Loader, Trash } from "lucide-react";
 import { toast } from "sonner";
 type Props = {
   fileId: string;
 };
-const DeleteFileButton = ({ fileId }: Props) => {
-  const [isCurrentDeleting, setisCurrentDeleting] = useState<string | null>();
+const ResumeDelete = ({ fileId }: Props) => {
   const utils = trpc.useUtils();
   const {
     mutate: deleteFile,
     isLoading,
     isError,
     error,
-  } = trpc.deleteFile.useMutation({
+  } = trpc.deleteResume.useMutation({
     onSuccess: () => {
-      utils.getUserFiles.invalidate();
+      utils.getResumes.invalidate();
       toast.success("File deleted");
     },
-    onMutate: ({ id }) => {
-      setisCurrentDeleting(id);
-    },
+
     onSettled: () => {
-      setisCurrentDeleting(null);
       toast.dismiss();
     },
   });
@@ -42,4 +39,4 @@ const DeleteFileButton = ({ fileId }: Props) => {
   );
 };
 
-export default DeleteFileButton;
+export default ResumeDelete;

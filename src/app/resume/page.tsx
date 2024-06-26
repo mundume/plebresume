@@ -15,10 +15,12 @@ const Page = async () => {
   if (!user || !user.id) redirect("/auth-callback?origin=resume");
 
   return (
-    <>
-      <CreateResume userId={user.id} />
-      <Resumes />
-    </>
+    <MaxWidthWrapper className="px-2 pt-3 my-auto ">
+      <div className="">
+        <CreateResume userId={user.id} />
+        <Resumes />
+      </div>
+    </MaxWidthWrapper>
   );
 };
 

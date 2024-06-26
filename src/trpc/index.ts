@@ -119,6 +119,24 @@ export const appRouter = router({
       },
     });
   }),
+  deleteResume: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findFirst({
+        where: {
+          id: input.id,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.createdResume.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return resume;
+    }),
 });
 
 // export type definition of API
