@@ -7,15 +7,16 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const Page = async () => {
+const Page = async ({ params }: { params: { resumeId: string } }) => {
   const { getUser } = getKindeServerSession();
+
   const user = await getUser();
 
   if (!user || !user.id) redirect("/auth-callback?origin=resume");
 
   return (
     <>
-      <ResumeBuilderContextProvider userId={user.id}>
+      <ResumeBuilderContextProvider userId={user.id} resumeId={params.resumeId}>
         <main>
           <MaxWidthWrapper className="max-w-full ">
             <div className="flex gap-4 pt-4">

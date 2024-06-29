@@ -1,6 +1,4 @@
-import React from "react";
 import { Card } from "./ui/card";
-import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import {
@@ -8,37 +6,37 @@ import {
   FormField,
   FormItem,
   FormControl,
-  FormDescription,
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import {
-  PersonalInfomationValues,
-  resumeSchema,
-} from "@/lib/validators/resume-validator";
-import {
-  Action,
-  AddPersonalInformation,
-  useResumeBuilderContext,
-} from "./resume-builder-context";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { db } from "@/config/prisma";
-import { Button } from "./ui/button";
+import { PersonalInfomationValues } from "@/lib/validators/resume-validator";
+import { useResumeBuilderContext } from "./resume-builder-context";
+import { trpc } from "@/app/_trpc/client";
 import { toast } from "sonner";
-import { z } from "zod";
+import { Button } from "./ui/button";
 
-type InformationAccordition = {
-  values: PersonalInfomationValues;
-  dispatch: React.Dispatch<AddPersonalInformation>;
-};
-const PersonalInformationAccordition = ({
-  values,
-  dispatch,
-}: InformationAccordition) => {
-  const { personalInfoForm: form } = useResumeBuilderContext();
-  const onSubmit = (data: z.infer<typeof resumeSchema>) => {
-    console.log(data);
+const PersonalInformationAccordition = () => {
+  const { personalInfoForm: form, resumeId } = useResumeBuilderContext();
+  const {
+    mutate: updatePersonalInformation,
+    isLoading,
+    isError,
+  } = trpc.updateResumePersonalInformation.useMutation({
+    onMutate: () => {
+      toast.loading("Updating personal information");
+    },
+    onSuccess: () => {
+      toast.success("Personal information updated");
+    },
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
+  const onSubmit = (data: PersonalInfomationValues) => {
+    updatePersonalInformation({
+      resume: data,
+      resumeId: resumeId,
+    });
   };
   return (
     <Card className=" border-none shadow-none ">
@@ -193,6 +191,10 @@ const PersonalInformationAccordition = ({
               </FormItem>
             )}
           />
+
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            Update
+          </Button>
         </form>
       </Form>
     </Card>

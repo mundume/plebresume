@@ -2,9 +2,31 @@ import React from "react";
 import GenericForm from "./generic-form";
 import { EducationFormSchema, employmentSchema } from "@/lib/schemas";
 import { useResumeBuilderContext } from "./resume-builder-context";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "sonner";
 
 export default function AddExperienceForm() {
-  const { form } = useResumeBuilderContext();
+  const { form, resumeId } = useResumeBuilderContext();
+  const {
+    mutate: updateResumeWorkExperience,
+    isLoading,
+    data,
+  } = trpc.updateResumeWorkExperience.useMutation({
+    onMutate: () => {
+      toast.loading("Saving...");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onSuccess: () => {
+      toast.success("Saved");
+    },
+    onSettled: (data) => {
+      console.log(data);
+      toast.dismiss();
+    },
+  });
   const values = {
     name: "Employer",
     title: "Job Title",
@@ -17,6 +39,10 @@ export default function AddExperienceForm() {
   const onSubmit = () => {
     form.handleSubmit((data) => {
       console.log(data);
+      updateResumeWorkExperience({
+        resumeId: resumeId,
+        workExperience: data,
+      });
     })();
   };
   return (

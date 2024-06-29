@@ -38,18 +38,5 @@ export const Receipt = ({ personalInfo, workExperience }: initialState) => (
         Work Experience
       </h1>
     </div>
-
-    {workExperience.map((item, index) => (
-      <div key={index} className="text-sm text-slate-800">
-        <h3 className="text-base font-bold ">{item.title}</h3>
-        <p className="flex gap-2 py-1 text-sm text-slate-600">
-          <span className="mr-2">{item.startDate}</span>
-          <span> to </span> <span className="ml-2">{item.endDate}</span>
-        </p>
-        <p className="font-medium">{item.companyName}</p>
-
-        <div className="text-sm">{item.description}</div>
-      </div>
-    ))}
   </Tailwind>
 );

@@ -21,7 +21,7 @@ const ResumeInfoAccordition = ({
           add your personal information.
         </p>
       </div>
-      <PersonalInformationAccordition dispatch={dispatch} values={values} />
+      <PersonalInformationAccordition />
     </div>
   );
 };

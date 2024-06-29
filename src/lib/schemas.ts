@@ -1,16 +1,14 @@
 import { z, ZodSchema } from "zod";
 
 export const formSchema = z.object({
-  name: z.string({ required_error: "Company name is required" }),
-  title: z.string({
-    required_error: "Job title is required",
-  }),
-  description: z.string(),
-  startDate: z
-    .date({
-      required_error: "To get the timeline, start date is required",
+  name: z.string({ required_error: "Company name is required" }).optional(),
+  title: z
+    .string({
+      required_error: "Job title is required",
     })
     .optional(),
+  description: z.string().optional(),
+  startDate: z.date({}).optional(),
   endDate: z.date({}).optional(),
   currently: z.boolean().default(false).optional(),
   location: z.string({ required_error: "Location is required" }),

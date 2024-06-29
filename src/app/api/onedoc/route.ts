@@ -10,9 +10,9 @@ import { db } from "@/config/prisma";
 const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
 
 export const GET = async (req: NextRequest) => {
-  const p = await db.user.findFirst({
+  const p = await db.createdResume.findFirst({
     where: {
-      email: "nzaih18@gmail.com",
+      id: "clxw32ye70003kwm39brl5a2r",
     },
   });
   const receipt = {
@@ -27,13 +27,12 @@ export const GET = async (req: NextRequest) => {
         lastName: p?.lastName!,
       },
       email: p?.email!,
-      phone: "0700000000",
-      proffession: "Software Engineer",
-      profile:
-        "Highly skilled UI Engineer with 5 years of experience in designing and developing intuitive user interfaces for web and mobile applications. Proficient in HTML, CSS, JavaScript, and modern front-end frameworks such as React and Vue.js. Passionate about blending design aesthetics with technical functionality to create seamless user experiences. Strong collaborator with UX designers and backend developers to deliver innovative solutions that exceed user expectations.",
+      phone: p?.phone!,
+      proffession: p?.profession!,
+      profile: p?.profile!,
       address: {
-        city: "Kibandahasara",
-        state: "Kenya",
+        city: p?.city!,
+        state: p?.state!,
       },
     },
     // workExperience: [

@@ -3,6 +3,8 @@ import { z } from "zod";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/config/prisma";
+import { resumeSchema } from "@/lib/validators/resume-validator";
+import { employmentSchema } from "@/lib/schemas";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -119,6 +121,7 @@ export const appRouter = router({
       },
     });
   }),
+
   deleteResume: privateProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -133,6 +136,77 @@ export const appRouter = router({
       await db.createdResume.delete({
         where: {
           id: input.id,
+        },
+      });
+      return resume;
+    }),
+  updateResumePersonalInformation: privateProcedure
+    .input(z.object({ resume: resumeSchema, resumeId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.createdResume.update({
+        where: {
+          id: input.resumeId,
+        },
+        data: {
+          firstName: input.resume.resume.names.firstName,
+          lastName: input.resume.resume.names.lastName,
+          city: input.resume.resume.address.city,
+          state: input.resume.resume.address.state,
+          email: input.resume.resume.email,
+          profession: input.resume.resume.proffession,
+          phone: input.resume.resume.phone,
+          profile: input.resume.resume.profile,
+        },
+      });
+      return resume;
+    }),
+
+  updateResumeWorkExperience: privateProcedure
+    .input(
+      z.object({
+        resumeId: z.string(),
+        workExperience: employmentSchema,
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.createdResume.update({
+        where: {
+          id: input.resumeId,
+        },
+        data: {
+          ...resume,
+          workExperience: {
+            updateMany: input.workExperience.experience.map((experience) => ({
+              where: {
+                id: input.resumeId,
+              },
+              data: {
+                currently: experience.currently,
+                description: experience.description,
+                endDate: experience.endDate?.toString(),
+                location: experience.location,
+                name: experience.name,
+                startDate: experience.startDate?.toString(),
+                title: experience.title,
+              },
+            })),
+          },
         },
       });
       return resume;

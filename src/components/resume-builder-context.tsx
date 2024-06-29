@@ -28,6 +28,7 @@ export type ResumeBuilderContextProps = {
   hobbiesForm: UseFormReturn<HobbiesFormSchema>;
   languageForm: UseFormReturn<LanguagesFormSchema>;
   userId: string;
+  resumeId: string;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -176,17 +177,6 @@ export type WorkExperienceAction = {
   payload: EmploymentSchema;
 };
 
-export type WorKexperience = {
-  experience: {
-    companyName: string;
-    title: string;
-    description: string;
-    startDate: Date;
-    endDate?: Date | undefined;
-    currently?: boolean | undefined;
-  }[];
-};
-
 export type EducationAction = {
   type: "ADD_EDUCATION";
   payload: EducationSchema;
@@ -309,9 +299,11 @@ function reducer(state: initialState, action: Action) {
 export const ResumeBuilderContextProvider = ({
   children,
   userId,
+  resumeId,
 }: {
   children: React.ReactNode;
   userId: string;
+  resumeId: string;
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
 
@@ -319,7 +311,7 @@ export const ResumeBuilderContextProvider = ({
     defaultValues: {
       resume: {
         names: {
-          firstName: "mund",
+          firstName: "",
           lastName: "",
         },
         email: "",
@@ -397,6 +389,7 @@ export const ResumeBuilderContextProvider = ({
       hobbiesForm,
       languageForm,
       userId,
+      resumeId,
       personalInfoForm,
     }),
     [
@@ -409,6 +402,7 @@ export const ResumeBuilderContextProvider = ({
       hobbiesForm,
       languageForm,
       userId,
+      resumeId,
       personalInfoForm,
     ]
   );
