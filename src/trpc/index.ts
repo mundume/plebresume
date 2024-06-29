@@ -166,6 +166,7 @@ export const appRouter = router({
           profile: input.resume.resume.profile,
         },
       });
+
       return resume;
     }),
 
@@ -185,25 +186,26 @@ export const appRouter = router({
         },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      const workExperience = await db.workExperience.findFirst({
+        where: {
+          resumeId: input.resumeId,
+        },
+      });
+
       await db.createdResume.update({
         where: {
           id: input.resumeId,
         },
         data: {
           ...resume,
+
           workExperience: {
             updateMany: input.workExperience.experience.map((experience) => ({
               where: {
                 id: input.resumeId,
               },
               data: {
-                currently: experience.currently,
-                description: experience.description,
-                endDate: experience.endDate,
-                location: experience.location,
-                name: experience.name,
-                startDate: experience.startDate,
-                title: experience.title,
+                ...experience,
               },
             })),
           },

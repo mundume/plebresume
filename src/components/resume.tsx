@@ -1,4 +1,4 @@
-import { Tailwind, PageTop } from "@onedoc/react-print";
+import { Tailwind, PageTop, Markdown } from "@onedoc/react-print";
 
 const Resume = ({
   values,
@@ -23,17 +23,12 @@ const Resume = ({
   return (
     <Tailwind>
       <PageTop>
-        <div>
-          <h2 className="pb-2 text-3xl font-semibold tracking-tight scroll-m-20 first:mt-0">
-            U andd IIIII
-          </h2>
-          <a
-            href="https://www.linkedin.com/jobs/"
-            className="pb-2  font-semibold tracking-tight scroll-m-20 first:mt-0"
-          >
-            linkedin
-          </a>
-        </div>
+        <a
+          href="https://www.linkedin.com/jobs/"
+          className="pb-2  font-semibold tracking-tight scroll-m-20 first:mt-0"
+        >
+          linkedin
+        </a>
       </PageTop>
       <div className="font-sans text-slate-800">
         <div className="flex flex-col ">
@@ -75,10 +70,16 @@ const Resume = ({
               <span className="pr-1 underline">01</span>
               Profile
             </p>
-            <span className="">{values.personalInfo.profile}</span>
+            <span className=""></span>
           </p>
         </div>
       </div>
+      <Markdown>{`- Item 1
+* Item 2
+  - Subitem 1
+  - Subitem 2
+- Item 3
+`}</Markdown>
     </Tailwind>
   );
 };
