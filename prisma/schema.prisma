@@ -117,8 +117,8 @@ model WorkExperience {
   name        String?
   description String?
   location    String?
-  startDate  String?
-  endDate     String?
+  startDate DateTime?
+  endDate     DateTime?
   currently   Boolean?
   resumeId    String
   resume      CreatedResume   @relation(fields: [resumeId], references: [id])

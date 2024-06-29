@@ -39,9 +39,18 @@ export default function AddExperienceForm() {
   const onSubmit = () => {
     form.handleSubmit((data) => {
       console.log(data);
+      const formattedData = data.experience.map((experience) => ({
+        ...experience,
+        startDate: experience.startDate
+          ? new Date(experience.startDate)
+          : undefined,
+        endDate: experience.endDate ? new Date(experience.endDate) : undefined,
+      }));
       updateResumeWorkExperience({
         resumeId: resumeId,
-        workExperience: data,
+        workExperience: {
+          experience: formattedData,
+        },
       });
     })();
   };

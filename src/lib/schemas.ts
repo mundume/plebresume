@@ -8,8 +8,14 @@ export const formSchema = z.object({
     })
     .optional(),
   description: z.string().optional(),
-  startDate: z.date({}).optional(),
-  endDate: z.date({}).optional(),
+  startDate: z.preprocess(
+    (arg) => (arg ? new Date(arg as string) : undefined),
+    z.date().optional()
+  ),
+  endDate: z.preprocess(
+    (arg) => (arg ? new Date(arg as string) : undefined),
+    z.date().optional()
+  ),
   currently: z.boolean().default(false).optional(),
   location: z.string({ required_error: "Location is required" }),
 });

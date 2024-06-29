@@ -199,10 +199,10 @@ export const appRouter = router({
               data: {
                 currently: experience.currently,
                 description: experience.description,
-                endDate: experience.endDate?.toString(),
+                endDate: experience.endDate,
                 location: experience.location,
                 name: experience.name,
-                startDate: experience.startDate?.toString(),
+                startDate: experience.startDate,
                 title: experience.title,
               },
             })),
