@@ -4,7 +4,7 @@ import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/config/prisma";
 import { resumeSchema } from "@/lib/validators/resume-validator";
-import { employmentSchema } from "@/lib/schemas";
+import { educationSchema, employmentSchema } from "@/lib/schemas";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -186,11 +186,6 @@ export const appRouter = router({
         },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
-      const workExperience = await db.workExperience.findFirst({
-        where: {
-          resumeId: input.resumeId,
-        },
-      });
 
       await db.createdResume.update({
         where: {
@@ -206,6 +201,45 @@ export const appRouter = router({
               },
               data: {
                 ...experience,
+              },
+            })),
+          },
+        },
+      });
+      return resume;
+    }),
+
+  updateResumeEducation: privateProcedure
+    .input(
+      z.object({
+        resumeId: z.string(),
+        education: educationSchema,
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+
+      await db.createdResume.update({
+        where: {
+          id: input.resumeId,
+        },
+        data: {
+          ...resume,
+
+          education: {
+            updateMany: input.education.education.map((education) => ({
+              where: {
+                id: input.resumeId,
+              },
+              data: {
+                ...education,
               },
             })),
           },
