@@ -65,7 +65,7 @@ export type SkillsSchema = z.infer<typeof skillsSchema>;
 
 export type SocialLinksSchema = z.infer<typeof socialLinksSchema>;
 
-export type EducationFormSchema = z.infer<typeof educationFormSchema>;
+export type EducationFormSchema = z.infer<typeof educationSchema>;
 export type EducationSchema = z.infer<typeof educationSchema>;
 
 export type FormSchema = z.infer<typeof formSchema>;

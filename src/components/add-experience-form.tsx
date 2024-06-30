@@ -8,10 +8,10 @@ import { toast } from "sonner";
 export default function AddExperienceForm() {
   const { form, resumeId } = useResumeBuilderContext();
   const {
-    mutate: updateResumeWorkExperience,
+    mutate: addWorkExperience,
     isLoading,
     data,
-  } = trpc.updateResumeWorkExperience.useMutation({
+  } = trpc.addWorkExperience.useMutation({
     onMutate: () => {
       toast.loading("Saving...");
     },
@@ -45,7 +45,7 @@ export default function AddExperienceForm() {
           : undefined,
         endDate: experience.endDate ? new Date(experience.endDate) : undefined,
       }));
-      updateResumeWorkExperience({
+      addWorkExperience({
         resumeId: resumeId,
         workExperience: {
           experience: formattedData,

@@ -96,7 +96,7 @@ model CreatedResume {
   workExperience  WorkExperience[]
   education       Education[]
   skills          Skill[]
-  hobbies         String[]
+  hobbies         String?
   languages       Language[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt

@@ -9,25 +9,24 @@ import { toast } from "sonner";
 function EducationForm() {
   const { dispatch, educationForm, userId, resumeId } =
     useResumeBuilderContext();
-  const { mutate: updateResumeEducation, error } =
-    trpc.updateResumeEducation.useMutation({
-      onSuccess: () => {
-        toast.success("Education added successfully");
-      },
+  const { mutate: addEducation, error } = trpc.addEducation.useMutation({
+    onSuccess: () => {
+      toast.success("Education added successfully");
+    },
 
-      onSettled: () => {
-        toast.dismiss();
-      },
+    onSettled: () => {
+      toast.dismiss();
+    },
 
-      onMutate: () => {
-        toast.loading("Saving...");
-      },
+    onMutate: () => {
+      toast.loading("Saving...");
+    },
 
-      onError: (error) => {
-        toast.error(error.message);
-        console.log(error.message);
-      },
-    });
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+  });
   const values = {
     name: "School Name",
     title: "Degree",
@@ -48,7 +47,7 @@ function EducationForm() {
         endDate: education.endDate ? new Date(education.endDate) : undefined,
       }));
 
-      updateResumeEducation({
+      addEducation({
         resumeId,
         education: {
           education: formattedData,

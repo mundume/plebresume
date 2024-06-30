@@ -18,10 +18,10 @@ import { Button } from "./ui/button";
 const PersonalInformationAccordition = () => {
   const { personalInfoForm: form, resumeId } = useResumeBuilderContext();
   const {
-    mutate: updatePersonalInformation,
+    mutate: addPersonalInformation,
     isLoading,
     isError,
-  } = trpc.updateResumePersonalInformation.useMutation({
+  } = trpc.addPersonalInformation.useMutation({
     onMutate: () => {
       toast.loading("Updating personal information");
     },
@@ -33,7 +33,7 @@ const PersonalInformationAccordition = () => {
     },
   });
   const onSubmit = (data: PersonalInfomationValues) => {
-    updatePersonalInformation({
+    addPersonalInformation({
       resume: data,
       resumeId: resumeId,
     });

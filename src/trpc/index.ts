@@ -7,6 +7,9 @@ import { resumeSchema } from "@/lib/validators/resume-validator";
 import {
   educationSchema,
   employmentSchema,
+  HobbiesSchema,
+  skillsFormSchema,
+  skillsSchema,
   socialLinksSchema,
 } from "@/lib/schemas";
 
@@ -113,15 +116,6 @@ export const appRouter = router({
         data: {
           userId,
           name: `${user.firstName} ${user.lastName} resume ${Date.now()}`,
-          workExperience: {
-            create: [],
-          },
-          education: {
-            create: [],
-          },
-          socialLinks: {
-            create: [],
-          },
         },
       });
       return resume;
@@ -150,10 +144,15 @@ export const appRouter = router({
         where: {
           id: input.id,
         },
+        include: {
+          education: true,
+          workExperience: true,
+          socialLinks: true,
+        },
       });
       return resume;
     }),
-  updateResumePersonalInformation: privateProcedure
+  addPersonalInformation: privateProcedure
     .input(z.object({ resume: resumeSchema, resumeId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
@@ -184,7 +183,7 @@ export const appRouter = router({
       return resume;
     }),
 
-  updateResumeWorkExperience: privateProcedure
+  addWorkExperience: privateProcedure
     .input(
       z.object({
         resumeId: z.string(),
@@ -201,7 +200,6 @@ export const appRouter = router({
         },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
-
       await Promise.all(
         input.workExperience.experience.map((experience) =>
           db.workExperience.createMany({
@@ -233,7 +231,7 @@ export const appRouter = router({
       return updatedResume;
     }),
 
-  updateResumeEducation: privateProcedure
+  addEducation: privateProcedure
     .input(
       z.object({
         resumeId: z.string(),
@@ -255,13 +253,7 @@ export const appRouter = router({
           db.education.createMany({
             data: {
               resumeId: input.resumeId,
-              title: education.title,
-              name: education.name,
-              description: education.description,
-              location: education.location,
-              startDate: education.startDate,
-              endDate: education.endDate,
-              currently: education.currently,
+              ...education,
             },
           })
         )
@@ -278,7 +270,7 @@ export const appRouter = router({
       console.log(updatedResume);
       return updatedResume;
     }),
-  updateSocialLinks: privateProcedure
+  addSocialLinks: privateProcedure
     .input(
       z.object({
         resumeId: z.string(),
@@ -295,25 +287,89 @@ export const appRouter = router({
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
 
-      await db.createdResume.update({
+      await Promise.all(
+        input.socialLinks.socialLinks.map((socialLink) =>
+          db.socialLink.createMany({
+            data: {
+              resumeId: input.resumeId,
+              ...socialLink,
+            },
+          })
+        )
+      );
+
+      const updatedResume = await db.createdResume.findUnique({
         where: {
           id: input.resumeId,
+          userId,
+        },
+        include: {
+          socialLinks: true,
+        },
+      });
+
+      return updatedResume;
+    }),
+  addSkills: privateProcedure
+    .input(z.object({ resumeId: z.string(), skills: skillsFormSchema }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+
+      await Promise.all(
+        input.skills.skills.map((skill) =>
+          db.skill.createMany({
+            data: {
+              resumeId: input.resumeId,
+              ...skill,
+            },
+          })
+        )
+      );
+
+      const updatedResume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+        include: {
+          skills: true,
+        },
+      });
+
+      console.log(updatedResume);
+
+      return updatedResume;
+    }),
+  addHobbies: privateProcedure
+    .input(z.object({ resumeId: z.string(), hobbies: HobbiesSchema }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      const updatedResume = await db.createdResume.update({
+        where: {
+          id: input.resumeId,
+          userId,
         },
         data: {
           ...resume,
-          socialLinks: {
-            updateMany: input.socialLinks.socialLinks.map((socialLink) => ({
-              where: {
-                id: input.resumeId,
-              },
-              data: {
-                ...socialLink,
-              },
-            })),
-          },
+          hobbies: input.hobbies.hobbies,
         },
       });
-      return resume;
+
+      return updatedResume;
     }),
 });
 

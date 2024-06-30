@@ -23,6 +23,9 @@ const ResumeDelete = ({ fileId }: Props) => {
     onSettled: () => {
       toast.dismiss();
     },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
   if (isLoading) toast.loading("Deleting file");
   return (

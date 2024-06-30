@@ -19,9 +19,36 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Plus, Trash, Trash2 } from "lucide-react";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "sonner";
+import { SocialLinksSchema } from "@/lib/schemas";
 
 const SocialLinks = () => {
-  const { socialLinkForm } = useResumeBuilderContext();
+  const { socialLinkForm, resumeId } = useResumeBuilderContext();
+  const { mutate: addSocialLinks } = trpc.addSocialLinks.useMutation({
+    onSuccess: () => {
+      toast.success("Saved");
+    },
+    onMutate: () => {
+      toast.loading("Saving...");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
+  const onSubmit = (data: SocialLinksSchema) => {
+    addSocialLinks({
+      resumeId: resumeId,
+      socialLinks: {
+        socialLinks: data.socialLinks,
+      },
+    });
+  };
+
   const { fields, append, remove } = useFieldArray({
     control: socialLinkForm.control,
     name: "socialLinks",
@@ -37,7 +64,10 @@ const SocialLinks = () => {
       <div>
         <Form {...socialLinkForm}>
           <Accordion type="single" collapsible>
-            <form className="space-y-8">
+            <form
+              className="space-y-8"
+              onSubmit={socialLinkForm.handleSubmit(onSubmit)}
+            >
               {fields.map((field, index) => (
                 <div
                   key={field.id}
@@ -129,6 +159,9 @@ const SocialLinks = () => {
                   }
                 >
                   <Plus className="w-4 h-4 mr-2" /> Add 1 more link
+                </Button>
+                <Button type="submit" className="w-full">
+                  Save
                 </Button>
               </div>
             </form>

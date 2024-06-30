@@ -19,13 +19,40 @@ import {
 } from "@/components/ui/accordion";
 import { Plus, Trash, Trash2 } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "sonner";
+import { SkillsFormSchema } from "@/lib/schemas";
 
 function SkillsForm() {
-  const { skillsForm } = useResumeBuilderContext();
+  const { skillsForm, resumeId } = useResumeBuilderContext();
   const { fields, append, remove } = useFieldArray({
     control: skillsForm.control,
     name: "skills",
   });
+  const { mutate: addSkills } = trpc.addSkills.useMutation({
+    onSuccess: () => {
+      toast.success("Saved");
+    },
+    onMutate: () => {
+      toast.loading("Saving...");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
+
+  const onSubmit = (data: SkillsFormSchema) => {
+    addSkills({
+      resumeId,
+      skills: {
+        skills: data.skills,
+      },
+    });
+  };
   return (
     <div className="w-full space-y-4 py-4 ">
       <div>
@@ -38,7 +65,11 @@ function SkillsForm() {
       <div className="">
         <Form {...skillsForm}>
           <Accordion type="single" collapsible>
-            <form action="" className="space-y-8">
+            <form
+              action=""
+              className="space-y-8"
+              onSubmit={skillsForm.handleSubmit(onSubmit)}
+            >
               {fields.map((field, index) => (
                 <div
                   className="flex gap-2 items-center accordion"
@@ -145,6 +176,9 @@ function SkillsForm() {
                   }
                 >
                   <Plus className="w-4 h-4 mr-2" /> Add 1 more skill
+                </Button>
+                <Button type="submit" className="w-full">
+                  Save
                 </Button>
               </div>
             </form>
