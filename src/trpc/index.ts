@@ -4,7 +4,11 @@ import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/config/prisma";
 import { resumeSchema } from "@/lib/validators/resume-validator";
-import { educationSchema, employmentSchema } from "@/lib/schemas";
+import {
+  educationSchema,
+  employmentSchema,
+  socialLinksSchema,
+} from "@/lib/schemas";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -109,6 +113,15 @@ export const appRouter = router({
         data: {
           userId,
           name: `${user.firstName} ${user.lastName} resume ${Date.now()}`,
+          workExperience: {
+            create: [],
+          },
+          education: {
+            create: [],
+          },
+          socialLinks: {
+            create: [],
+          },
         },
       });
       return resume;
@@ -154,6 +167,7 @@ export const appRouter = router({
       await db.createdResume.update({
         where: {
           id: input.resumeId,
+          userId,
         },
         data: {
           firstName: input.resume.resume.names.firstName,
@@ -179,6 +193,7 @@ export const appRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
+
       const resume = await db.createdResume.findUnique({
         where: {
           id: input.resumeId,
@@ -187,26 +202,35 @@ export const appRouter = router({
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
 
-      await db.createdResume.update({
+      await Promise.all(
+        input.workExperience.experience.map((experience) =>
+          db.workExperience.createMany({
+            data: {
+              resumeId: input.resumeId,
+              title: experience.title,
+              name: experience.name,
+              description: experience.description,
+              location: experience.location,
+              startDate: experience.startDate,
+              endDate: experience.endDate,
+              currently: experience.currently,
+            },
+          })
+        )
+      );
+
+      const updatedResume = await db.createdResume.findUnique({
         where: {
           id: input.resumeId,
+          userId,
         },
-        data: {
-          ...resume,
-
-          workExperience: {
-            updateMany: input.workExperience.experience.map((experience) => ({
-              where: {
-                id: input.resumeId,
-              },
-              data: {
-                ...experience,
-              },
-            })),
-          },
+        include: {
+          workExperience: true,
         },
       });
-      return resume;
+      console.log(updatedResume);
+
+      return updatedResume;
     }),
 
   updateResumeEducation: privateProcedure
@@ -226,20 +250,64 @@ export const appRouter = router({
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
 
+      await Promise.all(
+        input.education.education.map((education) =>
+          db.education.createMany({
+            data: {
+              resumeId: input.resumeId,
+              title: education.title,
+              name: education.name,
+              description: education.description,
+              location: education.location,
+              startDate: education.startDate,
+              endDate: education.endDate,
+              currently: education.currently,
+            },
+          })
+        )
+      );
+      const updatedResume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+        include: {
+          education: true,
+        },
+      });
+      console.log(updatedResume);
+      return updatedResume;
+    }),
+  updateSocialLinks: privateProcedure
+    .input(
+      z.object({
+        resumeId: z.string(),
+        socialLinks: socialLinksSchema,
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+
       await db.createdResume.update({
         where: {
           id: input.resumeId,
         },
         data: {
           ...resume,
-
-          education: {
-            updateMany: input.education.education.map((education) => ({
+          socialLinks: {
+            updateMany: input.socialLinks.socialLinks.map((socialLink) => ({
               where: {
                 id: input.resumeId,
               },
               data: {
-                ...education,
+                ...socialLink,
               },
             })),
           },

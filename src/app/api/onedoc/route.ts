@@ -8,18 +8,24 @@ import ResumePreviewer from "@/components/resumepreviewer";
 import { db } from "@/config/prisma";
 
 const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
+// Opt out of caching for all data requests in the route segment
 
 export const GET = async (req: NextRequest) => {
   const p = await db.createdResume.findFirst({
     where: {
-      id: "clxw32ye70003kwm39brl5a2r",
+      id: "cly083kfx000593cpfeqw1p6n",
+    },
+    include: {
+      education: true,
+      workExperience: true,
     },
   });
-  const receipt = {
-    id: 1,
-    date: "2021-01-01",
-    total: 100,
-  };
+  const l = await db.education.findMany();
+
+  console.log(l);
+
+  console.log(p);
+
   const values = {
     personalInfo: {
       names: {

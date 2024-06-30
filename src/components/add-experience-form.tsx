@@ -38,7 +38,6 @@ export default function AddExperienceForm() {
   };
   const onSubmit = () => {
     form.handleSubmit((data) => {
-      console.log(data);
       const formattedData = data.experience.map((experience) => ({
         ...experience,
         startDate: experience.startDate

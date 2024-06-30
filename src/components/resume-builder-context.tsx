@@ -33,18 +33,20 @@ export type ResumeBuilderContextProps = {
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   values: {
-    personalInfo: {
-      names: {
-        firstName: "",
-        lastName: "",
-      },
-      profile: "",
-      email: "",
-      proffession: "",
-      phone: "",
-      address: {
-        city: "",
-        state: "",
+    resume: {
+      resume: {
+        address: {
+          city: "",
+          state: "",
+        },
+        email: "",
+        proffession: "",
+        phone: "",
+        profile: "",
+        names: {
+          firstName: "",
+          lastName: "",
+        },
       },
     },
 
@@ -64,7 +66,13 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
     hobbiesForm: {
       hobbies: "",
     },
+    languageForm: {
+      languages: [],
+    },
   },
+  personalInfoForm: {} as any,
+  userId: "",
+  resumeId: "",
   skillsForm: {} as any,
   dispatch: () => {},
   form: {} as any,
@@ -75,20 +83,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
 });
 
 export type initialState = {
-  personalInfo: {
-    names: {
-      firstName: string;
-      lastName: string;
-    };
-    email: string;
-    proffession: string;
-    phone: string;
-    profile: string;
-    address: {
-      city: string;
-      state: string;
-    };
-  };
+  resume: PersonalInfomationValues;
   workExperience: EmploymentSchema;
   education: EducationSchema;
   socialLinks: SocialLinksSchema;
@@ -97,18 +92,20 @@ export type initialState = {
   languageForm: LanguagesFormSchema;
 };
 const initialArg: initialState = {
-  personalInfo: {
-    names: {
-      firstName: "",
-      lastName: "",
-    },
-    email: "",
-    proffession: "",
-    phone: "",
-    profile: "",
-    address: {
-      city: "",
-      state: "",
+  resume: {
+    resume: {
+      address: {
+        city: "",
+        state: "",
+      },
+      email: "",
+      proffession: "",
+      phone: "",
+      profile: "",
+      names: {
+        firstName: "",
+        lastName: "",
+      },
     },
   },
   workExperience: {
@@ -216,7 +213,7 @@ function reducer(state: initialState, action: Action) {
       return {
         ...state,
         personalInfo: {
-          ...state.personalInfo,
+          ...state.resume.resume,
           ...action.payload,
         },
       };

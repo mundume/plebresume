@@ -70,7 +70,7 @@ const Resume = ({
               <span className="pr-1 underline">01</span>
               Profile
             </p>
-            <span className=""></span>
+            <span className="">{values.personalInfo.profile}</span>
           </p>
         </div>
       </div>
