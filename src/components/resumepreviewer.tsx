@@ -228,15 +228,14 @@ const ResumePreviewer = () => {
             <span className="pr-1 underline text-blue-400">05</span>
             Languages
           </p>
-          <div className=" grid grid-cols-3">
+          <div className=" grid grid-cols-3 place-content-center">
             {languages.map((item, index) => (
-              <div key={index} className="flex gap-2">
-                <p className="text-slate-600 text-xs">
-                  {item?.languages && `- ${item?.languages}`}
-                </p>
-                <p className="text-slate-600 text-xs">
-                  {item?.level && `${item?.level} years`}
-                </p>
+              <div
+                key={index}
+                className="flex gap-2 items-center justify-center"
+              >
+                <p className="text-slate-600 text-xs">{item?.languages}</p>
+                <p className="text-blue-400 text-xs">{item?.level}</p>
               </div>
             ))}
           </div>

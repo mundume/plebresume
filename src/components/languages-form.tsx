@@ -18,14 +18,38 @@ import { Input } from "./ui/input";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import { useFieldArray } from "react-hook-form";
 import { Button } from "./ui/button";
-import { Plus, Trash2 } from "lucide-react";
+import { Check, CheckCircle, Plus, Trash2 } from "lucide-react";
+import LanguagesSelect from "./languages-select";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "sonner";
+import { LanguagesFormSchema } from "@/lib/schemas";
 
 const LanguagesForm = () => {
-  const { languageForm } = useResumeBuilderContext();
+  const { languageForm, resumeId } = useResumeBuilderContext();
+  const { mutate: addLanguage, isLoading } = trpc.addLanguages.useMutation({
+    onSuccess: () => {
+      toast.success("Language added successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onMutate: () => {
+      toast.loading("Saving...");
+    },
+  });
   const { fields, append, remove } = useFieldArray({
     control: languageForm.control,
     name: "languages",
   });
+  const onSubmit = (data: LanguagesFormSchema) => {
+    addLanguage({
+      languages: {
+        languages: data.languages,
+      },
+      resumeId: resumeId,
+    });
+  };
   return (
     <div className="w-full space-y-4 py-4 ">
       <div>
@@ -35,7 +59,11 @@ const LanguagesForm = () => {
       <div>
         <Form {...languageForm}>
           <Accordion type="single" collapsible>
-            <form action="" className="space-y-8">
+            <form
+              action=""
+              className="space-y-8"
+              onSubmit={languageForm.handleSubmit(onSubmit)}
+            >
               {fields.map((field, index) => (
                 <div
                   className="flex gap-2 items-center accordion"
@@ -62,8 +90,7 @@ const LanguagesForm = () => {
                               <p className="text-xs text-slate-500 flex-1 hover:no-underline">
                                 {languageForm.watch(
                                   `languages.${index}.level` as any
-                                )}{" "}
-                                years of experience
+                                )}
                               </p>
                             )}
                           </div>
@@ -82,7 +109,7 @@ const LanguagesForm = () => {
                               <FormLabel>Language</FormLabel>
                               <FormControl>
                                 <Input
-                                  placeholder="skill name"
+                                  placeholder="language name"
                                   {...field}
                                   className="h-12"
                                 />
@@ -100,14 +127,9 @@ const LanguagesForm = () => {
                           name={`languages.${index}.level` as any}
                           render={({ field }) => (
                             <FormItem className="w-full">
-                              <FormLabel>Level</FormLabel>
+                              <FormLabel>Proficiency</FormLabel>
                               <FormControl>
-                                <Input
-                                  type="number"
-                                  placeholder="level(in years of experience)"
-                                  {...field}
-                                  className="h-12"
-                                />
+                                <LanguagesSelect field={field} />
                               </FormControl>
                               <FormDescription>
                                 years of experience
@@ -144,6 +166,9 @@ const LanguagesForm = () => {
                   }
                 >
                   <Plus className="w-4 h-4 mr-2" /> Add 1 more language
+                </Button>
+                <Button type="submit" className="w-full ">
+                  <CheckCircle className="w-5 h-5 mr-2" /> Saved
                 </Button>
               </div>
             </form>

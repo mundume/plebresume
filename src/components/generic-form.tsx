@@ -3,7 +3,6 @@ import {
   UseFormReturn,
   FieldValues,
   Path,
-  UseControllerProps,
 } from "react-hook-form";
 import { format } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -34,7 +33,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Plus, PlusIcon, Trash, Trash2 } from "lucide-react";
+import { PlusIcon, Trash2 } from "lucide-react";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;

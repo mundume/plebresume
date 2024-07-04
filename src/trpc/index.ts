@@ -8,6 +8,8 @@ import {
   educationSchema,
   employmentSchema,
   HobbiesSchema,
+  LanguagesFormSchema,
+  LanguagesSchema,
   skillsFormSchema,
   skillsSchema,
   socialLinksSchema,
@@ -369,6 +371,41 @@ export const appRouter = router({
         },
       });
 
+      return updatedResume;
+    }),
+  addLanguages: privateProcedure
+    .input(z.object({ resumeId: z.string(), languages: LanguagesFormSchema }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      await Promise.all(
+        input.languages.languages.map((language) =>
+          db.language.createMany({
+            data: {
+              resumeId: input.resumeId,
+              ...language,
+            },
+          })
+        )
+      );
+
+      const updatedResume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+        include: {
+          languages: true,
+        },
+      });
+
+      console.log(updatedResume);
       return updatedResume;
     }),
 });
