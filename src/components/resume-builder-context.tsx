@@ -17,6 +17,7 @@ import {
   PersonalInfomationValues,
   resumeSchema,
 } from "@/lib/validators/resume-validator";
+import { trpc } from "@/app/_trpc/client";
 export type ResumeBuilderContextProps = {
   values: initialState;
   form: UseFormReturn<EmploymentSchema, any, undefined>;
@@ -303,12 +304,14 @@ export const ResumeBuilderContextProvider = ({
   resumeId: string;
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
+  const { data: resume, isLoading } = trpc.getResume.useQuery({ id: resumeId });
+  console.log(resume?.firstName);
 
   const personalInfoForm = useForm<PersonalInfomationValues>({
     defaultValues: {
       resume: {
         names: {
-          firstName: "",
+          firstName: isLoading ? "" : resume?.firstName || "",
           lastName: "",
         },
         email: "",
@@ -375,6 +378,7 @@ export const ResumeBuilderContextProvider = ({
   const languageForm = useForm<LanguagesFormSchema>({
     defaultValues: { languages: [{ languages: "", level: "" }] },
   });
+
   const contextValues = useMemo(
     () => ({
       values,

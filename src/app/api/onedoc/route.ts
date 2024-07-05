@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { compile } from "@onedoc/react-print";
-import { Receipt } from "@/components/reciepts";
 import { Onedoc } from "@onedoc/client";
 import Resume from "@/components/resume";
-import { TailwindResume } from "@/components/tailwind-resume";
-import ResumePreviewer from "@/components/resumepreviewer";
 import { db } from "@/config/prisma";
 
 const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
@@ -13,13 +10,17 @@ const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
 export const GET = async (req: NextRequest) => {
   const p = await db.createdResume.findFirst({
     where: {
-      id: "cly083kfx000593cpfeqw1p6n",
+      id: "cly1iw5wm000926kxp3ep27xu",
     },
     include: {
       education: true,
       workExperience: true,
+      languages: true,
+      skills: true,
+      socialLinks: true,
     },
   });
+
   const l = await db.education.findMany();
 
   console.log(l);
@@ -54,7 +55,7 @@ export const GET = async (req: NextRequest) => {
   };
 
   const { file, error } = await onedoc.render({
-    html: await compile(Resume({ values: values })),
+    html: await compile(Resume(p!)),
   });
 
   if (error) {

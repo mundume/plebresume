@@ -1,4 +1,4 @@
-import { Tailwind } from "@onedoc/react-print";
+import { Tailwind, Markdown } from "@onedoc/react-print";
 import React from "react";
 
 type Props = {

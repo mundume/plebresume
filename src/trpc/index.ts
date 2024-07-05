@@ -130,6 +130,26 @@ export const appRouter = router({
       },
     });
   }),
+  getResume: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findFirst({
+        where: {
+          id: input.id,
+          userId,
+        },
+        include: {
+          education: true,
+          workExperience: true,
+          socialLinks: true,
+          skills: true,
+          languages: true,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      return resume;
+    }),
 
   deleteResume: privateProcedure
     .input(z.object({ id: z.string() }))
