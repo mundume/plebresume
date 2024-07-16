@@ -10,6 +10,7 @@ import { Loader } from "lucide-react";
 
 const Resumes = () => {
   const { data: resumes, isLoading, isError } = trpc.getResumes.useQuery();
+
   return (
     <div>
       {isLoading ? (

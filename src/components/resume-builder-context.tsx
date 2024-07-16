@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, use, useMemo, useReducer } from "react";
+import React, {
+  createContext,
+  use,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -305,8 +311,6 @@ export const ResumeBuilderContextProvider = ({
 }) => {
   const [values, dispatch] = useReducer(reducer, initialArg);
   const { data: resume, isLoading } = trpc.getResume.useQuery({ id: resumeId });
-  console.log(resume?.firstName);
-
   const personalInfoForm = useForm<PersonalInfomationValues>({
     defaultValues: {
       resume: {
@@ -407,6 +411,27 @@ export const ResumeBuilderContextProvider = ({
       personalInfoForm,
     ]
   );
+
+  useEffect(() => {
+    if (!isLoading && resume) {
+      personalInfoForm.reset({
+        resume: {
+          names: {
+            firstName: resume.firstName || "",
+            lastName: resume.lastName || "",
+          },
+          email: resume.email || "",
+          proffession: resume.profession || "",
+          phone: resume.phone || "",
+          profile: resume.profile || "",
+          address: {
+            city: resume.city || "",
+            state: resume.state || "",
+          },
+        },
+      });
+    }
+  }, [resume, isLoading, personalInfoForm]);
 
   return (
     <ResumeBuilderContext.Provider

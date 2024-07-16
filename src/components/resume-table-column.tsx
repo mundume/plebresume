@@ -19,6 +19,7 @@ import { format } from "date-fns/format";
 import DeleteFileButton from "./DeleteFileButton";
 import Link from "next/link";
 import ResumeDelete from "./resume-delete-file";
+import { trpc } from "@/app/_trpc/client";
 
 type TRPCRouterOutput = inferRouterOutputs<AppRouter>;
 
@@ -53,8 +54,17 @@ export const resumeColumns: ColumnDef<TFileData>[] = [
     header: () => <p className="text-left">Name</p>,
     cell: ({ row }) => {
       const k = row.original.name;
+      const utils = trpc.useUtils();
 
-      return <Link href={`/resume/${row.original.id}`}>{k}</Link>;
+      return (
+        <Link
+          href={`/resume/${row.original.id}`}
+          onTouchStart={() => utils.getResumes.prefetch()}
+          onMouseEnter={() => utils.getResumes.prefetch()}
+        >
+          {k}
+        </Link>
+      );
     },
   },
 
