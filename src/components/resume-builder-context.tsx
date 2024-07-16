@@ -430,8 +430,45 @@ export const ResumeBuilderContextProvider = ({
           },
         },
       });
+
+      form.reset({
+        // @ts-ignore
+        experience: resume.workExperience || [],
+      });
+
+      educationForm.reset({
+        // @ts-ignore
+        education: resume.education || [],
+      });
+
+      socialLinkForm.reset({
+        // @ts-ignore
+        socialLinks: resume.socialLinks || [],
+      });
+      languageForm.reset({
+        // @ts-ignore
+        languages: resume.languages || [],
+      });
+      skillsForm.reset({
+        // @ts-ignore
+        skills: resume.skills || [],
+      });
+      hobbiesForm.reset({
+        // @ts-ignore
+        hobbies: resume.hobbies || [],
+      });
     }
-  }, [resume, isLoading, personalInfoForm]);
+  }, [
+    resume,
+    isLoading,
+    personalInfoForm,
+    form,
+    educationForm,
+    socialLinkForm,
+    languageForm,
+    skillsForm,
+    hobbiesForm,
+  ]);
 
   return (
     <ResumeBuilderContext.Provider

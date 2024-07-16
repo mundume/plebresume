@@ -9,6 +9,7 @@ import { toast } from "sonner";
 function EducationForm() {
   const { dispatch, educationForm, userId, resumeId } =
     useResumeBuilderContext();
+
   const { mutate: addEducation, error } = trpc.addEducation.useMutation({
     onSuccess: () => {
       toast.success("Education added successfully");

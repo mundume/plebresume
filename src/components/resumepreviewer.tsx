@@ -18,6 +18,7 @@ const ResumePreviewer = () => {
     hobbiesForm,
     languageForm,
     personalInfoForm,
+
     userId,
   } = useResumeBuilderContext();
   const { ref, height } = useResizeDetector();
@@ -31,9 +32,8 @@ const ResumePreviewer = () => {
   const hobbies = hobbiesForm.watch("hobbies");
   const languages = languageForm.watch("languages");
 
-  console.log(personalInfo);
   return (
-    <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen ">
+    <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen  ">
       <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
         <div ref={ref} className=" font-sans text-slate-800">
           <div className="flex flex-col ">
@@ -105,10 +105,7 @@ const ResumePreviewer = () => {
           </p>
           <div>
             {workExperience?.map((item, index) => (
-              <div
-                key={index}
-                className="grid  grid-cols-12 my-4  items-start  "
-              >
+              <div key={index} className="flex justify-between gap-3  ">
                 <div className=" col-span-3  flex  gap-2 text-xs text-blue-400   ">
                   {item.startDate && (
                     <p className=" text-xs">
@@ -139,7 +136,7 @@ const ResumePreviewer = () => {
                     {item?.description}
                   </Markdown>
                 </div>
-                <div className="text-slate-600 font-mono text-xs  col-span-2 text-center">
+                <div className="text-slate-600 font-mono text-xs  col-span-2  justify-self-end text-center">
                   {item.location}
                 </div>
               </div>
