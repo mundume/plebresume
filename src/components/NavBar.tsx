@@ -65,9 +65,9 @@ export const NavBar = async () => {
                   <NotificationsPopover />
                   <UserAccountNav />
                 </div>
+                <ModeToggle />
               </>
             )}
-            <ModeToggle />
           </div>
         </div>
       </MaxWidthWrapper>

@@ -43,3 +43,55 @@ Dear Hiring manager,
 Sincerely,
 [Your name]
 [Your signature]
+
+# Nzai Kilonzo
+
+**Location:** Nairobi, Kenya  
+**Phone:** +254114109808  
+**Email:** nzaih18@gmail.com
+
+---
+
+Hey! I am an engineer, learning how to build and design scalable websites and applications. My focus is to build with better user experience, design aesthetic, good developer experience and meaningful impact.
+
+---
+
+## Work Experience
+
+### UI Engineer
+
+**Mugogo Inc**  
+_Nairobi_  
+**07/2022 to Present**
+
+- Developed and implemented user-friendly interfaces for web applications, incorporating best practices in UX design and ensuring seamless navigation for end-users.
+- Collaborated with cross-functional teams to translate wireframes and design mockups into interactive prototypes, streamlining the development process and reducing time-to-market.
+- Conducted usability tests and gathered user feedback to iterate on UI designs, resulting in improved user satisfaction and increased adoption rates.
+- Optimized front-end performance by identifying and resolving performance bottlenecks, resulting in faster page load times and enhanced user experience.
+
+### Open Source Engineer
+
+**Contribute-To-This-Project**  
+_Remote_  
+**07/2022 to Present**
+
+- I guide beginner and newbie or anyone who wants to make their first open source contribution. I do code reviews, code maintenance and collaborations with amazing people all around the world.
+- Assisted contributors with special needs, and served as a source of support to them.
+
+---
+
+## Skills
+
+- **Typescript:** 2 years
+- **React:** 2 years
+- **Nextjs:** 1 year
+- **HTML:** 3 years
+- **CSS:** 3 years
+
+---
+
+## Education
+
+**Mount Kenya University**  
+_Business Information Technology_  
+**01/2020 to Present**
