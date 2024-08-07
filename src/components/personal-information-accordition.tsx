@@ -16,7 +16,12 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 
 const PersonalInformationAccordition = () => {
-  const { personalInfoForm: form, resumeId } = useResumeBuilderContext();
+  const {
+    personalInfoForm: form,
+    resumeId,
+    resume,
+  } = useResumeBuilderContext();
+  const { getResume } = trpc.useUtils();
   const {
     mutate: addPersonalInformation,
     isLoading,
@@ -27,6 +32,27 @@ const PersonalInformationAccordition = () => {
     },
     onSuccess: () => {
       toast.success("Personal information updated");
+      ``;
+    },
+
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
+  const {
+    mutate: update,
+    isLoading: updateLoading,
+    isError: updateError,
+  } = trpc.updatePersonalInformation.useMutation({
+    onMutate: () => {
+      toast.loading("Updating personal information");
+    },
+    onSuccess: () => {
+      toast.success("Personal information updated");
+
+      getResume.invalidate();
+
+      ``;
     },
     onSettled: () => {
       toast.dismiss();
@@ -35,6 +61,14 @@ const PersonalInformationAccordition = () => {
   const onSubmit = (data: PersonalInfomationValues) => {
     addPersonalInformation({
       resume: data,
+      resumeId: resumeId,
+    });
+  };
+  const onUpdate = (data: PersonalInfomationValues) => {
+    update({
+      resume: {
+        ...data,
+      },
       resumeId: resumeId,
     });
   };
@@ -192,9 +226,19 @@ const PersonalInformationAccordition = () => {
             )}
           />
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            Update
-          </Button>
+          {resume?.firstName ? (
+            <Button
+              onClick={() => onUpdate(form.getValues())}
+              className="w-full"
+              disabled={updateLoading}
+            >
+              Update
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              Save
+            </Button>
+          )}
         </form>
       </Form>
     </Card>

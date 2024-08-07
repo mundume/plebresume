@@ -204,6 +204,35 @@ export const appRouter = router({
 
       return resume;
     }),
+  updatePersonalInformation: privateProcedure
+    .input(z.object({ resume: resumeSchema, resumeId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.createdResume.update({
+        where: {
+          id: input.resumeId,
+          userId,
+        },
+        data: {
+          firstName: input.resume.resume.names.firstName,
+          lastName: input.resume.resume.names.lastName,
+          city: input.resume.resume.address.city,
+          state: input.resume.resume.address.state,
+          email: input.resume.resume.email,
+          profession: input.resume.resume.proffession,
+          phone: input.resume.resume.phone,
+          profile: input.resume.resume.profile,
+        },
+      });
+      return resume;
+    }),
 
   addWorkExperience: privateProcedure
     .input(
