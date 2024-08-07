@@ -314,9 +314,9 @@ const GenericForm = <T extends FieldValues>({
               >
                 <PlusIcon className="w-5 h-5 mr-2" /> Add 1 more {value}
               </Button>
-              {resume?.workExperience && value === "experience" ? (
+              {resume?.workExperience[0] && value === "experience" ? (
                 <Button className="w-full">Update WorkExperience</Button>
-              ) : resume?.education && value === "education" ? (
+              ) : resume?.education[0] && value === "education" ? (
                 <Button className="w-full">Update Education</Button>
               ) : (
                 <Button className="w-full" type="submit">
