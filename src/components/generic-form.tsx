@@ -358,9 +358,7 @@ const GenericForm = <T extends FieldValues>({
               {resume?.workExperience[0] && value === "experience" ? (
                 <Button className="w-full">Update work experience</Button>
               ) : resume?.education[0] && value === "education" ? (
-                <Button className="w-full" type="button">
-                  Update Education
-                </Button>
+                <Button className="w-full">Update Education</Button>
               ) : (
                 <Button className="w-full" type="submit">
                   Submit

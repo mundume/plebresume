@@ -373,8 +373,18 @@ export const appRouter = router({
           id: input.resumeId,
           userId,
         },
+        include: {
+          education: true,
+        },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      if (resume.education) {
+        await db.education.deleteMany({
+          where: {
+            resumeId: input.resumeId,
+          },
+        });
+      }
 
       await Promise.all(
         input.education.education.map((education) =>
