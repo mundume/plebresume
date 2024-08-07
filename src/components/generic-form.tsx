@@ -34,6 +34,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { PlusIcon, Trash2 } from "lucide-react";
+import { useResumeBuilderContext } from "./resume-builder-context";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -60,6 +61,7 @@ const GenericForm = <T extends FieldValues>({
     name: value as any,
   });
 
+  const { resume } = useResumeBuilderContext();
   return (
     <Card className="rounded border-none shadow-none">
       <Form {...form}>
@@ -312,9 +314,15 @@ const GenericForm = <T extends FieldValues>({
               >
                 <PlusIcon className="w-5 h-5 mr-2" /> Add 1 more {value}
               </Button>
-              <Button type="submit" className="w-full">
-                Submit
-              </Button>
+              {resume?.workExperience && value === "experience" ? (
+                <Button className="w-full">Update WorkExperience</Button>
+              ) : resume?.education && value === "education" ? (
+                <Button className="w-full">Update Education</Button>
+              ) : (
+                <Button className="w-full" type="submit">
+                  Submit
+                </Button>
+              )}
             </div>
           </form>
         </Accordion>

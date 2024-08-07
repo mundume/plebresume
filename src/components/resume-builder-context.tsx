@@ -24,6 +24,7 @@ import {
   resumeSchema,
 } from "@/lib/validators/resume-validator";
 import { trpc } from "@/app/_trpc/client";
+import { Resume } from "@/config/types";
 export type ResumeBuilderContextProps = {
   values: initialState;
   form: UseFormReturn<EmploymentSchema, any, undefined>;
@@ -36,6 +37,7 @@ export type ResumeBuilderContextProps = {
   languageForm: UseFormReturn<LanguagesFormSchema>;
   userId: string;
   resumeId: string;
+  resume: Resume;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -87,6 +89,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   socialLinkForm: {} as any,
   hobbiesForm: {} as any,
   languageForm: {} as any,
+  resume: {} as any,
 });
 
 export type initialState = {
@@ -396,6 +399,7 @@ export const ResumeBuilderContextProvider = ({
       userId,
       resumeId,
       personalInfoForm,
+      resume,
     }),
     [
       values,
@@ -409,6 +413,7 @@ export const ResumeBuilderContextProvider = ({
       userId,
       resumeId,
       personalInfoForm,
+      resume,
     ]
   );
 
