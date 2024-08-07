@@ -250,8 +250,18 @@ export const appRouter = router({
           id: input.resumeId,
           userId,
         },
+        include: {
+          workExperience: true,
+        },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      if (resume.workExperience) {
+        await db.workExperience.deleteMany({
+          where: {
+            resumeId: input.resumeId,
+          },
+        });
+      }
       await Promise.all(
         input.workExperience.experience.map((experience) =>
           db.workExperience.createMany({
@@ -297,29 +307,34 @@ export const appRouter = router({
 
       return workExperience;
     }),
-  updateWorkExperiences: privateProcedure
+  updateWorkExperience: privateProcedure
     .input(
       z.object({
         resumeId: z.string(),
-        id: z.string(),
-        workExperience: formSchema,
+        workExperience: employmentSchema,
       })
     )
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
+
       const resume = await db.createdResume.findUnique({
         where: {
-          id: input.id,
+          id: input.resumeId,
           userId,
         },
+        include: {
+          workExperience: true,
+        },
       });
+
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
-      await db.workExperience.update({
+
+      await db.workExperience.updateMany({
         where: {
-          id: input.id,
+          resumeId: input.resumeId,
         },
         data: {
-          ...input.workExperience,
+          ...input.workExperience.experience,
         },
       });
     }),
