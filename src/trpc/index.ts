@@ -7,6 +7,7 @@ import { resumeSchema } from "@/lib/validators/resume-validator";
 import {
   educationSchema,
   employmentSchema,
+  formSchema,
   HobbiesSchema,
   LanguagesFormSchema,
   LanguagesSchema,
@@ -277,9 +278,70 @@ export const appRouter = router({
           workExperience: true,
         },
       });
-      console.log(updatedResume);
 
       return updatedResume;
+    }),
+
+  getWorkExperience: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { userId } = ctx;
+
+      const workExperience = await db.workExperience.findFirst({
+        where: {
+          resumeId: input.id,
+        },
+      });
+
+      if (!workExperience) throw new TRPCError({ code: "NOT_FOUND" });
+
+      return workExperience;
+    }),
+  updateWorkExperiences: privateProcedure
+    .input(
+      z.object({
+        resumeId: z.string(),
+        id: z.string(),
+        workExperience: formSchema,
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const resume = await db.createdResume.findUnique({
+        where: {
+          id: input.id,
+          userId,
+        },
+      });
+      if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.workExperience.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          ...input.workExperience,
+        },
+      });
+    }),
+  deleteWorkExperience: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+
+      const workExperience = await db.workExperience.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!workExperience) throw new TRPCError({ code: "NOT_FOUND" });
+
+      await db.workExperience.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return workExperience;
     }),
 
   addEducation: privateProcedure
@@ -309,6 +371,7 @@ export const appRouter = router({
           })
         )
       );
+
       const updatedResume = await db.createdResume.findUnique({
         where: {
           id: input.resumeId,
@@ -321,6 +384,7 @@ export const appRouter = router({
       console.log(updatedResume);
       return updatedResume;
     }),
+
   addSocialLinks: privateProcedure
     .input(
       z.object({

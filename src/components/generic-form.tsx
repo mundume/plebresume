@@ -35,6 +35,8 @@ import {
 } from "@/components/ui/accordion";
 import { PlusIcon, Trash2 } from "lucide-react";
 import { useResumeBuilderContext } from "./resume-builder-context";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "sonner";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -62,6 +64,32 @@ const GenericForm = <T extends FieldValues>({
   });
 
   const { resume } = useResumeBuilderContext();
+  const utils = trpc.useUtils();
+  const {
+    data: workExperience,
+    isLoading,
+    isError,
+  } = trpc.getWorkExperience.useQuery({
+    id: resume?.id,
+  });
+
+  const { mutate: deleteWork, isLoading: isDeleting } =
+    trpc.deleteWorkExperience.useMutation({
+      onMutate: () => {
+        toast.loading("Deleting...");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onSuccess: (data) => {
+        toast.success("Deleted");
+        utils.getResume.invalidate();
+        console.log(data);
+      },
+      onSettled: () => {
+        toast.dismiss();
+      },
+    });
   return (
     <Card className="rounded border-none shadow-none">
       <Form {...form}>
@@ -291,14 +319,22 @@ const GenericForm = <T extends FieldValues>({
                     </div>
                   </AccordionContent>
                 </AccordionItem>
-                <Button
-                  type="button"
-                  size="icon"
-                  className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
-                  onClick={() => remove(index)}
-                >
-                  <Trash2 className="w-5 h-5" />
-                </Button>
+                {isLoading ? (
+                  "...."
+                ) : (
+                  <Button
+                    type="button"
+                    size="icon"
+                    className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
+                    onClick={() =>
+                      deleteWork({
+                        id: resume?.workExperience[index].id as string,
+                      })
+                    }
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </Button>
+                )}
               </div>
             ))}
             <div className="flex flex-col items-center justify-between gap-4">
@@ -315,9 +351,17 @@ const GenericForm = <T extends FieldValues>({
                 <PlusIcon className="w-5 h-5 mr-2" /> Add 1 more {value}
               </Button>
               {resume?.workExperience[0] && value === "experience" ? (
-                <Button className="w-full">Update WorkExperience</Button>
+                <Button
+                  type="button"
+                  className="w-full"
+                  onClick={() => console.log("clicked")}
+                >
+                  Update WorkExperience
+                </Button>
               ) : resume?.education[0] && value === "education" ? (
-                <Button className="w-full">Update Education</Button>
+                <Button className="w-full" type="button">
+                  Update Education
+                </Button>
               ) : (
                 <Button className="w-full" type="submit">
                   Submit
