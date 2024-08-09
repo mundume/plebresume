@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import { LanguagesFormSchema } from "@/lib/schemas";
 
 const LanguagesForm = () => {
-  const { languageForm, resumeId } = useResumeBuilderContext();
+  const { languageForm, resumeId, resume } = useResumeBuilderContext();
   const { mutate: addLanguage, isLoading } = trpc.addLanguages.useMutation({
     onSuccess: () => {
       toast.success("Language added successfully");
@@ -38,10 +38,27 @@ const LanguagesForm = () => {
       toast.loading("Saving...");
     },
   });
+
+  const { mutate: deleteLanguage } = trpc.deleteLanguage.useMutation({
+    onSuccess: () => {
+      toast.success("Language deleted");
+    },
+    onMutate: () => {
+      toast.loading("Deleting Language...");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
   const { fields, append, remove } = useFieldArray({
     control: languageForm.control,
     name: "languages",
   });
+
   const onSubmit = (data: LanguagesFormSchema) => {
     addLanguage({
       languages: {
@@ -144,7 +161,17 @@ const LanguagesForm = () => {
                   </AccordionItem>
 
                   <Button
-                    onClick={() => remove(index)}
+                    onClick={() => {
+                      if (resume?.languages[index]?.id) {
+                        [
+                          deleteLanguage({
+                            id: resume?.languages[index]?.id,
+                          }),
+                        ];
+                      } else {
+                        remove(index);
+                      }
+                    }}
                     type="button"
                     size={"icon"}
                     className="shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400 trash-button "
@@ -168,7 +195,7 @@ const LanguagesForm = () => {
                   <Plus className="w-4 h-4 mr-2" /> Add 1 more language
                 </Button>
                 <Button type="submit" className="w-full ">
-                  <CheckCircle className="w-5 h-5 mr-2" /> Saved
+                  {resume?.languages?.length > 0 ? "Update" : "Save"}
                 </Button>
               </div>
             </form>

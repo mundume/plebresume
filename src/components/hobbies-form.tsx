@@ -9,7 +9,7 @@ import { HobbiesFormSchema } from "@/lib/schemas";
 import { Button } from "./ui/button";
 
 const HobbiesForm = () => {
-  const { hobbiesForm, resumeId } = useResumeBuilderContext();
+  const { hobbiesForm, resumeId, resume } = useResumeBuilderContext();
   const { mutate: addHobbies } = trpc.addHobbies.useMutation({
     onSuccess: (data) => {
       toast.success("Hobbies added successfully");
@@ -53,7 +53,9 @@ const HobbiesForm = () => {
               name="hobbies"
               render={({ field }) => <Textarea {...field} />}
             />
-            <Button type="submit">Save</Button>
+            <Button type="submit">
+              {resume?.hobbies !== null ? "Update Hobbies" : "Add Hobbies"}
+            </Button>
           </form>
         </Form>
       </div>

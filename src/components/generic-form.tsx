@@ -82,6 +82,21 @@ const GenericForm = <T extends FieldValues>({
         toast.dismiss();
       },
     });
+  const { mutate: deleteEducation } = trpc.deleteEducation.useMutation({
+    onMutate: () => {
+      toast.loading("Deleting...");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      toast.success("Deleted");
+      utils.getResume.invalidate();
+    },
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
 
   return (
     <Card className="rounded border-none shadow-none">
@@ -317,11 +332,21 @@ const GenericForm = <T extends FieldValues>({
                   type="button"
                   size="icon"
                   className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
-                  onClick={() =>
-                    deleteWork({
-                      id: resume?.workExperience[index].id as string,
-                    })
-                  }
+                  onClick={() => {
+                    if (resume?.workExperience[index]?.id) {
+                      deleteWork({
+                        id: resume?.workExperience[index].id as string,
+                      });
+                    } else {
+                      if (resume?.education[index]?.id) {
+                        deleteEducation({
+                          id: resume?.education[index].id as string,
+                        });
+                      } else {
+                        remove(index);
+                      }
+                    }
+                  }}
                 >
                   <Trash2 className="w-5 h-5" />
                 </Button>

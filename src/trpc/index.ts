@@ -409,6 +409,23 @@ export const appRouter = router({
       console.log(updatedResume);
       return updatedResume;
     }),
+  deleteEducation: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const education = await db.education.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!education) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.education.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return education;
+    }),
 
   addSocialLinks: privateProcedure
     .input(
@@ -554,6 +571,16 @@ export const appRouter = router({
         },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      if (resume.hobbies) {
+        await db.createdResume.update({
+          where: {
+            id: input.resumeId,
+          },
+          data: {
+            hobbies: input.hobbies.hobbies,
+          },
+        });
+      }
       const updatedResume = await db.createdResume.update({
         where: {
           id: input.resumeId,
@@ -609,7 +636,6 @@ export const appRouter = router({
         },
       });
 
-      console.log(updatedResume);
       return updatedResume;
     }),
   deleteLanguage: privateProcedure
