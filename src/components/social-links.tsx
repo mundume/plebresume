@@ -24,7 +24,8 @@ import { toast } from "sonner";
 import { SocialLinksSchema } from "@/lib/schemas";
 
 const SocialLinks = () => {
-  const { socialLinkForm, resumeId } = useResumeBuilderContext();
+  const { socialLinkForm, resumeId, resume } = useResumeBuilderContext();
+  const utils = trpc.useUtils();
   const { mutate: addSocialLinks } = trpc.addSocialLinks.useMutation({
     onSuccess: () => {
       toast.success("Saved");
@@ -40,6 +41,23 @@ const SocialLinks = () => {
       toast.dismiss();
     },
   });
+  const { mutate: deleteSocial, isLoading } = trpc.deleteSocialLink.useMutation(
+    {
+      onMutate: () => {
+        toast.loading("Deleting Link...");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onSuccess: (data) => {
+        toast.success("Link Deleted");
+        utils.getResume.invalidate();
+      },
+      onSettled: () => {
+        toast.dismiss();
+      },
+    }
+  );
   const onSubmit = (data: SocialLinksSchema) => {
     addSocialLinks({
       resumeId: resumeId,
@@ -140,7 +158,15 @@ const SocialLinks = () => {
                     type="button"
                     size="icon"
                     className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
-                    onClick={() => remove(index)}
+                    onClick={() => {
+                      if (resume?.socialLinks[index]?.id) {
+                        deleteSocial({
+                          id: resume.socialLinks[index].id,
+                        });
+                      } else {
+                        remove(index);
+                      }
+                    }}
                   >
                     <Trash2 className="w-5 h-5" />
                   </Button>

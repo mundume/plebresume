@@ -424,8 +424,19 @@ export const appRouter = router({
           id: input.resumeId,
           userId,
         },
+        include: {
+          socialLinks: true,
+        },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+
+      if (resume.socialLinks) {
+        await db.socialLink.deleteMany({
+          where: {
+            resumeId: input.resumeId,
+          },
+        });
+      }
 
       await Promise.all(
         input.socialLinks.socialLinks.map((socialLink) =>
@@ -450,6 +461,23 @@ export const appRouter = router({
 
       return updatedResume;
     }),
+  deleteSocialLink: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const socialLink = await db.socialLink.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!socialLink) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.socialLink.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return socialLink;
+    }),
   addSkills: privateProcedure
     .input(z.object({ resumeId: z.string(), skills: skillsFormSchema }))
     .mutation(async ({ ctx, input }) => {
@@ -459,8 +487,19 @@ export const appRouter = router({
           id: input.resumeId,
           userId,
         },
+        include: {
+          skills: true,
+        },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+
+      if (resume.skills) {
+        await db.skill.deleteMany({
+          where: {
+            resumeId: input.resumeId,
+          },
+        });
+      }
 
       await Promise.all(
         input.skills.skills.map((skill) =>
@@ -486,6 +525,23 @@ export const appRouter = router({
       console.log(updatedResume);
 
       return updatedResume;
+    }),
+  deleteSkill: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const skill = await db.skill.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!skill) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.skill.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return skill;
     }),
   addHobbies: privateProcedure
     .input(z.object({ resumeId: z.string(), hobbies: HobbiesSchema }))
@@ -520,8 +576,18 @@ export const appRouter = router({
           id: input.resumeId,
           userId,
         },
+        include: {
+          languages: true,
+        },
       });
       if (!resume) throw new TRPCError({ code: "NOT_FOUND" });
+      if (resume.languages) {
+        await db.language.deleteMany({
+          where: {
+            resumeId: input.resumeId,
+          },
+        });
+      }
       await Promise.all(
         input.languages.languages.map((language) =>
           db.language.createMany({
@@ -545,6 +611,23 @@ export const appRouter = router({
 
       console.log(updatedResume);
       return updatedResume;
+    }),
+  deleteLanguage: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const language = await db.language.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!language) throw new TRPCError({ code: "NOT_FOUND" });
+      await db.language.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return language;
     }),
 });
 

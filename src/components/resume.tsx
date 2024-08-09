@@ -1,11 +1,28 @@
 import React from "react";
 import { type Resume } from "@/config/types";
-import { Tailwind } from "@onedoc/react-print";
+import { PageTop, Tailwind } from "@onedoc/react-print";
 import { format } from "date-fns";
 
 const Resume = (resume: Resume) => {
   return (
     <Tailwind>
+      <PageTop>
+        <div className="flex items-center gap-2 justify-center w-full mt-5">
+          <div className=" flex items-center gap-2 justify-center w-full text-sm">
+            <p className="font-semibold">socials : </p>
+            {resume?.socialLinks?.map((link, index) => (
+              <a
+                href={link.link!}
+                key={index}
+                target="_blank"
+                className=" underline-offset-4 hover:underline underline mr-2"
+              >
+                <span>{link.name}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </PageTop>
       <div className="p-2 bg-white w-full font-sans text-sm">
         <header className="mb-2">
           <h1 className="text-2xl font-bold text-gray-800 font-sans">
@@ -40,7 +57,7 @@ const Resume = (resume: Resume) => {
                   ? "Present"
                   : format(job.endDate || "", "MMM yyyy")}
               </p>
-              <ul className="list-disc list-inside text-gray-700 mt-1">
+              <ul className="list-none list-inside text-gray-700 mt-1">
                 {job?.description?.split("\n").map((item, i) => (
                   <li key={i}>{item}</li>
                 ))}

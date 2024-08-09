@@ -24,7 +24,7 @@ import { toast } from "sonner";
 import { SkillsFormSchema } from "@/lib/schemas";
 
 function SkillsForm() {
-  const { skillsForm, resumeId } = useResumeBuilderContext();
+  const { skillsForm, resumeId, resume } = useResumeBuilderContext();
   const { fields, append, remove } = useFieldArray({
     control: skillsForm.control,
     name: "skills",
@@ -44,7 +44,21 @@ function SkillsForm() {
       toast.dismiss();
     },
   });
-
+  const { mutate: deleteSkill } = trpc.deleteSkill.useMutation({
+    onSuccess: () => {
+      toast.success("Skill deleted");
+    },
+    onMutate: () => {
+      toast.loading("Deleting Skill...");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
   const onSubmit = (data: SkillsFormSchema) => {
     addSkills({
       resumeId,
@@ -154,7 +168,15 @@ function SkillsForm() {
                   </AccordionItem>
 
                   <Button
-                    onClick={() => remove(index)}
+                    onClick={() => {
+                      if (resume?.skills[index]?.id) {
+                        deleteSkill({
+                          id: resume.skills[index].id,
+                        });
+                      } else {
+                        remove(index);
+                      }
+                    }}
                     type="button"
                     size={"icon"}
                     className="shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400 trash-button "

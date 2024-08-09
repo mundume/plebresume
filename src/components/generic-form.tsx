@@ -62,7 +62,6 @@ const GenericForm = <T extends FieldValues>({
     control: form.control,
     name: value as any,
   });
-  console.log(form.getValues(value as any));
 
   const { resume, resumeId } = useResumeBuilderContext();
   const utils = trpc.useUtils();
@@ -83,21 +82,7 @@ const GenericForm = <T extends FieldValues>({
         toast.dismiss();
       },
     });
-  const { mutate: update, isLoading } = trpc.updateWorkExperience.useMutation({
-    onMutate: () => {
-      toast.loading("Updating...");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-    onSuccess: (data) => {
-      toast.success("Updated");
-      utils.getResume.invalidate();
-    },
-    onSettled: () => {
-      toast.dismiss();
-    },
-  });
+
   return (
     <Card className="rounded border-none shadow-none">
       <Form {...form}>
