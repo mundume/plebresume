@@ -1,5 +1,5 @@
 import OpenAI from "openai";
 
 export const openai = new OpenAI({
-  apiKey: "https://api.pawan.krd/v1/chat/completions",
+  apiKey: process.env.OPENAI_API_KEY,
 });
