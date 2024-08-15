@@ -11,6 +11,7 @@
     "postinstall": "prisma generate --no-engine"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.46",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@kinde-oss/kinde-auth-nextjs": "^2.0.13",
@@ -51,7 +52,7 @@
     "@uiw/react-md-editor": "^4.0.4",
     "@uploadthing/react": "^6.6.0",
     "@welldone-software/why-did-you-render": "^8.0.3",
-    "ai": "^2.2.31",
+    "ai": "^3.3.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
@@ -96,7 +97,7 @@
     "uuid": "^9.0.1",
     "vaul": "^0.8.0",
     "ws": "^8.16.0",
-    "zod": "^3.22.4",
+    "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
