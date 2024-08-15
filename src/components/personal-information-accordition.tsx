@@ -9,19 +9,29 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { PersonalInfomationValues } from "@/lib/validators/resume-validator";
+import {
+  NotificationSchema,
+  PersonalInfomationValues,
+} from "@/lib/validators/resume-validator";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { useState, useTransition } from "react";
+import { getNotifications } from "@/app/notyys/actions";
 
 const PersonalInformationAccordition = () => {
+  const [generation, setGeneration] = useState<NotificationSchema>();
+  const [pending, startTransition] = useTransition();
   const {
     personalInfoForm: form,
+    dispatch,
     resumeId,
     resume,
   } = useResumeBuilderContext();
+
   const { getResume } = trpc.useUtils();
+
   const {
     mutate: addPersonalInformation,
     isLoading,
@@ -71,6 +81,19 @@ const PersonalInformationAccordition = () => {
       },
       resumeId: resumeId,
     });
+  };
+  const updateProfileInContext = () => {
+    const currentProfile = form.getValues().resume.profile;
+    dispatch({
+      type: "ADD_PERSONAL_INFORMATION",
+      payload: {
+        resume: {
+          ...form.getValues().resume,
+          profile: currentProfile,
+        },
+      },
+    });
+    toast.success("Profile updated in context");
   };
   return (
     <Card className=" border-none shadow-none ">
@@ -225,6 +248,7 @@ const PersonalInformationAccordition = () => {
               </FormItem>
             )}
           />
+          <Button onClick={updateProfileInContext}>lll</Button>
 
           {resume?.firstName ? (
             <Button
@@ -241,6 +265,29 @@ const PersonalInformationAccordition = () => {
           )}
         </form>
       </Form>
+      <Button
+        onClick={async () => {
+          startTransition(async () => {
+            const { notifications: newNotifications } = await getNotifications(
+              "Messages during the beer party."
+            );
+            setGeneration(newNotifications);
+          });
+        }}
+      >
+        {pending ? "Generating..." : "Generate"}
+      </Button>
+      <>
+        {generation &&
+          generation.notifications?.map((n) => (
+            <Card
+              onClick={() => form.setValue("resume.profile", n.message)}
+              key={n.message}
+            >
+              {n.message}
+            </Card>
+          ))}
+      </>
     </Card>
   );
 };

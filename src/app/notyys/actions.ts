@@ -22,6 +22,6 @@ export async function getNotifications(input: string) {
       ),
     }),
   });
-  revalidatePath("/notyys");
+  revalidatePath("/resume/[resumeId]", "page");
   return { notifications };
 }
