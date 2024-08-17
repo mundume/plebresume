@@ -9,22 +9,19 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import {
-  NotificationSchema,
-  PersonalInfomationValues,
-} from "@/lib/validators/resume-validator";
+import { PersonalInfomationValues } from "@/lib/validators/resume-validator";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
-import { useState, useTransition } from "react";
-import { getNotifications } from "@/app/notyys/actions";
+import { useTransition } from "react";
 import ProfileMenu from "./profile-menu";
 
 const PersonalInformationAccordition = () => {
   const [pending, startTransition] = useTransition();
   const {
     personalInfoForm: form,
+    skillsForm,
     dispatch,
     resumeId,
     resume,
@@ -138,7 +135,7 @@ const PersonalInformationAccordition = () => {
             />
           </div>
           <div className="relative">
-            <ProfileMenu form={form} />
+            <ProfileMenu form={form} skillsForm={skillsForm} />
             <FormField
               control={form.control}
               name="resume.profile"

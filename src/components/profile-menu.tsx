@@ -10,15 +10,25 @@ import {
   NotificationSchema,
   PersonalInfomationValues,
 } from "@/lib/validators/resume-validator";
-import { getNotifications } from "@/app/notyys/actions";
+import { generateResumeProfile } from "@/app/notyys/actions";
 import { Card } from "./ui/card";
 import { UseFormReturn } from "react-hook-form";
 import SimpleBar from "simplebar-react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 type Props = {
   form: UseFormReturn<PersonalInfomationValues, any, undefined>;
+  skillsForm: UseFormReturn<
+    {
+      skills: {
+        skills: string;
+        level: string;
+      }[];
+    },
+    any,
+    undefined
+  >;
 };
-const ProfileMenu = ({ form }: Props) => {
+const ProfileMenu = ({ form, skillsForm }: Props) => {
   const [pending, startTransition] = useTransition();
   const [generation, setGeneration] = useState<NotificationSchema>();
   const { resume } = useResumeBuilderContext();
@@ -41,21 +51,20 @@ const ProfileMenu = ({ form }: Props) => {
                   className=""
                   onClick={async () => {
                     startTransition(async () => {
-                      const { profiles } = await getNotifications(
-                        `use input: ${form.getValues(
-                          "resume.proffession"
-                        )} and ${resume.skills
-                          .map(
-                            (skill) =>
-                              `skill: ${skill.skills} and ${skill.level}`
-                          )
-                          .join(" and ")}  generate 5 resume profile instances`
-                      );
+                      const { profiles } = await generateResumeProfile({
+                        skills: skillsForm.getValues("skills"),
+                      });
                       setGeneration(profiles);
                     });
                   }}
                 >
-                  <RefreshCcw className="w-4 h-4 text-slate-600" />
+                  <RefreshCcw
+                    className={
+                      pending
+                        ? "animate-spin w-4 h-4 text-slate-600"
+                        : `w-4 h-4 text-slate-600`
+                    }
+                  />
                 </Button>
               </div>
             ) : (
@@ -68,13 +77,9 @@ const ProfileMenu = ({ form }: Props) => {
                   size={"sm"}
                   onClick={async () => {
                     startTransition(async () => {
-                      const { profiles } = await getNotifications(
-                        `use input: ${form.getValues(
-                          "resume.proffession"
-                        )} and ${resume.skills
-                          .map((skill) => `skill: ${skill}`)
-                          .join(" and ")}  generate 5 resume profile instances`
-                      );
+                      const { profiles } = await generateResumeProfile({
+                        skills: skillsForm.getValues("skills"),
+                      });
                       setGeneration(profiles);
                     });
                   }}
