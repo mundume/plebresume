@@ -39,12 +39,10 @@ export const workExperience = z.object({
 //   startDate?: string;
 //   title?: string;
 const schema = z.object({
-  notifications: z
+  profiles: z
     .array(
       z.object({
-        name: z.string().describe("Name of a fictional person."),
-        message: z.string().describe("Do not use emojis or links."),
-        minutesAgo: z.number(),
+        profile: z.string().describe("Do not use emojis or links."),
       })
     )
     .optional(),

@@ -1,13 +1,13 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { openai } from "@/lib/openai";
+
 import { pinecone } from "@/lib/pinecone";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { coverLetterSchema } from "@/lib/validators/coverlettervalidator";
 import { db } from "@/config/prisma";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { OpenAIStream, StreamingTextResponse } from "ai";
-import { format } from "date-fns";
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 export const runtime = "edge";
 export const POST = async (req: NextRequest) => {
@@ -46,10 +46,10 @@ export const POST = async (req: NextRequest) => {
   const results = await vectorStore.similaritySearch(fileId);
   console.log(results);
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+  const response = await streamText({
+    model: openai("gpt-3.5-turbo"),
     temperature: 0.7,
-    stream: true,
+
     messages: [
       {
         role: "system",
@@ -95,11 +95,7 @@ Sincerely,
   `,
       },
     ],
-  });
-
-  const stream = OpenAIStream(response, {
-    async onCompletion(completion) {
-      console.log(completion);
+    onFinish: async (completion) => {
       const pleb = await db.coverLetter.findFirst({
         where: {
           id: fileId,
@@ -111,16 +107,17 @@ Sincerely,
           where: {
             id: fileId,
             userId: id,
+            name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
           },
           data: {
-            text: completion,
+            text: completion.text,
           },
         });
       } else {
         await db.coverLetter.create({
           data: {
             name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
-            text: completion,
+            text: completion.text,
             id: fileId,
             userId: id,
           },
@@ -130,5 +127,5 @@ Sincerely,
   });
 
   // Respond with the stream
-  return new StreamingTextResponse(stream);
+  return response.toTextStreamResponse();
 };

@@ -12,7 +12,7 @@ const CoverLetterRenderer = () => {
   const [preview, setPreview] = useState<boolean>(true);
   const { response, isLoading } = useCoverLetterContext();
   const [done, setDone] = useState(false);
-  console.log(response);
+
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await fetch(`/api/pdf`, {

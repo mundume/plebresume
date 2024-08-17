@@ -11,7 +11,7 @@ type Params = {
     fileid: string;
   };
 };
-
+export const runtime = "edge";
 const Page = async ({ params }: Params) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();

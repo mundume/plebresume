@@ -19,9 +19,9 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { useState, useTransition } from "react";
 import { getNotifications } from "@/app/notyys/actions";
+import ProfileMenu from "./profile-menu";
 
 const PersonalInformationAccordition = () => {
-  const [generation, setGeneration] = useState<NotificationSchema>();
   const [pending, startTransition] = useTransition();
   const {
     personalInfoForm: form,
@@ -137,24 +137,27 @@ const PersonalInformationAccordition = () => {
               )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="resume.profile"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Profile</FormLabel>
-                <FormControl>
-                  <Textarea
-                    className="rounded"
-                    placeholder="Enter title"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="relative">
+            <ProfileMenu form={form} />
+            <FormField
+              control={form.control}
+              name="resume.profile"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Profile</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="rounded"
+                      placeholder="Enter title"
+                      {...field}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="resume.proffession"
@@ -265,29 +268,6 @@ const PersonalInformationAccordition = () => {
           )}
         </form>
       </Form>
-      <Button
-        onClick={async () => {
-          startTransition(async () => {
-            const { notifications: newNotifications } = await getNotifications(
-              "Messages during the beer party."
-            );
-            setGeneration(newNotifications);
-          });
-        }}
-      >
-        {pending ? "Generating..." : "Generate"}
-      </Button>
-      <>
-        {generation &&
-          generation.notifications?.map((n) => (
-            <Card
-              onClick={() => form.setValue("resume.profile", n.message)}
-              key={n.message}
-            >
-              {n.message}
-            </Card>
-          ))}
-      </>
     </Card>
   );
 };

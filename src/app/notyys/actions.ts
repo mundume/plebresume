@@ -1,27 +1,33 @@
 "use server";
 
-import { generateObject } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { generateObject, streamText } from "ai";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { coverLetterSchema } from "@/lib/validators/coverlettervalidator";
+import { db } from "@/config/prisma";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { openai } from "@ai-sdk/openai";
+import { pinecone } from "@/lib/pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
+import { createStreamableValue } from "ai/rsc";
 
 export async function getNotifications(input: string) {
   "use server";
 
-  const { object: notifications } = await generateObject({
+  const { object: profiles } = await generateObject({
     model: openai("gpt-3.5-turbo"),
-    system: "You generate 5 random notifications for a messages app.",
+    system:
+      "You are a helpful assistant used to generate 5 resume profiles from user input.",
     prompt: input,
     schema: z.object({
-      notifications: z.array(
+      profiles: z.array(
         z.object({
-          name: z.string().describe("Name of a fictional person."),
-          message: z.string().describe("Do not use emojis or links."),
-          minutesAgo: z.number(),
+          profile: z.string(),
         })
       ),
     }),
   });
   revalidatePath("/resume/[resumeId]", "page");
-  return { notifications };
+  return { profiles };
 }

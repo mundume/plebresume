@@ -15,7 +15,7 @@
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@kinde-oss/kinde-auth-nextjs": "^2.0.13",
-    "@mdxeditor/editor": "^2.20.7",
+    "@mdxeditor/editor": "2.20.7",
     "@neondatabase/serverless": "^0.8.1",
     "@onedoc/client": "^0.1.29",
     "@onedoc/react-print": "^0.1.119",

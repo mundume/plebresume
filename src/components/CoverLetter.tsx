@@ -1,11 +1,8 @@
 "use client";
-
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { ForwardRefEditor } from "./ForwardedRefEditor";
 import { MDXEditorMethods } from "@mdxeditor/editor";
-import { Button } from "./ui/button";
-import { on } from "events";
 import { useCoverLetterContext } from "./Provider";
 
 const CoverLetter = ({
