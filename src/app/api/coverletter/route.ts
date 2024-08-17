@@ -47,7 +47,7 @@ export const POST = async (req: NextRequest) => {
   console.log(results);
 
   const response = await streamText({
-    model: openai("gpt-3.5-turbo"),
+    model: openai("gpt-4o-mini"),
     temperature: 0.7,
 
     messages: [
