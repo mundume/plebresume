@@ -14,7 +14,7 @@ import { useState, useTransition } from "react";
 import { UseFormReturn } from "react-hook-form";
 import SimpleBar from "simplebar-react";
 import { Button } from "./ui/button";
-import { generateResumeProfile } from "@/app/notyys/actions";
+import { generateResumeProfile } from "@/app/actions";
 import { Bot, RefreshCcw } from "lucide-react";
 import { Card } from "./ui/card";
 import { LottieNotFound } from "./lottie";

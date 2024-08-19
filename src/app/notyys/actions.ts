@@ -1,17 +1,8 @@
 "use server";
-
-import { generateObject, streamText } from "ai";
+import { generateObject } from "ai";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { coverLetterSchema } from "@/lib/validators/coverlettervalidator";
-import { db } from "@/config/prisma";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { openai } from "@ai-sdk/openai";
-import { pinecone } from "@/lib/pinecone";
-import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { createStreamableValue } from "ai/rsc";
-import { SkillsFormSchema } from "@/lib/schemas";
 
 export async function generateResumeProfile({
   skills,
