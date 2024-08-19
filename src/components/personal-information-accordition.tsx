@@ -15,7 +15,9 @@ import { trpc } from "@/app/_trpc/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { useTransition } from "react";
-import ProfileMenu from "./profile-menu";
+
+import { Sheet } from "lucide-react";
+import { AIprofileSheet } from "./generate-profile-sheet";
 
 const PersonalInformationAccordition = () => {
   const [pending, startTransition] = useTransition();
@@ -135,7 +137,7 @@ const PersonalInformationAccordition = () => {
             />
           </div>
           <div className="relative">
-            <ProfileMenu form={form} skillsForm={skillsForm} />
+            <AIprofileSheet form={form} skillsForm={skillsForm} />
             <FormField
               control={form.control}
               name="resume.profile"
@@ -248,7 +250,6 @@ const PersonalInformationAccordition = () => {
               </FormItem>
             )}
           />
-          <Button onClick={updateProfileInContext}>lll</Button>
 
           {resume?.firstName ? (
             <Button

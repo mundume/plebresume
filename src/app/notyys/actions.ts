@@ -21,8 +21,6 @@ export async function generateResumeProfile({
     level: string;
   }[];
 }) {
-  "use server";
-
   const { object: profiles } = await generateObject({
     model: openai("gpt-3.5-turbo"),
     system:

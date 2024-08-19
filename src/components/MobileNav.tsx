@@ -2,16 +2,15 @@
 import { ArrowRightIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import NotificationIcon from "./Bellicon";
-import { Menu, Minus, Twitter, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Menu, Twitter, X } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 import NotificationsDrawerMobile from "./NotificationsDrawerMobile";
-import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { ModeToggle } from "./theme-toggle";
+
+import { Avatar } from "./ui/avatar";
 import MobileThemeToggle from "./mobile-theme-toggle";
 import { cn, getInitials } from "@/lib/utils";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 
 const MobileNav = ({ user }: { user: KindeUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
