@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Sparkle, Sparkles } from "lucide-react";
 
 type Skills = {
   skill: string;
@@ -11,7 +13,10 @@ type Props = {
 };
 function AISkillCard({ handleAddGeneratedSkill, generatedSkill }: Props) {
   return (
-    <div>
+    <div className="relative">
+      <Badge className="absolute top-1 right-1">
+        <Sparkles className="w-4 h-4 text-yellow-400" /> ai
+      </Badge>
       {generatedSkill.length > 0 && (
         <Card className="flex items-center gap-2 my-4 flex-wrap p-4 border-none">
           {generatedSkill.map((skill, index) => (

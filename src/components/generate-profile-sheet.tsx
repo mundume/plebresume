@@ -15,7 +15,7 @@ import { UseFormReturn } from "react-hook-form";
 import SimpleBar from "simplebar-react";
 import { Button } from "./ui/button";
 import { generateResumeProfile } from "@/app/actions";
-import { Bot, RefreshCcw } from "lucide-react";
+import { Bot, RefreshCcw, Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { LottieNotFound } from "./lottie";
 
@@ -48,8 +48,8 @@ export const AIprofileSheet = ({ form, skillsForm }: Props) => {
               className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full 
             bg-slate-950 px-3 py-1 text-xs  text-slate-300 backdrop-blur-3xl"
             >
-              <Bot className="w-4 h-4  mr-1.5  text-purple-500" />
-              AI Profile
+              <Sparkles className="w-4 h-4  mr-1.5  text-yellow-400" />
+              play
             </span>
           </Button>
         </SheetTrigger>
