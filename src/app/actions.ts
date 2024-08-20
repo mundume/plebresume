@@ -13,7 +13,7 @@ export async function generateResumeProfile({
   }[];
 }) {
   const { object: profiles } = await generateObject({
-    model: openai("gpt-3.5-turbo"),
+    model: openai("gpt-4o-mini"),
     system:
       "You are a helpful assistant used to generate 5 resume profiles from user input.",
     schema: z.object({
@@ -41,4 +41,34 @@ export async function generateResumeProfile({
   });
   revalidatePath("/resume/[resumeId]", "page");
   return { profiles };
+}
+
+export async function generateSkills({ input }: { input: string }) {
+  const { object: skills } = await generateObject({
+    model: openai("gpt-4o-mini"),
+    system:
+      "You are a helpful assistant used to generate 5 skills from user input.",
+    schema: z.object({
+      skills: z.array(
+        z.object({
+          skill: z.string(),
+        })
+      ),
+    }),
+    messages: [
+      {
+        role: "system",
+        content: `Generate 10  job related skills ie html, css, typescript, etc from the following job title provided as the input: ${input}`,
+      },
+
+      {
+        role: "user",
+        content: `Generate 10  job related skills ie html, css, typescript, etc from the following job title provided as the input: ${input}`,
+      },
+    ],
+  });
+
+  revalidatePath("/resume/[resumeId]", "page");
+
+  return { skills };
 }

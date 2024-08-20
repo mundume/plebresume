@@ -127,7 +127,7 @@ export const AIprofileSheet = ({ form, skillsForm }: Props) => {
               {generation &&
                 generation.profiles?.map((n) => (
                   <Card
-                    className="p-4 flex flex-col items-center text-slate-600 my-2 justify-center w-full rounded cursor-pointer hover:bg-slate-100  transition duration-500 "
+                    className="p-4  flex flex-col items-center text-slate-600 my-2 justify-center w-full rounded cursor-pointer hover:bg-slate-100  transition duration-500 "
                     onClick={() => form.setValue("resume.profile", n.profile)}
                     key={n.profile}
                   >

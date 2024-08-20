@@ -39,7 +39,7 @@ export const socialLinksSchema = z.object({
 
 export const skillsSchema = z.object({
   skills: z.string(),
-  level: z.string(),
+  level: z.string().optional(),
 });
 
 export const skillsFormSchema = z.object({

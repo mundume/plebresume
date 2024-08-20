@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { useTransition } from "react";
 
-import { Sheet } from "lucide-react";
 import { AIprofileSheet } from "./generate-profile-sheet";
 
 const PersonalInformationAccordition = () => {
@@ -81,19 +80,7 @@ const PersonalInformationAccordition = () => {
       resumeId: resumeId,
     });
   };
-  const updateProfileInContext = () => {
-    const currentProfile = form.getValues().resume.profile;
-    dispatch({
-      type: "ADD_PERSONAL_INFORMATION",
-      payload: {
-        resume: {
-          ...form.getValues().resume,
-          profile: currentProfile,
-        },
-      },
-    });
-    toast.success("Profile updated in context");
-  };
+
   return (
     <Card className=" border-none shadow-none ">
       <Form {...form}>
@@ -137,6 +124,7 @@ const PersonalInformationAccordition = () => {
             />
           </div>
           <div className="relative">
+            {/* @ts-ignore */}
             <AIprofileSheet form={form} skillsForm={skillsForm} />
             <FormField
               control={form.control}

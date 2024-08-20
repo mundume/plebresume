@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import {
   Form,
@@ -17,18 +17,34 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Plus, Trash, Trash2 } from "lucide-react";
+import { Loader, Plus, Trash, Trash2 } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "sonner";
 import { SkillsFormSchema } from "@/lib/schemas";
+import { generateSkills } from "@/app/actions";
+import { Card } from "./ui/card";
+import AISkillCard from "./ai-skill-card";
+
+type Skills = {
+  skill: string;
+};
 
 function SkillsForm() {
-  const { skillsForm, resumeId, resume } = useResumeBuilderContext();
+  const { skillsForm, resumeId, resume, personalInfoForm } =
+    useResumeBuilderContext();
   const { fields, append, remove } = useFieldArray({
     control: skillsForm.control,
     name: "skills",
   });
+  const [generatedSkill, setGeneratedSkill] = useState<Skills[]>([]);
+  console.log(generatedSkill);
+  const [pending, startTransition] = useTransition();
+
+  const handleAddGeneratedSkill = (skill: string) => {
+    append({ skills: skill, level: "" });
+    setGeneratedSkill((prev) => prev.filter((s) => s.skill !== skill));
+  };
   const { mutate: addSkills } = trpc.addSkills.useMutation({
     onSuccess: () => {
       toast.success("Saved");
@@ -67,6 +83,21 @@ function SkillsForm() {
       },
     });
   };
+  const check = personalInfoForm?.getValues("resume.proffession");
+
+  useEffect(() => {
+    const profession = personalInfoForm.getValues("resume.proffession");
+    // @ts-ignore
+    if (profession?.length > 6) {
+      startTransition(async () => {
+        const { skills } = await generateSkills({
+          input: profession!,
+        });
+
+        setGeneratedSkill(skills.skills);
+      });
+    }
+  }, [personalInfoForm.getValues("resume.proffession")]);
   return (
     <div className="w-full space-y-4 py-4 ">
       <div>
@@ -77,6 +108,14 @@ function SkillsForm() {
         </p>
       </div>
       <div className="">
+        {pending ? (
+          <Loader className="w-8 h-8 animate-spin" />
+        ) : (
+          <AISkillCard
+            generatedSkill={generatedSkill}
+            handleAddGeneratedSkill={handleAddGeneratedSkill}
+          />
+        )}
         <Form {...skillsForm}>
           <Accordion type="single" collapsible>
             <form
@@ -141,6 +180,7 @@ function SkillsForm() {
                           )}
                           key={field.id}
                         />
+
                         <FormField
                           control={skillsForm.control}
                           name={`skills.${index}.level` as any}

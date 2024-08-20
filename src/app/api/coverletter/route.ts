@@ -8,7 +8,7 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
-
+export const runtime = "edge";
 export const POST = async (req: NextRequest) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
