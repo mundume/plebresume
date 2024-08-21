@@ -73,7 +73,7 @@ export async function generateSkills({ input }: { input: string }) {
   return { skills };
 }
 
-export const generateWorkexperience = async (input: string) => {
+export const generateWorkexperience = async ({ input }: { input: string }) => {
   const { object: workexperience } = await generateObject({
     model: openai("gpt-4o-mini"),
     system:
@@ -88,12 +88,12 @@ export const generateWorkexperience = async (input: string) => {
     messages: [
       {
         role: "system",
-        content: `You are an expert in crafting concise and impactful work experience descriptions for resumes. Generate a detailed description of the work experience for the following role: ${input}. Please ensure the description is formatted in markdown, using numbered lists, and is no longer than 123 words`,
+        content: `You are an expert in crafting concise and impactful work experience descriptions for resumes. Generate a detailed description of the work experience for the following role: ${input}. Please ensure the description is formatted in markdown, using numbered lists, and is no longer than 100 words`,
       },
 
       {
         role: "user",
-        content: `You are an expert in crafting concise and impactful work experience descriptions for resumes. Generate a detailed description of the work experience for the following role: ${input}. Please ensure the description is formatted in markdown, using numbered lists, and is no longer than 123 words`,
+        content: `You are an expert in crafting concise and impactful work experience descriptions for resumes. Generate a detailed description of the work experience for the following role: ${input}. Please ensure the description is formatted in markdown, using numbered lists, and is no longer than 100 words`,
       },
     ],
   });

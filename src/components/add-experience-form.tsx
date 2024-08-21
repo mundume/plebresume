@@ -23,7 +23,6 @@ export default function AddExperienceForm() {
       toast.success("Saved");
     },
     onSettled: (data) => {
-      console.log(data);
       toast.dismiss();
     },
   });

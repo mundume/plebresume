@@ -477,6 +477,7 @@ export const ResumeBuilderContextProvider = ({
 
   return (
     <ResumeBuilderContext.Provider
+      // @ts-ignore
       value={{
         ...contextValues,
       }}

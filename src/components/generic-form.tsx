@@ -37,6 +37,8 @@ import { PlusIcon, Trash2 } from "lucide-react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "sonner";
+import { useTransition } from "react";
+import { generateWorkexperience } from "@/app/actions";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -58,6 +60,7 @@ const GenericForm = <T extends FieldValues>({
   onSubmit,
   values,
 }: Props<T>) => {
+  const [pending, startTransition] = useTransition();
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: value as any,
@@ -74,7 +77,7 @@ const GenericForm = <T extends FieldValues>({
       onError: (error) => {
         toast.error(error.message);
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         toast.success("Deleted");
         utils.getResume.invalidate();
       },
@@ -180,9 +183,26 @@ const GenericForm = <T extends FieldValues>({
                         control={form.control}
                         name={`${value}.${index}.description` as Path<T>}
                         render={({ field }) => (
-                          <FormItem>
+                          <FormItem className="relative">
                             <FormLabel>Description</FormLabel>
+                            {value === "experience" && (
+                              <Button
+                                type="button"
+                                onClick={() => {
+                                  startTransition(async () => {
+                                    const { workexperience } =
+                                      await generateWorkexperience({
+                                        input: `${value}.${index}.title`,
+                                      });
+                                    console.log(workexperience);
+                                  });
+                                }}
+                              >
+                                wapekeeyangu
+                              </Button>
+                            )}
                             <FormControl>
+                              {}
                               <ForwardRefEditor
                                 {...field}
                                 onChange={field.onChange}
