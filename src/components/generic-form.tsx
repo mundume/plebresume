@@ -358,6 +358,7 @@ const GenericForm = <T extends FieldValues>({
                 variant={"ghost"}
                 className="w-full"
                 onClick={() =>
+                  // @ts-ignore
                   append({
                     ...form.getValues(),
                   })

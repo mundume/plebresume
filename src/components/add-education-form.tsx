@@ -30,7 +30,7 @@ function EducationForm() {
   });
   const values = {
     name: "School Name",
-    title: "Degree",
+    title: "Degree(Diploma)",
     description: "Description",
     location: "City",
     startDate: "Start Date",

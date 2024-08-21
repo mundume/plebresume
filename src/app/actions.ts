@@ -72,3 +72,33 @@ export async function generateSkills({ input }: { input: string }) {
 
   return { skills };
 }
+
+export const generateWorkexperience = async (input: string) => {
+  const { object: workexperience } = await generateObject({
+    model: openai("gpt-4o-mini"),
+    system:
+      "You are a helpful assistant used to generate 5 work experience from user input.",
+    schema: z.object({
+      workexperience: z.array(
+        z.object({
+          workexperience: z.string(),
+        })
+      ),
+    }),
+    messages: [
+      {
+        role: "system",
+        content: `You are an expert in crafting concise and impactful work experience descriptions for resumes. Generate a detailed description of the work experience for the following role: ${input}. Please ensure the description is formatted in markdown, using numbered lists, and is no longer than 123 words`,
+      },
+
+      {
+        role: "user",
+        content: `You are an expert in crafting concise and impactful work experience descriptions for resumes. Generate a detailed description of the work experience for the following role: ${input}. Please ensure the description is formatted in markdown, using numbered lists, and is no longer than 123 words`,
+      },
+    ],
+  });
+
+  revalidatePath("/resume/[resumeId]", "page");
+
+  return { workexperience };
+};

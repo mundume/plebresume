@@ -38,7 +38,6 @@ function SkillsForm() {
     name: "skills",
   });
   const [generatedSkill, setGeneratedSkill] = useState<Skills[]>([]);
-  console.log(generatedSkill);
   const [pending, startTransition] = useTransition();
 
   const handleAddGeneratedSkill = (skill: string) => {
@@ -61,8 +60,12 @@ function SkillsForm() {
     },
   });
   const { mutate: deleteSkill } = trpc.deleteSkill.useMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success("Skill deleted");
+      const index = fields.findIndex((field) => field.id === data.id);
+      if (index !== -1) {
+        remove(index);
+      }
     },
     onMutate: () => {
       toast.loading("Deleting Skill...");
@@ -83,7 +86,16 @@ function SkillsForm() {
       },
     });
   };
-  const check = personalInfoForm?.getValues("resume.proffession");
+  const handleDeleteSkill = (index: number) => {
+    const skill = resume?.skills[index];
+    if (skill?.id) {
+      deleteSkill({
+        id: skill.id,
+      });
+    } else {
+      remove(index);
+    }
+  };
 
   useEffect(() => {
     const profession = personalInfoForm.getValues("resume.proffession");
@@ -208,15 +220,7 @@ function SkillsForm() {
                   </AccordionItem>
 
                   <Button
-                    onClick={() => {
-                      if (resume?.skills[index]?.id) {
-                        deleteSkill({
-                          id: resume.skills[index].id,
-                        });
-                      } else {
-                        remove(index);
-                      }
-                    }}
+                    onClick={() => handleDeleteSkill(index)}
                     type="button"
                     size={"icon"}
                     className="shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400 trash-button "
