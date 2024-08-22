@@ -30,7 +30,6 @@ export default function InitializedMDXEditor({
         headingsPlugin(),
         listsPlugin({
           orderedList: true,
-          bulletList: true,
           unorderedList: true,
         }),
 

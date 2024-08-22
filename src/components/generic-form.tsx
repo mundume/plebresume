@@ -37,8 +37,10 @@ import { PlusIcon, Trash2 } from "lucide-react";
 import { useResumeBuilderContext } from "./resume-builder-context";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "sonner";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { generateWorkexperience } from "@/app/actions";
+import { WorkExperienceSelect } from "./work-experience-select";
+import MarkdownEditor from "./Markdown";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -54,13 +56,18 @@ interface Props<T extends FieldValues> {
   };
 }
 
+type Description = {
+  workExperience: string;
+};
 const GenericForm = <T extends FieldValues>({
   form,
   value,
   onSubmit,
   values,
 }: Props<T>) => {
-  const [pending, startTransition] = useTransition();
+  const [genetatedDescription, setGeneratedDescription] = useState<
+    Description[]
+  >([]);
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: value as any,
@@ -184,32 +191,37 @@ const GenericForm = <T extends FieldValues>({
                         name={`${value}.${index}.description` as Path<T>}
                         render={({ field }) => (
                           <FormItem className="relative">
-                            <FormLabel>Description</FormLabel>
                             {value === "experience" && (
-                              <Button
-                                type="button"
-                                onClick={() => {
-                                  startTransition(async () => {
-                                    const { workexperience } =
-                                      await generateWorkexperience({
-                                        input: `${value}.${index}.title`,
-                                      });
-                                    console.log(workexperience);
-                                  });
-                                }}
+                              <div
+                                className="
+                              "
                               >
-                                wapekeeyangu
-                              </Button>
+                                <WorkExperienceSelect
+                                  input={form.getValues(
+                                    `${value}.${index}.title` as Path<T>
+                                  )}
+                                  // @ts-ignore
+                                  form={form}
+                                  index={index}
+                                  genetatedDescription={genetatedDescription}
+                                  setGeneratedDescription={
+                                    setGeneratedDescription
+                                  }
+                                />
+                              </div>
                             )}
+                            <FormLabel>Description</FormLabel>
                             <FormControl>
-                              {}
-                              <ForwardRefEditor
-                                {...field}
-                                onChange={field.onChange}
-                                markdown={
-                                  field.value || "your description here"
-                                }
-                              />
+                              <>
+                                <ForwardRefEditor
+                                  {...field}
+                                  onChange={(newValue) => {
+                                    field.onChange(newValue);
+                                  }}
+                                  markdown={field.value || ""}
+                                  key={`${value}.${index}.description`}
+                                />
+                              </>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

@@ -131,6 +131,9 @@ importers:
       '@welldone-software/why-did-you-render':
         specifier: ^8.0.3
         version: 8.0.3(react@18.3.1)
+      ace-builds:
+        specifier: ^1.35.5
+        version: 1.35.5
       ai:
         specifier: ^3.3.7
         version: 3.3.7(openai@4.45.0(encoding@0.1.13))(react@18.3.1)(solid-js@1.8.17)(sswr@2.1.0(svelte@4.2.16))(svelte@4.2.16)(vue@3.4.27(typescript@5.4.5))(zod@3.23.8)
@@ -179,6 +182,9 @@ importers:
       markdown-to-jsx:
         specifier: ^7.4.1
         version: 7.4.7(react@18.3.1)
+      marked:
+        specifier: ^14.0.0
+        version: 14.0.0
       md-to-pdf:
         specifier: ^5.2.4
         version: 5.2.4(bufferutil@4.0.8)(typescript@5.4.5)
@@ -206,6 +212,9 @@ importers:
       react:
         specifier: ^18
         version: 18.3.1
+      react-ace:
+        specifier: ^12.0.0
+        version: 12.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-day-picker:
         specifier: ^8.10.0
         version: 8.10.1(date-fns@3.6.0)(react@18.3.1)
@@ -3109,6 +3118,9 @@ packages:
   abs-svg-path@0.1.1:
     resolution: {integrity: sha512-d8XPSGjfyzlXC3Xx891DJRyZfqk5JU0BJrDQcsWomFIV1/BIzPW5HDH5iDdWpqWaav0YVIEzT1RHTwWr0FFshA==}
 
+  ace-builds@1.35.5:
+    resolution: {integrity: sha512-yh3V5BLHlN6gwbmk5sV00WRRvdEggJGJ3AIHhOOGHlgDWNWCSvOnHPO7Chb+AqaxxHuvpxOdXd7ZQesaiuJQZQ==}
+
   acorn-import-assertions@1.9.0:
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
     peerDependencies:
@@ -5343,6 +5355,12 @@ packages:
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
 
+  lodash.get@4.4.2:
+    resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+
+  lodash.isequal@4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+
   lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
 
@@ -5431,6 +5449,11 @@ packages:
     engines: {node: '>= 10'}
     peerDependencies:
       react: '>= 0.14.0'
+
+  marked@14.0.0:
+    resolution: {integrity: sha512-uIj4+faQ+MgHgwUW1l2PsPglZLOLOT1uErt06dAPtx2kjteLAkbsd/0FiYg/MGS+i7ZKLb7w2WClxHkzOOuryQ==}
+    engines: {node: '>= 18'}
+    hasBin: true
 
   marked@4.3.0:
     resolution: {integrity: sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==}
@@ -6239,6 +6262,12 @@ packages:
   range-parser@1.2.0:
     resolution: {integrity: sha512-kA5WQoNVo4t9lNx2kQNFCxKeBl5IbbSNBl1M/tLkw9WCn+hxNBAW5Qh8gdhs63CJnhjJ2zQWFoqPJP2sK1AV5A==}
     engines: {node: '>= 0.6'}
+
+  react-ace@12.0.0:
+    resolution: {integrity: sha512-PstU6CSMfYIJknb4su2Fa0WgLXzq2ufQgR6fjcSWuGT1hGTHkBzuKw+SncV8PuLCdSJBJc1VehPhyeXlWByG/g==}
+    peerDependencies:
+      react: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
 
   react-day-picker@8.10.1:
     resolution: {integrity: sha512-TMx7fNbhLk15eqcMt+7Z7S2KF7mfTId/XJDjKE8f+IUcFn0l08/kI4FiYTL/0yuOLmEcbR4Fwe3GJf/NiiMnPA==}
@@ -10557,6 +10586,8 @@ snapshots:
 
   abs-svg-path@0.1.1: {}
 
+  ace-builds@1.35.5: {}
+
   acorn-import-assertions@1.9.0(acorn@8.11.3):
     dependencies:
       acorn: 8.11.3
@@ -13019,6 +13050,10 @@ snapshots:
 
   lodash.debounce@4.0.8: {}
 
+  lodash.get@4.4.2: {}
+
+  lodash.isequal@4.5.0: {}
+
   lodash.isplainobject@4.0.6: {}
 
   lodash.merge@4.6.2: {}
@@ -13095,6 +13130,8 @@ snapshots:
   markdown-to-jsx@7.4.7(react@18.3.1):
     dependencies:
       react: 18.3.1
+
+  marked@14.0.0: {}
 
   marked@4.3.0: {}
 
@@ -14248,6 +14285,16 @@ snapshots:
       safe-buffer: 5.2.1
 
   range-parser@1.2.0: {}
+
+  react-ace@12.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      ace-builds: 1.35.5
+      diff-match-patch: 1.0.5
+      lodash.get: 4.4.2
+      lodash.isequal: 4.5.0
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-day-picker@8.10.1(date-fns@3.6.0)(react@18.3.1):
     dependencies:
