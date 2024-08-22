@@ -1,8 +1,7 @@
-import { generateWorkexperience } from "@/app/actions";
+import { generateEducation } from "@/app/actions";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -12,34 +11,34 @@ import SimpleBar from "simplebar-react";
 import { Button } from "./ui/button";
 import { Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
-import { UseFormReturn, UseFormSetValue } from "react-hook-form";
-import { EmploymentSchema } from "@/lib/schemas";
+import { UseFormReturn } from "react-hook-form";
+import { EducationFormSchema } from "@/lib/schemas";
 
 type Description = {
-  workExperience: string;
+  education: string;
 };
 type Props = {
   input: string;
   index: number;
-  form: UseFormReturn<EmploymentSchema>;
+  form: UseFormReturn<EducationFormSchema>;
 };
 
-export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
+export const EducationSelect = ({ input, form, index: i }: Props) => {
   const [pending, startTransition] = useTransition();
   const { setValue, getValues } = form;
 
   const [generatedDescription, setGeneratedDescription] = useState<
     Description[]
   >([]);
-  const l = getValues(`experience.${i}.location`);
+
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (open && input.length > 6) {
       const debounceTimer = setTimeout(() => {
         startTransition(async () => {
-          const { workexperience } = await generateWorkexperience({ input });
-          setGeneratedDescription(workexperience.workexperience);
+          const { education } = await generateEducation({ input });
+          setGeneratedDescription(education.education);
         });
       }, 500);
       return () => clearTimeout(debounceTimer);
@@ -77,18 +76,18 @@ export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
                   <Card
                     onClick={() => {
                       const currentDescription = getValues(
-                        `experience.${i}.description`
+                        `education.${i}.description`
                       );
-                      const newDescription = `${currentDescription}\n- ${description.workExperience}`;
+                      const newDescription = `${currentDescription}\n- ${description.education}`;
                       setValue(
-                        `experience.${i}.description`,
+                        `education.${i}.description`,
                         newDescription.trim()
                       );
                     }}
                     className="p-4 flex flex-col items-center text-slate-600 my-2 justify-center w-full rounded cursor-pointer hover:bg-slate-100 transition duration-500"
                     key={index}
                   >
-                    <p>{description.workExperience}</p>
+                    {description.education}
                   </Card>
                 ))}
               </>

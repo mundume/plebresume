@@ -106,3 +106,39 @@ export const generateWorkexperience = async ({ input }: { input: string }) => {
 
   return { workexperience };
 };
+
+export const generateEducation = async ({ input }: { input: string }) => {
+  const { object: education } = await generateObject({
+    model: openai("gpt-4o-mini"),
+    system:
+      "You are an expert in crafting concise and impactful education descriptions for resumes. Generate a  description of an education  from the user input.",
+    temperature: 0.7,
+
+    schema: z.object({
+      education: z.array(
+        z.object({
+          education: z.string(),
+        })
+      ),
+    }),
+    messages: [
+      {
+        role: "system",
+        content: `Generate 10 concise and impactful education descriptions from the following education provided as the input: ${input}. also dont repeat the education input just a clear and concise description.
+
+`,
+      },
+
+      {
+        role: "user",
+        content: `Generate 10 concise and impactful education descriptions from the following education provided as the input: ${input}.also dont repeat the education input just a clear and concise description.
+
+`,
+      },
+    ],
+  });
+
+  revalidatePath("/resume/[resumeId]", "page");
+
+  return { education };
+};

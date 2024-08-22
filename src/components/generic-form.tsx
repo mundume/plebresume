@@ -41,6 +41,7 @@ import { useState, useTransition } from "react";
 import { generateWorkexperience } from "@/app/actions";
 import { WorkExperienceSelect } from "./work-experience-select";
 import MarkdownEditor from "./Markdown";
+import { EducationSelect } from "./education-select";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -65,9 +66,6 @@ const GenericForm = <T extends FieldValues>({
   onSubmit,
   values,
 }: Props<T>) => {
-  const [genetatedDescription, setGeneratedDescription] = useState<
-    Description[]
-  >([]);
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: value as any,
@@ -190,10 +188,11 @@ const GenericForm = <T extends FieldValues>({
                         control={form.control}
                         name={`${value}.${index}.description` as Path<T>}
                         render={({ field }) => (
-                          <FormItem className="relative">
-                            {value === "experience" && (
+                          <FormItem className="relative  ">
+                            {value === "experience" ? (
                               <div
                                 className="
+                                prose bg-white no-break-inside
                               "
                               >
                                 <WorkExperienceSelect
@@ -203,18 +202,26 @@ const GenericForm = <T extends FieldValues>({
                                   // @ts-ignore
                                   form={form}
                                   index={index}
-                                  genetatedDescription={genetatedDescription}
-                                  setGeneratedDescription={
-                                    setGeneratedDescription
-                                  }
                                 />
                               </div>
-                            )}
+                            ) : value === "education" ? (
+                              <div className="prose bg-white no-break-inside">
+                                <EducationSelect
+                                  input={form.getValues(
+                                    `${value}.${index}.title` as Path<T>
+                                  )}
+                                  // @ts-ignore
+                                  form={form}
+                                  index={index}
+                                />
+                              </div>
+                            ) : null}
                             <FormLabel>Description</FormLabel>
                             <FormControl>
                               <>
                                 <ForwardRefEditor
                                   {...field}
+                                  contentEditableClassName="prose markdown bg-white no-break-inside bg"
                                   onChange={(newValue) => {
                                     field.onChange(newValue);
                                   }}

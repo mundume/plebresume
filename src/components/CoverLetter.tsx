@@ -16,7 +16,6 @@ const CoverLetter = ({
 
   const ref = useRef<MDXEditorMethods>(null);
 
-  console.log(response);
   useEffect(() => {
     ref.current?.setMarkdown(response);
   }, [response]);
@@ -26,6 +25,7 @@ const CoverLetter = ({
       <div className="h-full px-4 prose bg-white no-break-inside bg">
         <div className="">
           <ForwardRefEditor
+            value={response}
             markdown={response}
             ref={ref}
             onChange={(e) => {

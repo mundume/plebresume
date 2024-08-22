@@ -10,7 +10,7 @@ const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
 export const GET = async (req: NextRequest) => {
   const p = await db.createdResume.findFirst({
     where: {
-      id: "cly1iw5wm000926kxp3ep27xu",
+      id: "cm00uzsun0003115921aegxzr",
     },
     include: {
       education: true,

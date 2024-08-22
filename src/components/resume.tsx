@@ -1,6 +1,6 @@
 import React from "react";
 import { type Resume } from "@/config/types";
-import { PageTop, Tailwind } from "@onedoc/react-print";
+import { PageTop, Tailwind, Markdown } from "@onedoc/react-print";
 import { format } from "date-fns";
 
 const Resume = (resume: Resume) => {
@@ -57,10 +57,13 @@ const Resume = (resume: Resume) => {
                   ? "Present"
                   : format(job.endDate || "", "MMM yyyy")}
               </p>
-              <ul className="list-none list-inside text-gray-700 mt-1">
-                {job?.description?.split("\n").map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
+              <ul className="list-disc list-inside text-gray-700 mt-1">
+                {job?.description
+                  ?.split("\n")
+                  .filter((item) => item.trim() !== "")
+                  .map((item, i) => (
+                    <li key={i}>{item.replace(/^\*\s?/, "")} </li>
+                  ))}
               </ul>
             </div>
           ))}

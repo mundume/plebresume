@@ -18,12 +18,12 @@ const Page = async ({ params }: { params: { resumeId: string } }) => {
     <>
       <ResumeBuilderContextProvider userId={user.id} resumeId={params.resumeId}>
         <main>
-          <MaxWidthWrapper className="max-w-full ">
-            <div className="flex gap-4 pt-4">
-              <div className="w-6/12">
+          <MaxWidthWrapper className="max-w-full">
+            <div className="flex flex-col md:flex-row gap-4 pt-4">
+              <div className="w-full md:w-6/12">
                 <ResumeBuilder />
               </div>
-              <div className="w-5/12 right-20  ">
+              <div className="w-full md:w-5/12 md:ml-4">
                 <ResumePreviewer />
               </div>
             </div>

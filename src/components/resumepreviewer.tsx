@@ -33,212 +33,185 @@ const ResumePreviewer = () => {
   const languages = languageForm.watch("languages");
 
   return (
-    <div className="fixed w-5/12 right-20">
-      <div className="items-center block w-full  p-10 m-auto shadow-2xl min-h-screen  ">
+    <div className="w-full md:w-5/12 md:fixed md:right-10 p-4 md:p-0 h-screen">
+      <div className="w-full p-4 md:p-10 m-auto shadow-2xl min-h-screen bg-white">
         <SimpleBar autoHide={false} className="max-h-[calc(100vh-2rem)]">
-          <div ref={ref} className=" font-sans text-slate-800">
-            <div className="flex flex-col ">
-              <div className=" flex items-center gap-2 justify-center w-full text-xs">
-                <p className="font-semibold">Links : </p>
+          <div className="font-sans text-slate-800">
+            <header className="mb-6">
+              <div className="flex flex-wrap items-center justify-center w-full text-xs mb-2">
+                <p className="font-semibold mr-2">Links : </p>
                 {socialLinks.map((link, index) => (
                   <a
-                    href={link.link}
                     key={index}
+                    href={link.link}
                     target="_blank"
-                    className="text-primary text-xs underline-offset-4 hover:underline underline mr-2"
+                    rel="noopener noreferrer"
+                    className="text-primary text-xs underline-offset-4 hover:underline underline mr-2 mb-1"
                   >
                     <span>{link.name}</span>
                   </a>
                 ))}
               </div>
               <div className="flex items-center justify-between w-full">
-                <h1 className="text-xl font-bold">
+                <h1 className="text-lg md:text-xl font-bold">
                   {personalInfo.names?.firstName} {personalInfo.names?.lastName}
                 </h1>
-                <span className="p-1 border rounded-full ">NK</span>
+                <span className="p-1 border rounded-full text-xs">
+                  {personalInfo.names?.firstName?.[0]}
+                  {personalInfo.names?.lastName?.[0]}
+                </span>
               </div>
-              <p className="py-1 font-semibold text-sm ">
+              <p className="py-1 font-semibold text-sm">
                 {personalInfo.proffession}
               </p>
-            </div>
-            <div className="flex text-xs">
-              <div className="flex-1">
-                <p className="flex  text-slate-600 ">
-                  {" "}
-                  <span className="flex-1 font-bold  text-blue-400">
-                    email
-                  </span>{" "}
-                  <span className="flex-1">{personalInfo.email}</span>
-                </p>
-                <p className="flex  text-slate-600 ">
-                  {" "}
-                  <span className="flex-1 font-bold  text-blue-400">
-                    phone
-                  </span>{" "}
-                  <span className="flex-1">{personalInfo.phone}</span>
-                </p>
+              <div className="flex flex-col md:flex-row text-xs">
+                <div className="flex-1 mb-2 md:mb-0">
+                  <p className="flex text-slate-600">
+                    <span className="w-1/3 font-bold">email</span>
+                    <span className="w-2/3">{personalInfo.email}</span>
+                  </p>
+                  <p className="flex text-slate-600">
+                    <span className="w-1/3 font-bold">phone</span>
+                    <span className="w-2/3">{personalInfo.phone}</span>
+                  </p>
+                </div>
+                <div className="flex-1">
+                  <p className="flex text-slate-600">
+                    <span className="w-1/3 font-bold">Address</span>
+                    <span className="w-2/3">
+                      {personalInfo.address?.city}
+                      {personalInfo.address?.state &&
+                        `, ${personalInfo.address.state}`}
+                    </span>
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="flex  text-slate-600 ">
-                  <span className="flex-1 font-bold text-blue-400">
-                    Address
-                  </span>
-                  <span className="flex-1">
-                    {personalInfo?.address?.city}
-                    {personalInfo.address?.state && ","}{" "}
-                    {personalInfo.address?.state}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="flex text-slate-600 text-xs py-1">
-              <p className="pr-5 text-base font-bold text-slate-800 ">
-                <span className="pr-1 underline text-blue-400">01</span>
+            </header>
+
+            <section className="mb-6">
+              <h2 className="text-base font-bold text-slate-800 mb-2">
+                <span className="pr-1 underline">01</span>
                 Profile
-              </p>
-              <p className="">{personalInfo.profile}</p>
-            </div>
-          </div>
-          <div className="">
-            <p className="pr-5 text-base font-bold text-slate-800 ">
-              <span className="pr-1 underline text-blue-400">02</span>
-              Work Experience
-            </p>
-            <div>
-              {workExperience?.map((item, index) => (
-                <div key={index} className="flex justify-between gap-3  ">
-                  <div className=" col-span-3  flex  gap-2 text-xs text-blue-400   ">
-                    {item.startDate && (
-                      <p className=" text-xs">
-                        {format(new Date(item?.startDate) || "", "MMM, yyyy")}
-                      </p>
-                    )}
-                    -{" "}
-                    <p className=" text-xs ">
-                      {item.currently
-                        ? "Present"
-                        : item.endDate &&
-                          format(new Date(item?.endDate!) || "", "MMM, yyyy")}
-                    </p>
-                  </div>
+              </h2>
+              <p className="text-xs text-slate-600">{personalInfo.profile}</p>
+            </section>
 
-                  <div className=" col-span-7 text-xs">
-                    <div
-                      className="flex  gap-2 font-sans text-slate-800 items-center
-                  "
-                    >
-                      <h2 className="font-semibold ">{item?.title}</h2>{" "}
-                      {item?.name && <p className="">at</p>}
-                      <h2 className="font-semibold text-blue-400">
-                        {item?.name}
-                      </h2>
-                    </div>
-                    <Markdown className={"prose text-xs "}>
-                      {item?.description}
-                    </Markdown>
-                  </div>
-                  <div className="text-slate-600 font-mono text-xs  col-span-2  justify-self-end text-center">
-                    {item.location}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="py-1">
-            <p className="pr-5 text-base font-bold text-slate-800 ">
-              <span className="pr-1 underline text-blue-400">03</span>
-              Education
-            </p>
-            <div>
-              {education?.map((item, index) => (
-                <div
-                  key={index}
-                  className="grid  grid-cols-12 my-4 gap-6 items-start "
-                >
-                  <div className=" col-span-3  flex  gap-2 text-xs text-blue-400">
-                    {item.startDate && (
-                      <p className=" text-xs">
-                        {format(new Date(item?.startDate) || "", "MMM, yyyy")}
-                      </p>
-                    )}
-                    -
-                    <p className=" text-xs ">
-                      {item.currently
+            <section className="mb-6">
+              <h2 className="text-base font-bold text-slate-800 mb-2">
+                <span className="pr-1 underline">02</span>
+                Work Experience
+              </h2>
+              {workExperience?.map((job, index) => (
+                <div key={index} className="mb-4">
+                  <div className="flex flex-col md:flex-row justify-between gap-1 md:gap-3">
+                    <div className="text-xs text-slate-600 order-1 md:order-none">
+                      {job.startDate &&
+                        format(new Date(job.startDate), "MMM, yyyy")}{" "}
+                      -{" "}
+                      {job.currently
                         ? "Present"
-                        : item.endDate &&
-                          format(new Date(item?.endDate!) || "", "MMM, yyyy")}
-                    </p>
-                  </div>
-
-                  <div className=" col-span-7 text-xs">
-                    <div
-                      className="flex  gap-2 font-sans text-slate-800 items-center
-                  "
-                    >
-                      <h2 className="font-semibold ">{item?.title}</h2>{" "}
-                      {item?.name && <p className="">at</p>}
-                      <h2 className="font-semibold  text-blue-400">
-                        {item?.name}
-                      </h2>
+                        : job.endDate &&
+                          format(new Date(job.endDate), "MMM, yyyy")}
                     </div>
-                    <Markdown className={"prose text-xs "}>
-                      {item?.description}
-                    </Markdown>
+                    <div className="flex-1 order-3 md:order-none">
+                      <div className="flex flex-wrap gap-1 md:gap-2 items-center">
+                        <h3 className="text-xs font-semibold">{job.title}</h3>
+                        {job.name && <p className="text-xs">at</p>}
+                        <p className="text-xs font-semibold">{job.name}</p>
+                      </div>
+                      <p className="text-xs text-slate-600 mt-1">
+                        <Markdown className={"prose text-xs"}>
+                          {job.description}
+                        </Markdown>
+                      </p>
+                    </div>
+                    <div className="text-xs text-slate-600 order-2 md:order-none md:text-right">
+                      {job.location}
+                    </div>
                   </div>
-                  <div className="text-slate-600 font-mono text-xs col-span-2 text-center">
-                    {item.location}
+                </div>
+              ))}
+            </section>
+
+            <section className="mb-6">
+              <h2 className="text-base font-bold text-slate-800 mb-2">
+                <span className="pr-1 underline">03</span>
+                Education
+              </h2>
+              {education?.map((edu, index) => (
+                <div key={index} className="mb-4">
+                  <div className="flex flex-col md:flex-row justify-between gap-1 md:gap-3">
+                    <div className="text-xs text-slate-600 order-1 md:order-none">
+                      {edu.startDate &&
+                        format(new Date(edu.startDate), "MMM, yyyy")}{" "}
+                      -{" "}
+                      {edu.currently
+                        ? "Present"
+                        : edu.endDate &&
+                          format(new Date(edu.endDate), "MMM, yyyy")}
+                    </div>
+                    <div className="flex-1 order-3 md:order-none">
+                      <div className="flex flex-wrap gap-1 md:gap-2 items-center">
+                        <h3 className="text-xs font-semibold">{edu.title}</h3>
+                        {edu.name && <p className="text-xs">at</p>}
+                        <p className="text-xs font-semibold">{edu.name}</p>
+                      </div>
+                      <p className="text-xs text-slate-600 mt-1">
+                        <Markdown className={"prose text-xs"}>
+                          {edu.description}
+                        </Markdown>
+                      </p>
+                    </div>
+                    <div className="text-xs text-slate-600 order-2 md:order-none md:text-right">
+                      {edu.location}
+                    </div>
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-          <div className="">
-            <p className="pr-5 text-base font-bold text-slate-800 ">
-              <span className="pr-1 underline text-blue-400">04</span>
-              Skills
-            </p>
-            <div className=" grid grid-cols-3">
-              {skills.map((item, index) => (
-                <div key={index} className="flex gap-2">
-                  <p className="text-slate-600 text-xs">
-                    {item?.skills && `- ${item?.skills}`}
-                  </p>
-                  <p className="text-slate-600 text-xs">
-                    {item?.level && `${item?.level} years`}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="py-1">
-            <p className="pr-5 text-base font-bold text-slate-800 ">
-              <span className="pr-1 underline text-blue-400">05</span>
-              Hobbies
-            </p>
-            <div className=" grid grid-cols-2">
-              <p>
-                {hobbies && <p className="text-slate-600 text-xs">{hobbies}</p>}
-              </p>
-            </div>
-          </div>
-          <div className="">
-            <p className="pr-5 text-base font-bold text-slate-800 ">
-              <span className="pr-1 underline text-blue-400">05</span>
-              Languages
-            </p>
-            <div className=" grid grid-cols-3 place-content-center">
-              {languages.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex gap-2 items-center justify-center"
-                >
-                  <p className="text-slate-600 text-xs">{item?.languages}</p>
-                  <p className="text-blue-400 text-xs">{item?.level}</p>
-                </div>
-              ))}
-            </div>
+            </section>
+
+            <section className="mb-6">
+              <h2 className="text-base font-bold text-slate-800 mb-2">
+                <span className="pr-1 underline">04</span>
+                Skills
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {skills.map((skill, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-2 text-xs text-slate-600"
+                  >
+                    <span>{skill.skills}</span>
+                    {skill.level && <span>({skill.level} years)</span>}
+                  </div>
+                ))}
+              </div>
+            </section>
+            <section className="mb-6">
+              <h2 className="text-base font-bold text-slate-800 mb-2">
+                <span className="pr-1 underline">04</span>
+                Skills
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {languages.map((skill, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-2 text-xs text-slate-600"
+                  >
+                    <span>{skill.languages}</span>
+                    {skill.level && <span>({skill.level})</span>}
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mb-44">
+              <h2 className="text-base font-bold text-slate-800 mb-2">
+                <span className="pr-1 underline">05</span>
+                Hobbies
+              </h2>
+              <p className="text-xs text-slate-600">{hobbies}</p>
+            </section>
           </div>
         </SimpleBar>
       </div>

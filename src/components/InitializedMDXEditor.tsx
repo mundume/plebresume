@@ -29,7 +29,6 @@ export default function InitializedMDXEditor({
         // Example Plugin Usage
         headingsPlugin(),
         listsPlugin({
-          orderedList: true,
           unorderedList: true,
         }),
 
@@ -43,7 +42,7 @@ export default function InitializedMDXEditor({
             <>
               <UndoRedo />
               <BoldItalicUnderlineToggles />
-              <ListsToggle />
+              <ListsToggle options={["bullet"]} />
             </>
           ),
         }),
