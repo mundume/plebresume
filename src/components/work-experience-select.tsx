@@ -76,10 +76,11 @@ export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
                 {generatedDescription.map((description, index) => (
                   <Card
                     onClick={() => {
-                      const currentDescription = getValues(
-                        `experience.${i}.description`
-                      );
-                      const newDescription = `${currentDescription}\n- ${description.workExperience}`;
+                      const currentDescription =
+                        getValues(`experience.${i}.description`) || "";
+                      const newDescription = currentDescription
+                        ? `${currentDescription}\n- ${description.workExperience}`
+                        : `- ${description.workExperience}`;
                       setValue(
                         `experience.${i}.description`,
                         newDescription.trim()

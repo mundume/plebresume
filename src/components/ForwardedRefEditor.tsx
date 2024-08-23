@@ -5,6 +5,7 @@ import React, {
   useImperativeHandle,
   useEffect,
   useRef,
+  useState,
 } from "react";
 
 const Editor = dynamic(() => import("./InitializedMDXEditor"), {
@@ -17,30 +18,43 @@ export const ForwardRefEditor = forwardRef<
 >((props, ref) => {
   const { value, onChange, ...rest } = props;
   const editorRef = useRef<MDXEditorMethods>(null);
+  const [internalValue, setInternalValue] = useState<string>("");
 
   useImperativeHandle(ref, () => ({
     ...editorRef.current!,
     setMarkdown: (markdown: string) => {
-      editorRef.current?.setMarkdown(markdown);
+      console.log("setMarkdown called with:", markdown);
+      const sanitizedMarkdown = typeof markdown === "string" ? markdown : "";
+      editorRef.current?.setMarkdown(sanitizedMarkdown);
+      setInternalValue(sanitizedMarkdown);
     },
   }));
 
   useEffect(() => {
-    if (editorRef.current && editorRef.current.getMarkdown() !== value) {
-      editorRef.current.setMarkdown(value);
+    console.log("Value prop changed:", value);
+    if (typeof value === "string" && value !== internalValue) {
+      console.log("Updating internal value to:", value);
+      setInternalValue(value);
+      editorRef.current?.setMarkdown(value);
     }
   }, [value]);
+
+  const handleChange = (newValue: string) => {
+    console.log("handleChange called with:", newValue);
+    if (newValue !== internalValue) {
+      setInternalValue(newValue);
+      onChange(newValue);
+    }
+  };
+
+  console.log("Rendering ForwardRefEditor with internalValue:", internalValue);
 
   return (
     <Editor
       {...rest}
       editorRef={editorRef}
-      markdown={value}
-      onChange={(newValue) => {
-        if (newValue !== value) {
-          onChange(newValue);
-        }
-      }}
+      markdown={internalValue}
+      onChange={handleChange}
     />
   );
 });

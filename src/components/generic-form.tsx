@@ -221,11 +221,12 @@ const GenericForm = <T extends FieldValues>({
                               <>
                                 <ForwardRefEditor
                                   {...field}
-                                  contentEditableClassName="prose markdown bg-white no-break-inside bg"
+                                  contentEditableClassName="prose markdown bg-white no-break-inside bg text-sm"
                                   onChange={(newValue) => {
                                     field.onChange(newValue);
                                   }}
-                                  markdown={field.value || ""}
+                                  markdown={field.value || "hello"}
+                                  value={field.value || "hello"}
                                   key={`${value}.${index}.description`}
                                 />
                               </>

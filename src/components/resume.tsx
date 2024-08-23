@@ -69,17 +69,6 @@ const Resume = (resume: Resume) => {
           ))}
         </section>
 
-        <section className="mb-2">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">Skills</h2>
-          <ul className="grid grid-cols-2 gap-1">
-            {resume.skills?.map((skill, index) => (
-              <li key={index} className=" p-1 rounded">
-                {skill.skills} - {skill.level} years
-              </li>
-            ))}
-          </ul>
-        </section>
-
         <section>
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
             Education
@@ -95,8 +84,26 @@ const Resume = (resume: Resume) => {
                   ? "Present"
                   : format(edu.endDate || "", "MMM yyyy")}
               </p>
+              <ul className="list-disc list-inside text-gray-700 mt-1">
+                {edu?.description
+                  ?.split("\n")
+                  .filter((item) => item.trim() !== "")
+                  .map((item, i) => (
+                    <li key={i}>{item.replace(/^\*\s?/, "")} </li>
+                  ))}
+              </ul>
             </div>
           ))}
+        </section>
+        <section className="mb-2">
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">Skills</h2>
+          <ul className="grid grid-cols-2 gap-1">
+            {resume.skills?.map((skill, index) => (
+              <li key={index} className=" p-1 rounded">
+                {skill.skills} - {skill.level} years
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </Tailwind>
