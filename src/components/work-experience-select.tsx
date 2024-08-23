@@ -2,7 +2,6 @@ import { generateWorkexperience } from "@/app/actions";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -12,7 +11,7 @@ import SimpleBar from "simplebar-react";
 import { Button } from "./ui/button";
 import { Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
-import { UseFormReturn, UseFormSetValue } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { EmploymentSchema } from "@/lib/schemas";
 
 type Description = {
