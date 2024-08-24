@@ -1,4 +1,5 @@
 import CreateResume from "@/components/create-resume";
+import DownloadResume from "@/components/download-resume";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { ResumeBuilderContextProvider } from "@/components/resume-builder-context";
 import ResumeBuilder from "@/components/resumebuilder";
@@ -21,6 +22,7 @@ const Page = async ({ params }: { params: { resumeId: string } }) => {
           <MaxWidthWrapper className="max-w-full">
             <div className="flex flex-col md:flex-row gap-4 pt-4">
               <div className="w-full md:w-6/12">
+                <DownloadResume resumeId={params.resumeId} />
                 <ResumeBuilder />
               </div>
               <div className="w-full md:w-5/12 md:ml-4">

@@ -3,16 +3,7 @@ import { type Action } from "./resume-builder-context";
 import PersonalInformationAccordition from "./personal-information-accordition";
 import { PersonalInfomationValues } from "@/lib/validators/resume-validator";
 
-type AccorditionProps = {
-  values: PersonalInfomationValues;
-  dispatch: React.Dispatch<Action>;
-  name: string;
-};
-const ResumeInfoAccordition = ({
-  values,
-  dispatch,
-  name,
-}: AccorditionProps) => {
+const ResumeInfoAccordition = () => {
   return (
     <div className="space-y-4 border p-6 rounded">
       <div>

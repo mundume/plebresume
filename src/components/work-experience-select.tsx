@@ -13,6 +13,7 @@ import { Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { UseFormReturn } from "react-hook-form";
 import { EmploymentSchema } from "@/lib/schemas";
+import { Skeleton } from "./ui/skeleton";
 
 type Description = {
   workExperience: string;
@@ -32,6 +33,7 @@ export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
   >([]);
   const l = getValues(`experience.${i}.location`);
   const [open, setOpen] = useState<boolean>(false);
+  const skeleton = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   useEffect(() => {
     if (open && input.length > 6) {
@@ -66,12 +68,17 @@ export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
 
         <DropdownMenuContent className="text-xs w-[400px] h-[400px]">
           <SimpleBar className="flex items-center justify-center text-xs w-full h-full my-auto">
+            <DropdownMenuLabel>Work Experience</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             {pending ? (
-              <p>loading...</p>
+              Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  className="my-2 w-full h-[50px] animate-pulse bg-slate-100 rounded"
+                />
+              ))
             ) : (
               <>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
                 {generatedDescription.map((description, index) => (
                   <Card
                     onClick={() => {

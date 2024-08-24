@@ -15,11 +15,7 @@ const ResumeBuilder = () => {
   return (
     <div className="space-y-4">
       <div>
-        <ResumeInfoAccordition
-          values={values.resume.resume}
-          dispatch={dispatch}
-          name="personal information"
-        />
+        <ResumeInfoAccordition />
       </div>
       <div>
         <AddExperienceForm />

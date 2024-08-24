@@ -13,6 +13,7 @@ import { Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { UseFormReturn } from "react-hook-form";
 import { EducationFormSchema } from "@/lib/schemas";
+import { Skeleton } from "./ui/skeleton";
 
 type Description = {
   education: string;
@@ -67,7 +68,12 @@ export const EducationSelect = ({ input, form, index: i }: Props) => {
         <DropdownMenuContent className="text-xs w-[400px] h-[400px]">
           <SimpleBar className="flex items-center justify-center text-xs w-full h-full my-auto">
             {pending ? (
-              <p>loading...</p>
+              Array.from({ length: 8 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  className="my-2 w-full h-[50px] animate-pulse bg-slate-100 rounded"
+                />
+              ))
             ) : (
               <>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -75,9 +81,8 @@ export const EducationSelect = ({ input, form, index: i }: Props) => {
                 {generatedDescription.map((description, index) => (
                   <Card
                     onClick={() => {
-                      const currentDescription = getValues(
-                        `education.${i}.description`
-                      );
+                      const currentDescription =
+                        getValues(`education.${i}.description`) || "";
                       const newDescription = `${currentDescription}\n- ${description.education}`;
                       setValue(
                         `education.${i}.description`,

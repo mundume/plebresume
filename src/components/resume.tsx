@@ -96,6 +96,18 @@ const Resume = (resume: Resume) => {
           ))}
         </section>
         <section className="mb-2">
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">
+            Languages
+          </h2>
+          <ul className="grid grid-cols-2 gap-1">
+            {resume.languages?.map((lang, index) => (
+              <li key={index} className=" p-1 rounded">
+                {lang?.languages} - {lang.level}
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section className="mb-2">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">Skills</h2>
           <ul className="grid grid-cols-2 gap-1">
             {resume.skills?.map((skill, index) => (

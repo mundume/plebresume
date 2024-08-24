@@ -8,9 +8,12 @@ const onedoc = new Onedoc(process.env.ONEDOC_API_KEY!);
 // Opt out of caching for all data requests in the route segment
 
 export const GET = async (req: NextRequest) => {
+  const { searchParams } = new URL(req.url);
+  const resumeId = searchParams.get("id");
+
   const p = await db.createdResume.findFirst({
     where: {
-      id: "cm00uzsun0003115921aegxzr",
+      id: resumeId as string,
     },
     include: {
       education: true,
@@ -26,33 +29,6 @@ export const GET = async (req: NextRequest) => {
   console.log(l);
 
   console.log(p);
-
-  const values = {
-    personalInfo: {
-      names: {
-        firstName: p?.firstName!,
-        lastName: p?.lastName!,
-      },
-      email: p?.email!,
-      phone: p?.phone!,
-      proffession: p?.profession!,
-      profile: p?.profile!,
-      address: {
-        city: p?.city!,
-        state: p?.state!,
-      },
-    },
-    // workExperience: [
-    //   {.
-    //     companyName: "Plebs x Degens LLC",
-    //     description:
-    //       "personality hire you know just doing nothing and being lazy you know what im saying, but i cant be fired because the office will get boring without me you know what im saying",
-    //     endDate: "mar/2024",
-    //     startDate: "jan/2022",
-    //     title: "Vibes Engineer",
-    //   },
-    // ],
-  };
 
   const { file, error } = await onedoc.render({
     html: await compile(Resume(p!)),

@@ -192,10 +192,10 @@ export const appRouter = router({
           userId,
         },
         data: {
-          firstName: input.resume.resume.names.firstName,
-          lastName: input.resume.resume.names.lastName,
-          city: input.resume.resume.address.city,
-          state: input.resume.resume.address.state,
+          firstName: input?.resume?.resume?.names?.firstName,
+          lastName: input?.resume?.resume?.names?.lastName,
+          city: input?.resume?.resume?.address?.city,
+          state: input?.resume?.resume?.address?.state,
           email: input.resume.resume.email,
           profession: input.resume.resume.proffession,
           phone: input.resume.resume.phone,
@@ -222,10 +222,10 @@ export const appRouter = router({
           userId,
         },
         data: {
-          firstName: input.resume.resume.names.firstName,
-          lastName: input.resume.resume.names.lastName,
-          city: input.resume.resume.address.city,
-          state: input.resume.resume.address.state,
+          firstName: input?.resume?.resume?.names?.firstName,
+          lastName: input?.resume?.resume?.names?.lastName,
+          city: input?.resume?.resume?.address?.city,
+          state: input?.resume?.resume?.address?.state,
           email: input.resume.resume.email,
           profession: input.resume.resume.proffession,
           phone: input.resume.resume.phone,
@@ -521,6 +521,7 @@ export const appRouter = router({
       await Promise.all(
         input.skills.skills.map((skill) =>
           db.skill.createMany({
+            // @ts-ignore
             data: {
               resumeId: input.resumeId,
               ...skill,

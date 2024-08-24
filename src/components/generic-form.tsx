@@ -40,7 +40,6 @@ import { toast } from "sonner";
 import { useState, useTransition } from "react";
 import { generateWorkexperience } from "@/app/actions";
 import { WorkExperienceSelect } from "./work-experience-select";
-import MarkdownEditor from "./Markdown";
 import { EducationSelect } from "./education-select";
 
 interface Props<T extends FieldValues> {
