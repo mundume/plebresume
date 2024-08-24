@@ -22,7 +22,9 @@ const Page = async ({ params }: { params: { resumeId: string } }) => {
           <MaxWidthWrapper className="max-w-full">
             <div className="flex flex-col md:flex-row gap-4 pt-4">
               <div className="w-full md:w-6/12">
-                <DownloadResume resumeId={params.resumeId} />
+                <div className="flex justify-end items-end my-2">
+                  <DownloadResume resumeId={params.resumeId} />
+                </div>
                 <ResumeBuilder />
               </div>
               <div className="w-full md:w-5/12 md:ml-4">
