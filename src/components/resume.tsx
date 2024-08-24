@@ -62,7 +62,7 @@ const Resume = (resume: Resume) => {
                   ?.split("\n")
                   .filter((item) => item.trim() !== "")
                   .map((item, i) => (
-                    <li key={i}>{item.replace(/^\*\s?/, "")} </li>
+                    <li key={i}>{item.replace(/[^a-zA-Z\s]/g, "").trim()}</li>
                   ))}
               </ul>
             </div>
@@ -89,7 +89,7 @@ const Resume = (resume: Resume) => {
                   ?.split("\n")
                   .filter((item) => item.trim() !== "")
                   .map((item, i) => (
-                    <li key={i}>{item.replace(/^\*\s?/, "")} </li>
+                    <li key={i}>{item.replace(/[^a-zA-Z\s]/g, "").trim()}</li>
                   ))}
               </ul>
             </div>
@@ -99,9 +99,12 @@ const Resume = (resume: Resume) => {
           <h2 className="text-lg font-semibold text-gray-800 mb-2">
             Languages
           </h2>
-          <ul className="grid grid-cols-2 gap-1">
+          <ul className="flex flex-wrap gap-1">
             {resume.languages?.map((lang, index) => (
-              <li key={index} className=" p-1 rounded">
+              <li
+                key={index}
+                className="p-1 rounded flex-1 min-w-[calc(50%-0.5rem)]"
+              >
                 {lang?.languages} - {lang.level}
               </li>
             ))}
@@ -109,10 +112,13 @@ const Resume = (resume: Resume) => {
         </section>
         <section className="mb-2">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">Skills</h2>
-          <ul className="grid grid-cols-2 gap-1">
+          <ul className="flex flex-wrap gap-1">
             {resume.skills?.map((skill, index) => (
-              <li key={index} className=" p-1 rounded">
-                {skill.skills} - {skill.level} years
+              <li
+                key={index}
+                className="p-1 rounded flex-1 min-w-[calc(50%-0.5rem)]"
+              >
+                {skill.skills} {skill.level ? `- ${skill.level} years` : null}
               </li>
             ))}
           </ul>

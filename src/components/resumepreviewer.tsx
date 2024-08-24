@@ -190,7 +190,7 @@ const ResumePreviewer = () => {
             <section className="mb-6">
               <h2 className="text-base font-bold text-slate-800 mb-2">
                 <span className="pr-1 underline">04</span>
-                Skills
+                Languages
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {languages.map((skill, index) => (

@@ -11,7 +11,7 @@ export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const resumeId = searchParams.get("id");
 
-  const p = await db.createdResume.findFirst({
+  const resume = await db.createdResume.findFirst({
     where: {
       id: resumeId as string,
     },
@@ -24,14 +24,8 @@ export const GET = async (req: NextRequest) => {
     },
   });
 
-  const l = await db.education.findMany();
-
-  console.log(l);
-
-  console.log(p);
-
   const { file, error } = await onedoc.render({
-    html: await compile(Resume(p!)),
+    html: await compile(Resume(resume!)),
   });
 
   if (error) {

@@ -105,6 +105,20 @@ const GenericForm = <T extends FieldValues>({
     },
   });
 
+  const deleteEntity = (index: number) => {
+    if (resume?.workExperience[index]?.id) {
+      deleteWork({
+        id: resume?.workExperience[index].id as string,
+      });
+    } else if (resume?.education[index]?.id) {
+      deleteEducation({
+        id: resume?.education[index].id as string,
+      });
+    } else {
+      remove(index);
+    }
+  };
+
   return (
     <Card className="rounded border-none shadow-none">
       <Form {...form}>
@@ -114,7 +128,18 @@ const GenericForm = <T extends FieldValues>({
             className="space-y-8 w-full"
           >
             {fields.map((field, index) => (
-              <div key={field.id} className="flex gap-2 items-center accordion">
+              <div
+                key={field.id}
+                className="flex flex-col gap-2 items-center accordion relative"
+              >
+                <Button
+                  type="button"
+                  size="icon"
+                  className=" mt-2  self-end text-white md:hidden"
+                  onClick={() => deleteEntity(index)}
+                >
+                  <Trash2 className="w-4 h-4 text-slate-600" />
+                </Button>
                 <AccordionItem
                   value={`item-${index}`}
                   className="space-y-4 border p-4 rounded w-full"
@@ -370,22 +395,8 @@ const GenericForm = <T extends FieldValues>({
                 <Button
                   type="button"
                   size="icon"
-                  className="trash-button shadow-none hover:shadow-none hover:bg-transparent  hover:text-blue-400"
-                  onClick={() => {
-                    if (resume?.workExperience[index]?.id) {
-                      deleteWork({
-                        id: resume?.workExperience[index].id as string,
-                      });
-                    } else {
-                      if (resume?.education[index]?.id) {
-                        deleteEducation({
-                          id: resume?.education[index].id as string,
-                        });
-                      } else {
-                        remove(index);
-                      }
-                    }
-                  }}
+                  className="absolute top-4 right-4 trash-button shadow-none hover:shadow-none hover:bg-transparent hover:text-blue-400 hidden md:flex"
+                  onClick={() => deleteEntity(index)}
                 >
                   <Trash2 className="w-5 h-5" />
                 </Button>
