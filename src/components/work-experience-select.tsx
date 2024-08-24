@@ -71,7 +71,7 @@ export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
             <DropdownMenuLabel>Work Experience</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {pending ? (
-              Array.from({ length: 5 }).map((_, i) => (
+              Array.from({ length: 8 }).map((_, i) => (
                 <Skeleton
                   key={i}
                   className="my-2 w-full h-[50px] animate-pulse bg-slate-100 rounded"
