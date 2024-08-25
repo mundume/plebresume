@@ -61,7 +61,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                     <ArrowRightIcon className="w-5 h-5 ml-2 text-purple-400" />
                   </Link>
                 </li>
-                <Button icon={<HamburgerMenuIcon className="mr-2" />}>k</Button>
+
                 <li className="h-px my-3 bg-gray-300" />
                 <li>
                   <Link
