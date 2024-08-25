@@ -2,16 +2,15 @@
 import { ArrowRightIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import NotificationIcon from "./Bellicon";
-import { Menu, Minus, Twitter, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Menu, Twitter, X } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 import NotificationsDrawerMobile from "./NotificationsDrawerMobile";
-import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { ModeToggle } from "./theme-toggle";
+
+import { Avatar } from "./ui/avatar";
 import MobileThemeToggle from "./mobile-theme-toggle";
 import { cn, getInitials } from "@/lib/utils";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 
 const MobileNav = ({ user }: { user: KindeUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -38,13 +37,14 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
         variant={"pleb"}
         onClick={toggleOpen}
         className="relative z-50 ml-1 rounded-full"
-      >
-        {isOpen ? (
-          <X className="w-5 h-5 text-slate-600 dark:text-slate-50" />
-        ) : (
-          <Menu className="w-5 h-5 text-slate-600 " />
-        )}
-      </Button>
+        icon={
+          isOpen ? (
+            <X className="w-5 h-5 text-slate-600 dark:text-slate-50" />
+          ) : (
+            <Menu className="w-5 h-5 text-slate-600 " />
+          )
+        }
+      />
 
       {isOpen ? (
         <div className="fixed inset-0 z-0 w-full duration-200 h-100vh animate-in slide-in-from-left-40 fade-in-100">
@@ -61,6 +61,7 @@ const MobileNav = ({ user }: { user: KindeUser }) => {
                     <ArrowRightIcon className="w-5 h-5 ml-2 text-purple-400" />
                   </Link>
                 </li>
+
                 <li className="h-px my-3 bg-gray-300" />
                 <li>
                   <Link

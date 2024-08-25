@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@mdxeditor/editor/style.css";
 import Provider from "./_trpc/provider";
 import { NavBar } from "@/components/NavBar";
 import { GeistSans } from "geist/font/sans";

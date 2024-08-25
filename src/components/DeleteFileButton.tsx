@@ -1,8 +1,7 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import React, { useState } from "react";
-import { Button } from "./ui/button";
-import { Command, Delete, Loader, Trash } from "lucide-react";
+import { useState } from "react";
+import { Command, Delete } from "lucide-react";
 import { toast } from "sonner";
 type Props = {
   fileId: string;

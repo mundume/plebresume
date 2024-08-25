@@ -10,7 +10,7 @@ import { useResizeDetector } from "react-resize-detector";
 import SimpleBar from "simplebar-react";
 import ResumeFullscreen from "./ResumeFullscreen";
 
-import { ResumeContext, useResumeContext } from "./Provider";
+import { useCoverLetterContext } from "./Provider";
 import CoverLetterForm from "./CoverLetterForm";
 import FormDrawerMobile from "./form-drawer-mobile";
 import ApplicationForm from "./application-form";
@@ -28,7 +28,7 @@ type Props = {
 const PdfRenderer = ({ url, id }: Props) => {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { generateCoverLetter, isLoading, response } = useResumeContext();
+  const { generateCoverLetter, isLoading, response } = useCoverLetterContext();
   const { ref, width } = useResizeDetector();
 
   return (

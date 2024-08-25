@@ -12,7 +12,7 @@ import {
 } from "react";
 import { toast } from "sonner";
 
-type ResumeResponse = {
+type CoverLetterResponse = {
   generateCoverLetter: () => void;
   fileId: string;
   isLoading: boolean;
@@ -24,7 +24,7 @@ type ResumeResponse = {
 };
 
 //this will be moved from usestate to useReducer soon
-export const ResumeContext = createContext<ResumeResponse>({
+export const CoverLetterContext = createContext<CoverLetterResponse>({
   generateCoverLetter: () => {},
   fileId: "",
   isLoading: false,
@@ -48,7 +48,10 @@ type FormValues = {
   jobDescription: string;
 };
 
-export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
+export const CoverLetterContextProvider = ({
+  fileId,
+  children,
+}: ContextProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<string>("");
   const [formValues, setFormValues] = useState<FormValues>({
@@ -136,21 +139,21 @@ export const ResumeContextProvider = ({ fileId, children }: ContextProps) => {
   );
 
   return (
-    <ResumeContext.Provider
+    <CoverLetterContext.Provider
       value={{
         ...contextValue,
       }}
     >
       {children}
-    </ResumeContext.Provider>
+    </CoverLetterContext.Provider>
   );
 };
 
-export const useResumeContext = () => {
-  const context = use(ResumeContext);
+export const useCoverLetterContext = () => {
+  const context = use(CoverLetterContext);
   if (!context) {
     throw new Error(
-      "useResumeContext must be used within a ResumeContextProvider"
+      "useCoverLetterContext must be used within a CoverLetterContextProvider"
     );
   }
   return context;

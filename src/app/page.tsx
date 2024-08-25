@@ -1,13 +1,17 @@
-"use client";
-
-import Image from "next/image";
-import { trpc } from "./_trpc/client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 
-export default function Home() {
+import { TextGenerate } from "@/components/hero-text";
+import { BackgroundDots } from "@/components/ui/background-beams";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+export default async function Home() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
   return (
-    <MaxWidthWrapper>
-      <h1 className="text-6xl">Welcome to Brixton</h1>
+    <MaxWidthWrapper className="m-auto h-screen flex items-center justify-center">
+      <TextGenerate user={user} />
+
+      <BackgroundDots dotColor="#475569" />
     </MaxWidthWrapper>
   );
 }

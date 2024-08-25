@@ -1,11 +1,43 @@
 "use client";
-
-import React from "react";
+import { useResumeBuilderContext } from "./resume-builder-context";
+import ResumeInfoAccordition from "./resume-personal-info-accordition";
+import AddExperienceForm from "./add-experience-form";
+import SocialLinks from "./social-links";
+import SkillsForm from "./skills-form";
+import HobbiesForm from "./hobbies-form";
+import LanguagesForm from "./languages-form";
+import EducationForm from "./add-education-form";
 
 const ResumeBuilder = () => {
+  const { values, dispatch } = useResumeBuilderContext();
+  const context = useResumeBuilderContext();
+
   return (
-    <div>
-      <p>hello there</p>
+    <div className="space-y-4">
+      <div>
+        <ResumeInfoAccordition />
+      </div>
+      <div>
+        <AddExperienceForm />
+      </div>
+      <div
+        className="
+      "
+      >
+        <EducationForm />
+      </div>
+      <div>
+        <SocialLinks />
+      </div>
+      <div className="">
+        <SkillsForm />
+      </div>
+      <div className="">
+        <HobbiesForm />
+      </div>
+      <div className="">
+        <LanguagesForm />
+      </div>
     </div>
   );
 };

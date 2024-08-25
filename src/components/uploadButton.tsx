@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import {
   CheckCircle2,
@@ -13,7 +12,6 @@ import {
 } from "lucide-react";
 import Dropzone from "react-dropzone";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
 import { toast } from "sonner";
@@ -173,10 +171,10 @@ const UploadButton = () => {
       <DialogTrigger asChild>
         <Button
           onClick={() => setIsOpen(true)}
-          className="dark:border dark:border-slate-800"
+          className="bg-primary hover:bg-primary/80 text-primary-foreground my-4"
           variant={"pleb"}
         >
-          <Upload className="w-4 h-4 mr-1.5 text-purple-500" /> upload
+          <Upload className="w-4 h-4 mr-1.5 text-slate-400" /> upload
         </Button>
       </DialogTrigger>
       <DialogContent>

@@ -12,6 +12,10 @@ import {
   MDXEditor,
   type MDXEditorMethods,
   type MDXEditorProps,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  toolbarPlugin,
+  ListsToggle,
 } from "@mdxeditor/editor";
 
 // Only import this to the next file
@@ -24,12 +28,24 @@ export default function InitializedMDXEditor({
       plugins={[
         // Example Plugin Usage
         headingsPlugin(),
-        listsPlugin(),
+        listsPlugin({
+          unorderedList: true,
+        }),
+
         quotePlugin(),
         thematicBreakPlugin(),
         markdownShortcutPlugin(),
         linkPlugin(),
         linkDialogPlugin(),
+        toolbarPlugin({
+          toolbarContents: () => (
+            <>
+              <UndoRedo />
+              <BoldItalicUnderlineToggles />
+              <ListsToggle options={["bullet"]} />
+            </>
+          ),
+        }),
       ]}
       {...props}
       ref={editorRef}

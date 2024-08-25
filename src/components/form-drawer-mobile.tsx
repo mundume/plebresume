@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
 import ApplicationForm from "./application-form";
-import { useResumeContext } from "./Provider";
+import { useCoverLetterContext } from "./Provider";
 import { Bot, Loader, Pencil } from "lucide-react";
 
 const FormDrawerMobile = () => {
-  const { response, isLoading } = useResumeContext();
+  const { response, isLoading } = useCoverLetterContext();
   const [isOpen, setIsOpen] = useState(false);
   const handleSubmit = () => setIsOpen((open) => !open);
   return (

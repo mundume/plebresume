@@ -1,14 +1,13 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { openai } from "@/lib/openai";
+
 import { pinecone } from "@/lib/pinecone";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { coverLetterSchema } from "@/lib/validators/coverlettervalidator";
 import { db } from "@/config/prisma";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { OpenAIStream, StreamingTextResponse } from "ai";
-import { format } from "date-fns";
-
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
 export const runtime = "edge";
 export const POST = async (req: NextRequest) => {
   const { getUser } = getKindeServerSession();
@@ -46,10 +45,10 @@ export const POST = async (req: NextRequest) => {
   const results = await vectorStore.similaritySearch(fileId);
   console.log(results);
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+  const response = await streamText({
+    model: openai("gpt-3.5-turbo"),
     temperature: 0.7,
-    stream: true,
+
     messages: [
       {
         role: "system",
@@ -69,20 +68,28 @@ export const POST = async (req: NextRequest) => {
    JOB TITLE: ${jobTitle}
   JOB DESCRIPTION: ${jobDescription}
 
+
+
    \n----------------\n
 
 
-## Applicants Name  \n
-### Profession <br />
-Applicants Address <br />
-Phone: Applicants Phone  <br />
-Email: [Applicants Email](mailto:[Applicants Email])
+---
+title: Application for [job] Position at [Company Name]
+---
 
+## Applicants Name
 
-Dear Hiring manager,
+Applicants Address  
+Phone: Applicants Phone  
+Email: Applicants Email
+
+[Date]\n
+[Name of employer]\n
+[Mailing address of employer]\n
+Dear [Hiring manager's name],\n
 [Greet the hiring manager and state your name as well as the position you're applying for. These second and third sentences can mention how you found the position and express enthusiasm for the job. You can also mention if you heard about the position from a friend or if a colleague referred you.]
 
-[This first sentence in your second paragraph can introduce the skills you've gained from educational courses, volunteer experience or extracurricular activities. You can feature examples of these specific skills and tie together how you can apply them to this job position during these next few sentences. Mention any other related achievements, education or awards and how they may benefit the company.]
+[This first sentence in your second paragraph can introduce the skills you've gained from educational courses, volunteer experience or extracurricular activities. You can feature examples of these specific skills and tie together how you can apply them to this job position during these next few sentences. Mention any other related achievements or awards and how they may benefit the company.]
 
 [Your next paragraph can explain why you're the best candidate for the role. Mention any details you noticed on their website that you believe reflect your passion or motivations. You can also explain your dedication to learning more about the role and you're willingness to develop new skills in the position.]
 [In your closing paragraph, explain your excitement for the role one last time. Thank the employer for their time and request an interview. Mention that you look forward to hearing from them soon.]
@@ -91,15 +98,10 @@ Sincerely,
 [Your signature]
 
 
-
   `,
       },
     ],
-  });
-
-  const stream = OpenAIStream(response, {
-    async onCompletion(completion) {
-      console.log(completion);
+    onFinish: async (completion) => {
       const pleb = await db.coverLetter.findFirst({
         where: {
           id: fileId,
@@ -111,16 +113,17 @@ Sincerely,
           where: {
             id: fileId,
             userId: id,
+            name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
           },
           data: {
-            text: completion,
+            text: completion.text,
           },
         });
       } else {
         await db.coverLetter.create({
           data: {
             name: `${user.given_name} ${user.family_name}  coverletter ${fileId} `,
-            text: completion,
+            text: completion.text,
             id: fileId,
             userId: id,
           },
@@ -130,5 +133,5 @@ Sincerely,
   });
 
   // Respond with the stream
-  return new StreamingTextResponse(stream);
+  return response.toTextStreamResponse();
 };
