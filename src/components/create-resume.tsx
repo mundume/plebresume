@@ -4,7 +4,9 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Loader, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 const CreateResume = ({ userId }: { userId: string }) => {
+  const { push } = useRouter();
   const newResume = trpc.createResume.useMutation({});
   const utils = trpc.useUtils();
 
@@ -18,11 +20,12 @@ const CreateResume = ({ userId }: { userId: string }) => {
               userId,
             },
             {
-              onSuccess: () => {
+              onSuccess: (data) => {
                 utils.getResumes.invalidate();
                 toast.success(
                   "Resume created click on it to go to the resume builder!"
                 );
+                push(`/resume/${data.id}`);
               },
               onError: () => {
                 toast.error("Error creating resume");
