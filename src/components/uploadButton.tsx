@@ -174,7 +174,8 @@ const UploadButton = () => {
           className="bg-primary hover:bg-primary/80 text-primary-foreground my-4"
           variant={"pleb"}
         >
-          <Upload className="w-4 h-4 mr-1.5 text-slate-400" /> upload
+          <Upload className="w-4 h-4 mr-1.5 text-slate-400" /> click toupload
+          your resume
         </Button>
       </DialogTrigger>
       <DialogContent>
