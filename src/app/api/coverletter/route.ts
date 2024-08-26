@@ -79,14 +79,19 @@ title: Application for [job] Position at [Company Name]
 
 ## Applicants Name
 
-Applicants Address  
-Phone: Applicants Phone  
-Email: Applicants Email
+Applicants Address  \n
+Phone: Applicants Phone  \n
+Email: Applicants Email   \n
+\n
 
 [Date]\n
-[Name of employer]\n
-[Mailing address of employer]\n
-Dear [Hiring manager's name],\n
+\n
+[Name of employer]  \n
+\n
+[Mailing address of employer]  \n
+\n
+Dear [Hiring manager's name],  \n
+\n
 [Greet the hiring manager and state your name as well as the position you're applying for. These second and third sentences can mention how you found the position and express enthusiasm for the job. You can also mention if you heard about the position from a friend or if a colleague referred you.]
 
 [This first sentence in your second paragraph can introduce the skills you've gained from educational courses, volunteer experience or extracurricular activities. You can feature examples of these specific skills and tie together how you can apply them to this job position during these next few sentences. Mention any other related achievements or awards and how they may benefit the company.]
