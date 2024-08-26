@@ -36,8 +36,35 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         <title>Plebresume</title>
-        <meta property="og:image" content="/api/og" />
-        <meta property="twitter:image" content="/api/og" />
+        <meta
+          name="description"
+          content="Where plebs like you get unlimited ai assisted resumes and coverletters for free"
+        />
+
+        <meta property="og:url" content="https://plebresume.vercel.app" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Plebresume" />
+        <meta
+          property="og:description"
+          content="Where plebs like you get unlimited ai assisted resumes and coverletters for free"
+        />
+        <meta
+          property="og:image"
+          content="https://plebresume.vercel.app/api/og"
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="plebresume.vercel.app" />
+        <meta property="twitter:url" content="https://plebresume.vercel.app" />
+        <meta name="twitter:title" content="Plebresume" />
+        <meta
+          name="twitter:description"
+          content="Where plebs like you get unlimited ai assisted resumes and coverletters for free"
+        />
+        <meta
+          name="twitter:image"
+          content="https://plebresume.vercel.app/api/og"
+        />
       </Head>
       <Provider>
         <body className={`${GeistSans.className} bg-background `}>
