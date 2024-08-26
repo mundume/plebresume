@@ -10,6 +10,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Head from "next/head";
 
 export const metadata: Metadata = {
+  title: "Plebresume",
+  description:
+    "Where plebs like you get unlimited ai assisted resumes and coverletters for free",
   openGraph: {
     title: "Plebresume",
     description:
