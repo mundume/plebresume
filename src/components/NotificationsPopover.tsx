@@ -9,7 +9,7 @@ import NotificationTabs from "./NotificationTabs";
 const NotificationsPopover = () => {
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild disabled>
         <NotificationIcon />
       </PopoverTrigger>
       <PopoverContent className="w-full px-1">

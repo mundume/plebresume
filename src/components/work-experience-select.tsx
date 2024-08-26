@@ -9,11 +9,12 @@ import {
 import { useEffect, useState, useTransition } from "react";
 import SimpleBar from "simplebar-react";
 import { Button } from "./ui/button";
-import { Sparkles } from "lucide-react";
+import { RefreshCcw, Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { UseFormReturn } from "react-hook-form";
 import { EmploymentSchema } from "@/lib/schemas";
 import { Skeleton } from "./ui/skeleton";
+import { Badge } from "./ui/badge";
 
 type Description = {
   workExperience: string;
@@ -66,10 +67,8 @@ export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="text-xs w-[400px] h-[400px]">
+        <DropdownMenuContent className="text-xs w-[400px] h-[400px] relative">
           <SimpleBar className="flex items-center justify-center text-xs w-full h-full my-auto">
-            <DropdownMenuLabel>Work Experience</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             {pending ? (
               Array.from({ length: 8 }).map((_, i) => (
                 <Skeleton
@@ -79,6 +78,36 @@ export const WorkExperienceSelect = ({ input, form, index: i }: Props) => {
               ))
             ) : (
               <>
+                <DropdownMenuLabel>
+                  <Badge>
+                    <Sparkles className="w-4 h-4 text-yellow-400" /> ai
+                  </Badge>
+                </DropdownMenuLabel>
+                <div className="absolute right-0 top-0">
+                  <Button
+                    size={"icon"}
+                    className=""
+                    onClick={async () => {
+                      startTransition(async () => {
+                        const { workexperience } = await generateWorkexperience(
+                          {
+                            input,
+                          }
+                        );
+                        setGeneratedDescription(workexperience.workexperience);
+                      });
+                    }}
+                  >
+                    <RefreshCcw
+                      className={
+                        pending
+                          ? "animate-spin w-4 h-4 text-slate-600"
+                          : `w-4 h-4 text-slate-600`
+                      }
+                    />
+                  </Button>
+                </div>
+
                 {generatedDescription.map((description, index) => (
                   <Card
                     onClick={() => {

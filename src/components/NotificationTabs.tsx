@@ -78,7 +78,12 @@ const NotificationTabs = () => {
       <div className="flex items-center justify-between ">
         <TabsList className="gap-2 duration-1000 animate-in">
           {tabsData.map((tab) => (
-            <TabsTrigger key={tab.value} value={tab.value} className="">
+            <TabsTrigger
+              key={tab.value}
+              value={tab.value}
+              className=""
+              disabled
+            >
               {tab.heading}
             </TabsTrigger>
           ))}

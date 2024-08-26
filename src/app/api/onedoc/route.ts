@@ -26,6 +26,7 @@ export const GET = async (req: NextRequest) => {
 
   const { file, error } = await onedoc.render({
     html: await compile(Resume(resume!)),
+    test: false,
   });
 
   if (error) {
