@@ -75,7 +75,12 @@ export const resumeColumns: ColumnDef<TFileData>[] = [
     },
     cell: ({ row }) => {
       const updatedAt = row.original.updatedAt;
-      return <p className=""> {format(updatedAt, "MMM d, yyyy, h:mm a")}</p>;
+      return (
+        <Link className="" href={`/resume/${row.original.id}`}>
+          {" "}
+          {format(updatedAt, "MMM d, yyyy, h:mm a")}
+        </Link>
+      );
     },
   },
   {

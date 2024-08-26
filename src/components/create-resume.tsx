@@ -20,6 +20,9 @@ const CreateResume = ({ userId }: { userId: string }) => {
             {
               onSuccess: () => {
                 utils.getResumes.invalidate();
+                toast.success(
+                  "Resume created click on it to go to the resume builder!"
+                );
               },
               onError: () => {
                 toast.error("Error creating resume");
@@ -30,7 +33,7 @@ const CreateResume = ({ userId }: { userId: string }) => {
       >
         {newResume.isLoading ? (
           <>
-            <Loader className="w-4 h-4 animate-spin " />
+            <Loader className="w-4 h-4 animate-spin  " />
             <span className="ml-2">Creating Resume</span>
           </>
         ) : (

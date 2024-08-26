@@ -65,7 +65,7 @@ export const TextGenerateEffect = ({
       {showButton && (
         <div className="flex flex-col items-center justify-center md:flex-row md:gap-4">
           <Link
-            href="https://github.com/mundume"
+            href="https://github.com/mundume/plebresume"
             target="_blank"
             onClick={() => console.log("clicked")}
             className={cn(

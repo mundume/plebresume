@@ -96,20 +96,37 @@ function SkillsForm() {
       remove(index);
     }
   };
+  const profession = personalInfoForm.getValues("resume.proffession");
 
   useEffect(() => {
-    const profession = personalInfoForm.getValues("resume.proffession");
+    const profession = personalInfoForm?.watch("resume.proffession");
     // @ts-ignore
     if (profession?.length > 6) {
-      startTransition(async () => {
-        const { skills } = await generateSkills({
-          input: profession!,
-        });
+      const timer = setTimeout(() => {
+        startTransition(async () => {
+          try {
+            const { skills } = await generateSkills({
+              input: profession!,
+            });
 
-        setGeneratedSkill(skills.skills);
-      });
+            if (!skills.skills) {
+              return;
+            }
+
+            setGeneratedSkill(skills.skills);
+            toast.success(
+              "AI skills generated. Go to the skill section and add them!"
+            );
+          } catch (error) {
+            console.error("Error generating skills:", error);
+            toast.error("Failed to generate skills. Please try again.");
+          }
+        });
+      }, 5000);
+
+      return () => clearTimeout(timer);
     }
-  }, [personalInfoForm.getValues("resume.proffession")]);
+  }, [personalInfoForm.watch("resume.proffession")]);
   return (
     <div className="w-full space-y-4 py-4 ">
       <div>
