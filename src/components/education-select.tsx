@@ -9,11 +9,12 @@ import {
 import { useEffect, useState, useTransition } from "react";
 import SimpleBar from "simplebar-react";
 import { Button } from "./ui/button";
-import { Sparkles } from "lucide-react";
+import { RefreshCcw, Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { UseFormReturn } from "react-hook-form";
 import { EducationFormSchema } from "@/lib/schemas";
 import { Skeleton } from "./ui/skeleton";
+import { Badge } from "./ui/badge";
 
 type Description = {
   education: string;
@@ -65,7 +66,7 @@ export const EducationSelect = ({ input, form, index: i }: Props) => {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="text-xs w-[400px] h-[400px]">
+        <DropdownMenuContent className="text-xs w-[400px] h-[400px] relative">
           <SimpleBar className="flex items-center justify-center text-xs w-full h-full my-auto">
             {pending ? (
               Array.from({ length: 8 }).map((_, i) => (
@@ -76,7 +77,35 @@ export const EducationSelect = ({ input, form, index: i }: Props) => {
               ))
             ) : (
               <>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                  <Badge>
+                    <Sparkles className="w-4 h-4 mr-1.5 text-yellow-400" />
+                    ai
+                  </Badge>
+                </DropdownMenuLabel>
+                <div className="absolute right-0 top-0">
+                  <Button
+                    size={"icon"}
+                    className=""
+                    onClick={async () => {
+                      startTransition(async () => {
+                        const { education } = await generateEducation({
+                          input,
+                        });
+                        setGeneratedDescription(education.education);
+                      });
+                    }}
+                  >
+                    <RefreshCcw
+                      className={
+                        pending
+                          ? "animate-spin w-4 h-4 text-slate-600"
+                          : `w-4 h-4 text-slate-600`
+                      }
+                    />
+                  </Button>
+                </div>
+
                 <DropdownMenuSeparator />
                 {generatedDescription.map((description, index) => (
                   <Card
