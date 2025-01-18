@@ -2,7 +2,7 @@
 import { generateObject } from "ai";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { openai } from "@ai-sdk/openai";
+import { groq } from "@ai-sdk/groq";
 
 export async function generateResumeProfile({
   skills,
@@ -13,7 +13,7 @@ export async function generateResumeProfile({
   }[];
 }) {
   const { object: profiles } = await generateObject({
-    model: openai("gpt-4o-mini"),
+    model: groq("llama-3.3-70b-versatile"),
     system:
       "You are a helpful assistant used to generate 5 resume profiles from user input.",
     schema: z.object({
@@ -45,7 +45,7 @@ export async function generateResumeProfile({
 
 export async function generateSkills({ input }: { input: string }) {
   const { object: skills } = await generateObject({
-    model: openai("gpt-4o-mini"),
+    model: groq("llama-3.3-70b-versatile"),
     system:
       "You are a helpful assistant used to generate  skills from user input.",
     schema: z.object({
@@ -75,7 +75,7 @@ export async function generateSkills({ input }: { input: string }) {
 
 export const generateWorkexperience = async ({ input }: { input: string }) => {
   const { object: workexperience } = await generateObject({
-    model: openai("gpt-4o-mini"),
+    model: groq("llama-3.3-70b-versatile"),
     system:
       "You are an expert in crafting concise and impactful work experience descriptions for resumes. Generate a  description of a work experience  from the user input.",
     temperature: 0.7,
@@ -109,7 +109,7 @@ export const generateWorkexperience = async ({ input }: { input: string }) => {
 
 export const generateEducation = async ({ input }: { input: string }) => {
   const { object: education } = await generateObject({
-    model: openai("gpt-4o-mini"),
+    model: groq("llama-3.3-70b-versatile"),
     system:
       "You are an expert in crafting concise and impactful education descriptions for resumes. Generate a  description of an education  from the user input.",
     temperature: 0.7,

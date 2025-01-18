@@ -11,6 +11,7 @@
     "postinstall": "prisma generate --no-engine"
   },
   "dependencies": {
+    "@ai-sdk/groq": "^1.1.0",
     "@ai-sdk/openai": "^0.0.46",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
@@ -54,7 +55,7 @@
     "@vercel/og": "^0.6.2",
     "@welldone-software/why-did-you-render": "^8.0.3",
     "ace-builds": "^1.35.5",
-    "ai": "^3.3.7",
+    "ai": "^3.4.33",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
